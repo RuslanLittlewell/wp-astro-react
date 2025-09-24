@@ -126,7 +126,7 @@ export const ContactForm: FC<Props> = ({
                           initialCountry: "by",
                           nationalMode: false,
                           separateDialCode: true,
-                          loadUtils: () => import("public/utils.js" as any),
+                          loadUtils: () => import("public/tel-utils.mjs" as any),
                         }}
                       />
                     )}

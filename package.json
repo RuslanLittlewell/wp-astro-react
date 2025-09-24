@@ -1,6 +1,5 @@
 {
  "name": "astro-react-wp",
- "private": true,
  "type": "module",
  "scripts": {
   "dev": "astro dev",

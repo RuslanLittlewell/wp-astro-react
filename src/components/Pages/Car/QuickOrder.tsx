@@ -145,7 +145,7 @@ export const QuickOrder: FC<Props> = ({
                           containerClass: 'mobile lg:desctop',
                           nationalMode: false,
                           separateDialCode: true,
-                          loadUtils: () => import("public/utils.js" as any),
+                          loadUtils: () => import("public/tel-utils.mjs" as any),
                         }}
                       />
                     )}

@@ -4,7 +4,7 @@ import typography from "@tailwindcss/typography";
 
 const config: Config = {
   darkMode: ["class"],
-  content: ["./src/**/*.{astro,html,js,jsx,ts,tsx}"],
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
       height: {
