@@ -1,0 +1,29 @@
+---
+// components/BlurImage.astro
+import { getPlaiceholder } from "plaiceholder";
+
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+}
+
+const { src, alt, width = 500, height = 500 } = Astro.props;
+const { base64 } = await getPlaiceholder(src as any);
+---
+<div class="relative w-full h-full overflow-hidden">
+  <div
+    class="absolute inset-0 w-full h-full"
+    style={`background-image: url('${base64}'); background-size: cover; filter: blur(20px);`}
+  ></div>
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading="lazy"
+    decoding="async"
+    class="relative w-full h-full object-cover"
+  />
+</div>

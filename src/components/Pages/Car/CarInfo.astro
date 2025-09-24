@@ -1,0 +1,42 @@
+---
+import { Separator } from "@radix-ui/react-dropdown-menu";
+
+const { fields, car } = Astro.props;
+const { car_info } = fields.car;
+---
+
+<div
+  class="text-denim-900 w-full md:w-[70%] h-auto lg:h-[400px] grid grid-cols-1 lg:grid-cols-[40%_1fr] gap-3 shadow-md bg-denim-700/60 rounded-2xl p-5"
+>
+  <div class="space-y-2">
+    <div class="flex gap-1 items-center justify-between">
+      <span class="bg-denim-800 text-white px-3 py-2 rounded-2xl font-thin"
+        >Количество посадочных мест:</span
+      >
+      <span class="px-3 py-2 rounded-2xl">{car_info.seats}</span>
+    </div>
+    <Separator className="h-px bg-white/50" />
+    <div class="flex gap-1 items-center justify-between">
+      <span class="bg-denim-800 text-white px-3 py-2 rounded-2xl font-thin"
+        >Объем двигателя:</span
+      >
+      <span class="px-3 py-2 rounded-2xl">{car_info.engine}</span>
+    </div>
+    <Separator className="h-px bg-white/50" />
+    <div class="flex gap-1 items-center justify-between">
+      <span class="bg-denim-800 text-white px-3 py-2 rounded-2xl font-thin"
+        >Расход топлива:</span
+      >
+      <span class="px-3 py-2 rounded-2xl">{car_info.fuel_consumption}</span>
+    </div>
+    <Separator className="h-px bg-white/50" />
+    <div class="flex gap-1 items-center justify-between">
+      <span class="bg-denim-800 text-white px-3 py-2 rounded-2xl font-thin"
+        >Коробка передач:</span
+      >
+      <span class="px-3 py-2 rounded-2xl">{car_info.transmission}</span>
+    </div>
+    <Separator className="h-px bg-white/50" />
+  </div>
+  <div class="border-l border-white/50 pl-10" set:html={car.content.rendered} />
+</div>

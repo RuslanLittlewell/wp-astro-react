@@ -1,0 +1,33 @@
+---
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Container from "@/layouts/Container.astro";
+import { wpFetch } from "@/lib/wp";
+
+const {acf: pageData} = await wpFetch('/acf/v3/pages/123');
+const { seo } = pageData
+---
+
+<BaseLayout className="scrolled" title={seo.seo_title} image={seo.image} description={seo.short_description}>
+  <Container class="my-24">
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Главная</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Новости</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+
+  </Container>
+</BaseLayout>

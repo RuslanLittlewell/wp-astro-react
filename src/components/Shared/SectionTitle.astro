@@ -1,0 +1,6 @@
+---
+const { title, class: extraClass = "" } = Astro.props
+---
+<h2 class={`text-2xl lg:text-4xl text-denim-800 font-semibold text-center mb-4 lg:mb-20 ${extraClass}`}>
+  {title}
+</h2>

@@ -1,0 +1,23 @@
+---
+import MainTitle from "@/components/Shared/MainTitle.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Container from "@/layouts/Container.astro";
+import { wpFetch } from "@/lib/wp";
+
+// const data = await wpFetch("/acf/v3/pages/150");
+const page = await wpFetch(`/wp/v2/pages/150`);
+const {acf: pageData} = page;
+const { seo } = pageData;
+---
+
+<BaseLayout
+  title={seo.seo_title}
+  image={seo.image}
+  description={seo.short_description}
+  className="scrolled" 
+>
+  <Container class="my-32">
+    <MainTitle title={page.title.rendered} />
+    <div set:html={page.content.rendered} />
+  </Container>
+</BaseLayout>

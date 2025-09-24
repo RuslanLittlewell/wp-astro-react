@@ -1,0 +1,55 @@
+---
+// src/components/Seo.astro
+export interface Props {
+  title: string;
+  description?: string;
+  keywords?: string[] | string;
+  canonical?: string;
+  image?: string;
+  noindex?: boolean;
+  lang?: string; // например "ru"
+  type?: "website" | "article" | "product";
+}
+
+const {
+  title,
+  description = "",
+  keywords = "",
+  canonical = "",
+  image,
+  noindex = false,
+  lang = "ru",
+  type = "website",
+} = Astro.props as Props;
+
+const kw = Array.isArray(keywords) ? keywords.join(", ") : keywords;
+const url = canonical || Astro.url?.href || "";
+---
+<>
+  <title>{title}</title>
+  {noindex
+    ? <meta name="robots" content="noindex, nofollow" />
+    : <meta name="robots" content="index, follow" />
+  }
+
+  <meta name="description" content={description} />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="../../public/favicon.ico" />
+  {kw && <meta name="keywords" content={kw} />}
+
+  {url && <link rel="canonical" href={url} />}
+
+  {/* OG */}
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={type} />
+  {url && <meta property="og:url" content={url} />}
+  {image && <meta property="og:image" content={image} />}
+  <meta property="og:locale" content={`${lang}_${lang.toUpperCase()}`} />
+
+  {/* Twitter */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  {image && <meta name="twitter:image" content={image} />}
+</>

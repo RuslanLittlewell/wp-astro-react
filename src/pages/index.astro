@@ -1,0 +1,42 @@
+---
+import AboutSection from "@/components/Pages/Home/Sections/AboutSection.astro";
+import FAQ from "@/components/Pages/Home/Sections/FAQ.astro";
+import FormSection from "@/components/Pages/Home/Sections/FormSection.astro";
+import HeroSection from "@/components/Pages/Home/Sections/HeroSection.astro";
+import MapSection from "@/components/Pages/Home/Sections/MapSection.astro";
+import PopularAuto from "@/components/Pages/Home/Sections/PopularAuto.astro";
+import RentFlowSection from "@/components/Pages/Home/Sections/RentFlowSection.astro";
+import Services from "@/components/Pages/Home/Sections/Services.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { wpFetch } from "@/lib/wp";
+
+const data = await wpFetch(`/acf/v3/pages/48`);
+const { acf: pageDdata } = data;
+const {
+  status,
+  about_us,
+  for_rent,
+  recomendation_auto,
+  hero_block,
+  seo,
+  faq,
+  services,
+} = pageDdata;
+const {
+  seo_title: title,
+  keywords,
+  short_description: description,
+  seo_image: image,
+} = seo;
+---
+
+<BaseLayout {title} {keywords} {description} {image}>
+  <HeroSection {hero_block} {image} />
+  <FormSection />
+  <AboutSection {status} {about_us} />
+  <RentFlowSection fields={for_rent} />
+  <PopularAuto fields={recomendation_auto} />
+  <Services fields={services} />
+  <MapSection />
+  <FAQ fields={faq} />
+</BaseLayout>

@@ -1,0 +1,13 @@
+---
+import { cn } from "@/lib/utils";
+
+const { 
+  as: Element = 'div',
+  class: className = '',
+  big = false,
+} = Astro.props;
+---
+
+<Element class={cn('mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8', className, big && 'max-w-none')}>
+  <slot />
+</Element>

@@ -1,0 +1,19 @@
+---
+import Container from "@/layouts/Container.astro";
+import { fetchGoodsWithACF } from "@/lib/wp";
+import { CarCard } from "@/components/Pages/Cars/CarCard";
+import SectionTitle from "@/components/Shared/SectionTitle.astro";
+
+const { fields } = Astro.props;
+const ids = fields.map((i: { car: number }) => i.car);
+const cars = await fetchGoodsWithACF(ids);
+---
+
+<section class="py-10 lg:py-[70px] w-full">
+  <Container big>
+    <SectionTitle title="Популярные авто" />
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      {cars.map((car) => <CarCard car={car} client:load />)}
+    </div>
+  </Container>
+</section>

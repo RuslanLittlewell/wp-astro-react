@@ -1,0 +1,40 @@
+---
+import "@styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import Header from "@/layouts/Header.astro";
+import Footer from "./Footer.astro";
+import Seo from "./Seo.astro";
+import { wpFetch } from "@/lib/wp";
+import { cn } from "@/lib/utils";
+import GlobalSheet from "@/components/Shared/GlobalSheet";
+
+const {
+  title,
+  description = "",
+  keywords = "",
+  canonical = "",
+  image,
+  jsonLd,
+  className
+} = Astro.props;
+const { acf } = await wpFetch('/acf/v3/options/options');
+---
+
+<!doctype html>
+<html lang="ru" class="h-full">
+  <head>
+    <Seo {title} {description} {keywords} {canonical} {image} />
+    {jsonLd &&<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ClientRouter />
+  </head>
+  <body class={cn("min-h-screen bg-gray-50 text-gray-900 flex flex-col", className)}>
+    <Header data={acf} />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <GlobalSheet client:load />
+    <Footer data={acf} />
+  </body>
+</html>

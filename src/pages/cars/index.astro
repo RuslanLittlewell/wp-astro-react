@@ -1,0 +1,54 @@
+---
+import { CarCard } from "@/components/Pages/Cars/CarCard";
+import MainTitle from "@/components/Shared/MainTitle.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Container from "@/layouts/Container.astro";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { wpFetch } from "@/lib/wp";
+
+interface Car {
+  acf: any;
+  title: {
+    rendered: string;
+  };
+  slug: string;
+}
+
+const cars: Car[] = await wpFetch("/wp/v2/cars");
+const { acf: pageData } = await wpFetch("/acf/v3/pages/50");
+const { seo } = pageData;
+---
+
+<BaseLayout
+  title={seo.seo_title}
+  className="scrolled"
+  image={seo.image}
+  description={seo.short_description}
+>
+  <Container class="mt-24">
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Главная</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Автопарк</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+    <MainTitle title="Автопарк" />
+  </Container>
+  <Container big class="mb-24">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      {cars.map((car) => <CarCard car={car} client:load />)}
+    </div>
+  </Container>
+</BaseLayout>

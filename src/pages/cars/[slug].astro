@@ -1,0 +1,74 @@
+---
+import CarInfo from "@/components/Pages/Car/CarInfo.astro";
+import { CarSlider } from "@/components/Pages/Car/CarSlider";
+import { RentalCalculatorCard } from "@/components/Pages/Car/OrderCard";
+import { RequirementsBlock } from "@/components/Pages/Car/ReqBlock";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Container from "@/layouts/Container.astro";
+import { wpFetch } from "@/lib/wp";
+
+export async function getStaticPaths() {
+  const cars = await wpFetch(`/wp/v2/cars`);
+  return cars.map((car: any) => ({
+    params: { slug: car.slug },
+    props: { car },
+  }));
+}
+
+interface Props {
+  car: {
+    acf: any;
+    title: {
+      rendered: string;
+    };
+  };
+}
+const { car } = Astro.props;
+const { acf } = car;
+---
+
+<BaseLayout
+  title={car.title.rendered}
+  image={acf.car.car_images[0]}
+  className="scrolled"
+>
+  <div class="w-full mt-24">
+    <Container>
+      <h1 class="text-3xl text-denim-900 font-bold mb-8">
+        {car.title.rendered}
+      </h1>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Главная</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href={`/cars`}>Автопарк</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{car.title.rendered}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    </Container>
+
+    <CarSlider images={acf.car.car_images} client:load />
+    <Container>
+      <RequirementsBlock client:load />
+    </Container>
+    <Container class="flex flex-col md:flex-row gap-10">
+      <CarInfo fields={acf} {car} />
+      <RentalCalculatorCard fields={acf} client:load />
+    </Container>
+  </div>
+</BaseLayout>

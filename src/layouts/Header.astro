@@ -1,0 +1,49 @@
+---
+import { cn } from "@/lib/utils";
+import Logo from "@assets/icons/Logo.svg";
+const links = [
+  { name: "Главная", link: "/" },
+  { name: "Автопарк", link: "/cars" },
+  { name: "Условия", link: "/conditions" },
+  { name: "Новости", link: "/blog" },
+];
+---
+
+<header
+  class="w-[calc(100%_-1rem)] lg:w-[calc(100%_-60px)] p-5 flex items-center fixed top-2
+  left-1/2 -translate-x-1/2 z-40 bg-gray-800/10
+  transition-all duration-300 ease-in-out
+  shadow-md rounded-xl [.scrolled_&]:bg-gray-800/90"
+>
+  <div class="flex w-full justify-between items-center">
+    <!-- <Logo width="100px" /> -->
+    <Logo class="h-[32px]"/>
+    <nav>
+      <ul class="flex gap-4 text-white relative">
+        {
+          links.map((i) => {
+            return (
+              <li>
+                <a href={i.link}>
+                  <span>{i.name}</span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+<script is:inline>
+  const onScroll = () => {
+    if (window.scrollY > 0) {
+      document.documentElement.classList.add("scrolled");
+    } else {
+      document.documentElement.classList.remove("scrolled");
+    }
+  };
+
+  window.addEventListener("scroll", onScroll);
+  onScroll();
+</script>

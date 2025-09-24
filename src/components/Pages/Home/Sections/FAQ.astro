@@ -1,0 +1,25 @@
+---
+import Container from "@/layouts/Container.astro";
+import { AccordionBlock } from "../../Conditions/AccordionBlock";
+import SectionTitle from "@/components/Shared/SectionTitle.astro";
+
+const { fields } = Astro.props;
+const {faq_title, faq_description, faq_data } = fields;
+
+const data = faq_data.map((i: {ask: string, asnwer: string}) => ({
+  title: i.ask,
+  description: i.asnwer
+}))
+---
+
+<section class="py-10 lg:py-[70px] w-ful bg-gray-200">
+  <Container>
+    <SectionTitle title={faq_title} />
+    <p class="mb-10 text-center">
+      {faq_description}
+    </p>
+    <div>
+     <AccordionBlock {data} client:load />
+    </div>
+  </Container>
+</section>
