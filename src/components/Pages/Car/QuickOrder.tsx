@@ -98,12 +98,12 @@ export const QuickOrder: FC<Props> = ({
   return (
     <div
       className={cn(
-        "w-[30%] bg-denim-700/60 rounded-2xl p-5 shadow-lg backdrop-blur",
+        "w-[30%] bg-denim-700/60 rounded-2xl p-3 shadow-lg backdrop-blur",
         className
       )}
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 lg:space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 lg:space-y-3">
           {/* Инфо */}
           <div className="flex gap-2">
             <FieldRow label="Тариф" value={tier.label} />
@@ -119,7 +119,7 @@ export const QuickOrder: FC<Props> = ({
                   <Input
                     {...field}
                     placeholder="Иван"
-                    className="bg-denim-100 px-4 py-1 lg:py-3 text-sm lg:text-lg text-denim-800"
+                    className="bg-denim-100 px-4 py-1 lg:py-2 text-sm lg:text-md text-denim-800"
                   />
                 </FormControl>
                 <FormMessage />
@@ -142,7 +142,7 @@ export const QuickOrder: FC<Props> = ({
                         onChangeNumber={field.onChange}
                         initOptions={{
                           initialCountry: "by",
-                          containerClass: 'mobile lg:desctop',
+                          containerClass: 'quick-order',
                           nationalMode: false,
                           separateDialCode: true,
                           loadUtils: () => import("public/tel-utils.mjs" as any),
@@ -173,7 +173,7 @@ export const QuickOrder: FC<Props> = ({
                     onChange={(e) =>
                       field.onChange(e.currentTarget.valueAsNumber || 1)
                     }
-                    className="bg-denim-100 px-4 py-1 lg:py-3 tezt-sm lg:text-lg text-denim-800"
+                    className="bg-denim-100 px-4 py-1 lg:py-2 text-sm lg:text-md text-denim-800"
                   />
                 </FormControl>
                 <FormMessage />
@@ -201,7 +201,7 @@ export const QuickOrder: FC<Props> = ({
           {/* Итого */}
           <div className="mb-2">
             <div className="text-denim-900 text-xs lg:text-sm">Итого:</div>
-            <div className="text-lg lg:text-2xl text-end font-semibold">
+            <div className="text-md lg:text-xl text-end font-semibold">
               {isIndividual
                 ? "Индивидуальный расчет"
                 : formatBYN(totalWithPledge)}
@@ -210,18 +210,7 @@ export const QuickOrder: FC<Props> = ({
 
           <Button
             type="submit"
-            className="w-full rounded-xl bg-denim-300 hover:bg-denim-300/80 hidden md:block"
-            size="lg"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting
-              ? "Отправляем..."
-              : "Оставить заявку на аренду"}
-          </Button>
-
-          <Button
-            type="submit"
-            className="w-full rounded-xl bg-denim-300 hover:bg-denim-300/80 md:hidden block"
+            className="w-full rounded-xl bg-denim-300 hover:bg-denim-300/80"
             size="md"
             disabled={form.formState.isSubmitting}
           >
@@ -239,7 +228,7 @@ function FieldRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="w-full">
       <div className="text-denim-400 text-xs lg:text-sm mb-1">{label}</div>
-      <div className="bg-denim-100 rounded-xl px-4 py-1 lg:py-3 text-sm lg:text-lg flex items-center justify-between">
+      <div className="bg-denim-100 rounded-xl px-4 py-1 lg:py-2 text-sm lg:text-md flex items-center justify-between">
         <span className="text-denim-800">{value}</span>
       </div>
     </div>

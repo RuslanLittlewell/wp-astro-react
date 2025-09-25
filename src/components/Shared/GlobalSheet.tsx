@@ -11,10 +11,11 @@ export default function GlobalSheet() {
   const { open, payload, close } = useSheetStore();
   return (
     <UISheet open={open} onOpenChange={(v) => (v ? null : close())}>
-      <SheetContent side={payload?.side ?? "right"}>
+      <SheetContent side={payload?.side ?? "right"} className="overflow-auto lg:p-4">
         <SheetHeader>
           {payload?.title && <SheetTitle>{payload.title}</SheetTitle>}
         </SheetHeader>
+        <div className="flex flex-col justify-between h-[calc(100%_-_20px)]">
         <div className="my-1 lg:my-4">
           <img
             src={payload?.image}
@@ -32,6 +33,7 @@ export default function GlobalSheet() {
           className="w-full"
           handleClose={close}
         />
+        </div>
       </SheetContent>
     </UISheet>
   );
