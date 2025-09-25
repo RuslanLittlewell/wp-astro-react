@@ -1,4 +1,6 @@
 ---
+import FeaturedPosts from "@/components/Pages/Posts/FeaturedPosts.astro";
+import RegularPosts from "@/components/Pages/Posts/RegularPosts.astro";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,11 +13,32 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Container from "@/layouts/Container.astro";
 import { wpFetch } from "@/lib/wp";
 
+const posts: any[] = await wpFetch(
+  `/wp/v2/posts?per_page=100&orderby=date&order=desc&_fields=id,slug,date,link,title,excerpt,acf`
+);
+
+const slugOf = (p: any) => p.slug ?? p.link?.split("/").filter(Boolean).pop();
+const imgOf = (p: any) =>
+  p?.acf?.seo?.seo_image || "/images/news-placeholder.jpg";
+const fmt = (iso: string) =>
+  new Date(iso).toLocaleDateString("ru-RU", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
+const [featured, ...rest] = posts;
+const highlights = rest.slice(0, 2);
+const masonry = rest.slice(2);
+
 const {acf: pageData} = await wpFetch('/acf/v3/pages/123');
 const { seo } = pageData
 ---
 
-<BaseLayout className="scrolled" title={seo.seo_title} image={seo.image} description={seo.short_description}>
+<BaseLayout className="scrolled"
+  title="Новости"
+  description="Cервис проката автомобилей в Бресте — свежие новости и статьи"
+>
   <Container class="my-24">
     <Breadcrumb>
       <BreadcrumbList>
@@ -28,6 +51,15 @@ const { seo } = pageData
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
-    блоки с новостями
+    <div>
+          {
+      featured && (
+        <FeaturedPosts {slugOf} {imgOf} {fmt} {featured} {highlights} />
+      )
+    }
+
+    <!-- Masonry-лента -->
+    <RegularPosts {slugOf} {imgOf} {fmt} {masonry} />
+    </div>
   </Container>
 </BaseLayout>

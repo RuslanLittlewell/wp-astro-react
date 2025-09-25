@@ -1,0 +1,37 @@
+---
+const {masonry, slugOf, imgOf, fmt} = Astro.props;
+---
+
+<section class="masonry columns-1 gap-6 md:columns-2 lg:columns-3">
+  {
+    masonry.map((p: any) => (
+      <article class="mb-6 break-inside-avoid overflow-hidden rounded-3xl border bg-white transition hover:shadow-md">
+        <a href={`/posts/${slugOf(p)}`} class="block">
+          <div class="relative aspect-[16/10]">
+            <img
+              src={imgOf(p)}
+              alt={p.title?.rendered || "Новость"}
+              class="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="p-5">
+            <time datetime={p.date} class="text-xs text-muted-foreground">
+              {fmt(p.date)}
+            </time>
+            <h3 class="mt-1 text-lg font-semibold text-foreground">
+              <span set:html={p.title.rendered} />
+            </h3>
+            <div class="mt-2 line-clamp-3 text-sm text-muted-foreground">
+              <span set:html={p.excerpt?.rendered} />
+            </div>
+            <span class="mt-3 inline-flex items-center text-sm font-medium text-indigo-600">
+              Читать далее →
+            </span>
+          </div>
+        </a>
+      </article>
+    ))
+  }
+</section>

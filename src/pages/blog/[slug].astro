@@ -1,0 +1,108 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Container from "@/layouts/Container.astro";
+import { Image } from "astro:assets";
+import { wpFetch } from "@/lib/wp";
+
+const { slug } = Astro.params;
+const url = Astro.url?.href || "";
+
+const [post] = await wpFetch(
+  `/wp/v2/posts?slug=${slug}&_fields=id,date,title,content,acf`
+);
+
+export async function getStaticPaths() {
+  const posts = await wpFetch(`/wp/v2/posts?_fields=slug`);
+
+  return posts.map((post: { slug: string }) => ({
+    params: { slug: post.slug },
+  }));
+}
+const iso = post.date;
+const ymd = iso.split("T")[0];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  headline: post.title.rendered,
+  datePublished: ymd,
+  dateModified: ymd,
+  inLanguage: "ru",
+  author: {
+    "@type": "Organization",
+    name: "Прокат автомобилей в Бресте",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Прокат автомобилей в Бресте",
+  },
+  articleSection: "Новости",
+  description: "Cервис проката автомобилей в Бресте",
+  mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  image: post.acf?.image || "",
+};
+---
+
+<BaseLayout
+  title={post.title.rendered}
+  {jsonLd}
+  image={post.acf?.seo.image}
+  description={post.acf?.seo.short_description}
+>
+  <Container class:list="mt-32 mb-16 bg-zinc-50">
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Главная</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/posts">Новости</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>{post.title.rendered}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+    <article class="max-w-3xl mx-auto py-8">
+      <Image
+        src={post.acf?.seo.seo_image || "/default-image.jpg"}
+        alt={post.title.rendered}
+        width={800}
+        height={450}
+        class="w-full h-auto mb-6 rounded-lg shadow-md"
+      />
+      <h1 class="text-4xl font-bold mb-6" set:html={post.title.rendered} />
+      <div
+        class="prose prose-lg max-w-none
+         /* заголовки */
+         prose-headings:scroll-mt-24 prose-headings:font-semibold
+         prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:text-zinc-900
+         prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-zinc-900
+         /* абзацы */
+         prose-p:text-zinc-700 prose-p:leading-relaxed prose-p:my-4
+         /* списки */
+         prose-ul:my-4 prose-ul:pl-5 prose-li:my-1
+         prose-li:marker:text-indigo-500
+         [&_ul]:list-disc [&_ul]:pl-5
+         [&_ul_ul]:list-[circle] [&_ul_ul]:pl-5
+         [&_ul_ul_ul]:list-[square] [&_ul_ul_ul]:pl-5
+         /* цитаты */
+         prose-blockquote:my-6 prose-blockquote:rounded-xl
+         prose-blockquote:border-l-4 prose-blockquote:border-indigo-300
+         prose-blockquote:bg-indigo-50/60 prose-blockquote:px-5 prose-blockquote:py-3
+         prose-blockquote:font-medium prose-blockquote:text-zinc-800"
+        set:html={post.content.rendered}
+      />
+    </article>
+  </Container>
+</BaseLayout>
