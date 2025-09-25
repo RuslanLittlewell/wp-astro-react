@@ -8,7 +8,7 @@ const { featured, slugOf, imgOf, fmt, highlights } = Astro.props;
     class="group relative overflow-hidden rounded-3xl border bg-white lg:col-span-2"
   >
     <a
-      href={`/posts/${slugOf(featured)}`}
+      href={`/blog/${slugOf(featured)}`}
       class="absolute inset-0 z-10"
       aria-label="Читать новость"></a>
     <div class="relative aspect-[16/9] h-full">
