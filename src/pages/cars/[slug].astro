@@ -61,8 +61,9 @@ const { acf } = car;
         </BreadcrumbList>
       </Breadcrumb>
     </Container>
-
-    <CarSlider images={acf.car.car_images} client:load />
+    <Container big>
+      <CarSlider images={acf.car.car_images} client:load />
+    </Container>
     <Container>
       <RequirementsBlock client:load />
     </Container>

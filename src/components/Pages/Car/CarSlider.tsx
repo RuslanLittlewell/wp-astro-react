@@ -30,9 +30,9 @@ export const CarSlider: FC<Props> = ({ images }) => {
         {images.map((img: string, index: number) => (
           <SplideSlide
             key={index}
-            className="rounded-lg shadow-lg overflow-hidden lg:h-[50vh] text-center"
+            className="rounded-lg shadow-lg overflow-hidden text-center"
           >
-              <img src={img} alt="car" className="object-cover w-full h-full mx-auto" />
+              <img src={img} alt="car" className="object-cover w-full max-h-[600px] mx-auto" />
           </SplideSlide>
         ))}
       </Splide>
