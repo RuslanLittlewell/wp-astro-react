@@ -25,14 +25,14 @@ export const CarSlider: FC<Props> = ({ images }) => {
             },
           },
         }}
-        className="w-full"
+        className="w-auto "
       >
         {images.map((img: string, index: number) => (
           <SplideSlide
             key={index}
-            className="rounded-lg shadow-lg overflow-hidden"
+            className="rounded-lg shadow-lg overflow-hidden lg:h-[50vh] text-center"
           >
-              <img src={img} alt="car" className="w-full object-cover lg:h-[50vh]" />
+              <img src={img} alt="car" className="object-cover w-full h-full mx-auto" />
           </SplideSlide>
         ))}
       </Splide>
