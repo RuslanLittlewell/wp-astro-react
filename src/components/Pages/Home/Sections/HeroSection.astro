@@ -2,6 +2,7 @@
 import Container from "@/layouts/Container.astro";
 import { ContactForm } from "../ContancForm";
 import { Button } from "@/components/ui/button";
+import { Image } from "astro:assets";
 
 const { hero_block, image } = Astro.props;
 const { title, points } = hero_block;
@@ -24,16 +25,11 @@ interface Props {
 >
   <div
     class="grid w-full h-full aspect-[16/8] relative"
-    style={`--img: url(${image});`}
   >
     <div
-      class="rounded-xl bg-no-repeat bg-cover"
-      style="
-          background-image: var(--img);
-          background-size: cover;
-          background-position: 0 0;
-        "
+      class="rounded-xl overflow-hidden"
     >
+    <Image src={image} width={1200} height={800} alt="hero" class="w-full h-full object-cover"/>
     </div>
     <div
       class="absolute rounded-xl z-8 h-full w-1/2 bg-gradient-to-r from-gray-800 to-transparent"

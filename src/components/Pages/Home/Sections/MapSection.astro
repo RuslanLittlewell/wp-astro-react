@@ -6,13 +6,16 @@ import Container from "@/layouts/Container.astro";
 <section class="py-10 lg:py-[70px] w-full" id="map">
   <Container big>
     <SectionTitle title="Мы находимся тут"/>
-    <div class="rounded-xl overflow-hidden">
-    <script
-      type="text/javascript"
-      charset="utf-8"
-      async
-      src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A4049b838473c83e5e5faf17ef672e7cae31604e7505dfa4466eacfb0934655b8&width=100%25&height=400&lang=ru_RU&scroll=true"
-    ></script>
-    </div>
+<div class="rounded-xl overflow-hidden">
+  <iframe
+    src="https://yandex.ru/map-widget/v1/?um=constructor%3A4049b838473c83e5e5faf17ef672e7cae31604e7505dfa4466eacfb0934655b8&source=constructor"
+    width="100%"
+    height="400"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    style="display:block"
+  ></iframe>
+</div>
+
   </Container>
 </section>

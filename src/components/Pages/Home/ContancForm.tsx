@@ -89,7 +89,7 @@ export const ContactForm: FC<Props> = ({
             Нужен обратный звонок или консультация?
           </h2>
         </div>
-        <div className="grid gap-x-3 gap-y-2.5 md:grid-cols-[1fr_1fr_1fr] items-end">
+        <div className="grid gap-x-3 gap-y-2.5 md:grid-cols-[1fr_1fr_1fr] items-center">
           <FormField
             control={form.control}
             name="userName"
@@ -104,7 +104,7 @@ export const ContactForm: FC<Props> = ({
                     className="bg-white text-gray-600 placeholder:text-gray-800/90 py-2 md:py-3"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-white"/>
               </FormItem>
             )}
           />
@@ -132,7 +132,7 @@ export const ContactForm: FC<Props> = ({
                     )}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-white"/>
               </FormItem>
             )}
           />
