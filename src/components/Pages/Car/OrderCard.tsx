@@ -1,41 +1,82 @@
-import { PhoneIcon, TelegramIcon, WhatsAppIcon } from "@/components/Shared/Icons";
+import {
+  PhoneIcon,
+  TelegramIcon,
+  WhatsAppIcon,
+} from "@/components/Shared/Icons";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useMemo } from "react";
+
+import { z } from "zod";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+import IntlTelInput from "intl-tel-input/react";
+import "intl-tel-input/styles";
 
 interface Prices {
-  pledge: string | number; // залог (может прийти строкой "300" или текстом)
+  pledge: string | number;
   overrun: string | number;
-  one_day: string | number; // 1–2 суток
-  more_than_week: string | number; // 3–10 суток
-  almost_month: string | number; // 11–29 суток
-  more_month: string | number; // ≥30 суток (индивидуально)
+  one_day: string | number;
+  more_than_week: string | number;
+  almost_month: string | number;
+  more_month: string | number;
 }
 
 interface Props {
   fields: { prices: Prices };
   className?: string;
-  minimal?: boolean;
+  carName?: string;
+  handleClose: () => void;
 }
 
-export const RentalCalculatorCard: FC<Props> = ({ fields, className, minimal }) => {
-  const { prices } = fields;
-  const [days, setDays] = useState<number>(1);
+const schema = z.object({
+  name: z.string().min(2, "Укажите имя"),
+  days: z.number().min(1, "Минимум 1 сутки"),
+  phone: z.string().min(5, "Укажите телефон"),
+});
 
-  // helpers
+type FormValues = z.infer<typeof schema>;
+
+export const RentalCalculatorCard: FC<Props> = ({
+  fields,
+  className,
+  carName,
+  handleClose,
+}) => {
+  const { prices } = fields;
+
   const toNum = (v: string | number | undefined): number => {
     if (v == null) return 0;
     if (typeof v === "number") return v;
-    // достаём число из строки: "100 000 ₽" -> 100000
     const cleaned = v.replace(/[^0-9.,-]/g, "").replace(/,/g, ".");
     const parsed = parseFloat(cleaned);
     return Number.isFinite(parsed) ? parsed : 0;
   };
 
   const formatBYN = (n: number): string =>
-    new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(n) + " BYN";
+    new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(n) +
+    " BYN";
 
   type TierKey = "one_day" | "more_than_week" | "almost_month" | "more_month";
+
+  const form = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { days: 1, name: "", phone: "" },
+    mode: "onChange",
+  });
+
+  const days = form.watch("days");
 
   const tier: { key: TierKey; label: string } = useMemo(() => {
     if (days >= 30) return { key: "more_month", label: "Более 30 суток" };
@@ -44,76 +85,169 @@ export const RentalCalculatorCard: FC<Props> = ({ fields, className, minimal }) 
     return { key: "one_day", label: "1–2 суток" };
   }, [days]);
 
-  const daily = toNum(prices[tier.key as keyof Prices] as any);
-
-  const isIndividual = tier.key === "more_month"; // показать текст вместо суммы
-
+  const daily = toNum(prices[tier.key]);
+  const isIndividual = tier.key === "more_month";
   const totalWithPledge = !isIndividual ? daily * days : 0;
 
+  const onSubmit: SubmitHandler<FormValues> = (values: FormValues) => {
+    console.log("QuickOrder submit:", {
+      ...values,
+      car: carName,
+      price: isIndividual
+        ? "Индивидуальный расчет"
+        : formatBYN(totalWithPledge),
+    });
+    handleClose();
+  };
+
   return (
-    <div className={cn("w-full md:w-[30%] bg-denim-700/60 rounded-2xl p-5 shadow-lg backdrop-blur", className)}>
-      {/* Info rows */}
-      <FieldRow label="Тариф" value={`Базовый тариф — ${tier.label}`} />
-      {/* <FieldRow label="Залог" value={String(prices.pledge)} /> */}
-      <FieldRow label="Перепробег" value={String(prices.overrun)} />
+    <div
+      className={cn(
+        "bg-denim-700/40 border border-white/20 rounded-2xl p-3 shadow-lg backdrop-blur-md",
+        className
+      )}
+    >
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-2 lg:space-y-3"
+        >
+          {/* Инфо */}
+          <div className="flex gap-2">
+            <FieldRow label="Тариф" value={tier.label} />
+            <FieldRow label="Перепробег" value={String(prices.overrun)} />
+          </div>
+          <FormField
+            name="name"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-denim-400 lg:text-xs">
+                  Ваше имя
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Иван"
+                    className="bg-denim-100 px-4 py-1 lg:py-2 text-sm lg:text-md text-denim-800"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Телефон */}
+          <FormField
+            name="phone"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-denim-400 lg:text-xs">
+                  Телефон
+                </FormLabel>
+                <FormControl>
+                  <Controller
+                    name="phone"
+                    render={({ field: ctrl }) => (
+                      <IntlTelInput
+                        initialValue={field.value}
+                        onChangeNumber={field.onChange}
+                        initOptions={{
+                          initialCountry: "by",
+                          containerClass: "quick-order",
+                          nationalMode: false,
+                          separateDialCode: true,
+                          loadUtils: () =>
+                            import("public/tel-utils.mjs" as any),
+                        }}
+                      />
+                    )}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-      {/* Количество суток */}
-      <div className="mb-4">
-        <label className="text-denim-400 text-sm mb-1 block">Количество суток аренды</label>
-        <input
-          type="number"
-          min={1}
-          value={days}
-          onChange={(e) => setDays(Math.max(1, Number(e.target.value)))}
-          className="w-full bg-denim-100 rounded-xl px-4 py-3 text-lg text-denim-800 focus:outline-none focus:ring-2 focus:ring-denim-300"
-        />
-      </div>
+          {/* Дни */}
+          <FormField
+            name="days"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-denim-400 lg:text-xs">
+                  Количество суток аренды
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={1}
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(e.currentTarget.valueAsNumber || 1)
+                    }
+                    className="bg-denim-100 px-4 py-1 lg:py-2 text-sm lg:text-md text-denim-800"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-      {/* Текущая ставка */}
-      <div className="mb-2 text-sm text-denim-300">
-        {isIndividual ? (
-          <span>Для аренды на срок более 30 суток действует индивидуальный расчет.</span>
-        ) : (
-          <span>
-            Текущая ставка: <b className="text-denim-100">{toNum(daily)} BYN/сутки</b>
-          </span>
-        )}
-      </div>
+          {/* Текущая ставка */}
+          <div className="mb-2 text-xs lg:text-sm text-denim-300">
+            {isIndividual ? (
+              <span>
+                Для аренды на срок более 30 суток действует индивидуальный
+                расчёт.
+              </span>
+            ) : (
+              <span>
+                Текущая ставка:{" "}
+                <b className="text-denim-100">{daily} BYN/сутки</b>
+              </span>
+            )}
+          </div>
 
-      <div className="h-px bg-neutral-800 my-4" />
+          <div className="h-px bg-neutral-800" />
+          <div className="mb-4">
+            <div className="text-denim-900 text-sm">Итого:</div>
+            <div className="text-2xl text-end font-semibold tracking-tight">
+              {isIndividual
+                ? "Индивидуальный расчет"
+                : formatBYN(totalWithPledge)}
+            </div>
+          </div>
 
-      {/* Total */}
-      <div className="mb-4">
-        <div className="text-denim-900 text-sm">Итого:</div>
-        <div className="text-2xl text-end font-semibold tracking-tight">
-          {isIndividual ? "Индивидуальный расчет" : formatBYN(totalWithPledge)}
-        </div>
-      </div>
+          <Button
+            className="w-full mb-2 rounded-xl bg-denim-300 hover:bg-denim-300/80"
+            size="lg"
+          >
+            Оставить заявку на аренду
+          </Button>
 
-      <Button className="w-full mb-2 rounded-xl bg-denim-300 hover:bg-denim-300/80" size="lg">
-        Оставить заявку на аренду
-      </Button>
+          {/* Contacts */}
+          <div className="grid grid-cols-3 gap-3 mb-1">
+            <IconButton label="Позвонить" icon={PhoneIcon} />
+            <IconButton label="WhatsApp" icon={WhatsAppIcon} />
+            <IconButton label="Telegram" icon={TelegramIcon} />
+          </div>
 
-      {/* Contacts */}
-        <div className="grid grid-cols-3 gap-3 mb-1">
-        <IconButton label="Позвонить" icon={PhoneIcon} />
-        <IconButton label="WhatsApp" icon={WhatsAppIcon} />
-        <IconButton label="Telegram" icon={TelegramIcon} />
-      </div>
-    
-
-      <p className="text-xs text-neutral-500 text-center leading-relaxed mt-3">
-        Нажимая на кнопку "Отправить заявку" Вы соглашаетесь на обработку персональных данных
-      </p>
+          <p className="text-xs text-neutral-500 text-center leading-relaxed mt-3">
+            Нажимая на кнопку "Отправить заявку" Вы соглашаетесь на обработку
+            персональных данных
+          </p>
+        </form>
+      </Form>
     </div>
   );
 };
 
 function FieldRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="mb-4">
-      <div className="text-denim-400 text-sm mb-1">{label}</div>
-      <div className="bg-denim-100 rounded-xl px-4 py-3 text-lg flex items-center justify-between">
+    <div className="w-full">
+      <div className="text-denim-400 text-xs mb-1">{label}</div>
+      <div className="bg-denim-100 rounded-xl px-4 py-1 lg:py-2 text-sm lg:text-md flex items-center justify-between">
         <span className="text-denim-800">{value}</span>
       </div>
     </div>
@@ -122,7 +256,10 @@ function FieldRow({ label, value }: { label: string; value: string }) {
 
 function IconButton({ label, icon: Icon }: { label: string; icon: any }) {
   return (
-    <button type="button" className="bg-denim-800 hover:bg-denim-700 rounded-xl py-3 flex items-center justify-center gap-2">
+    <button
+      type="button"
+      className="bg-denim-800 hover:bg-denim-700 rounded-xl py-3 flex items-center justify-center gap-2"
+    >
       <Icon className="size-5 text-denim-100 fill-current" />
       <span className="sr-only">{label}</span>
     </button>
