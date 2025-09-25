@@ -30,9 +30,6 @@ const fmt = (iso: string) =>
 const [featured, ...rest] = posts;
 const highlights = rest.slice(0, 2);
 const masonry = rest.slice(2);
-
-const {acf: pageData} = await wpFetch('/acf/v3/pages/123');
-const { seo } = pageData
 ---
 
 <BaseLayout className="scrolled"

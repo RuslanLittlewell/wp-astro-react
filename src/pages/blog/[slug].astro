@@ -8,9 +8,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import Container from "@/layouts/Container.astro";
 import { Image } from "astro:assets";
 import { wpFetch } from "@/lib/wp";
+import Container from "@/layouts/Container.astro";
 
 const { slug } = Astro.params;
 const url = Astro.url?.href || "";
@@ -65,7 +65,7 @@ const jsonLd = {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href="/posts">Новости</BreadcrumbLink>
+          <BreadcrumbLink href="/blog">Новости</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>

@@ -6,7 +6,7 @@ const {masonry, slugOf, imgOf, fmt} = Astro.props;
   {
     masonry.map((p: any) => (
       <article class="mb-6 break-inside-avoid overflow-hidden rounded-3xl border bg-white transition hover:shadow-md">
-        <a href={`/posts/${slugOf(p)}`} class="block">
+        <a href={`/blog/${slugOf(p)}`} class="block">
           <div class="relative aspect-[16/10]">
             <img
               src={imgOf(p)}
