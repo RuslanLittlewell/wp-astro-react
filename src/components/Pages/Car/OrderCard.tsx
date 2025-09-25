@@ -37,7 +37,6 @@ interface Props {
   fields: { prices: Prices };
   className?: string;
   carName?: string;
-  handleClose: () => void;
 }
 
 const schema = z.object({
@@ -52,7 +51,6 @@ export const RentalCalculatorCard: FC<Props> = ({
   fields,
   className,
   carName,
-  handleClose,
 }) => {
   const { prices } = fields;
 
@@ -97,13 +95,12 @@ export const RentalCalculatorCard: FC<Props> = ({
         ? "Индивидуальный расчет"
         : formatBYN(totalWithPledge),
     });
-    handleClose();
   };
 
   return (
     <div
       className={cn(
-        "bg-denim-700/40 border border-white/20 rounded-2xl p-3 shadow-lg backdrop-blur-md",
+        "bg-denim-700/60 border border-white/20 rounded-2xl p-5 shadow-lg backdrop-blur-md",
         className
       )}
     >
