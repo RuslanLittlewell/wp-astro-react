@@ -32,7 +32,7 @@ export const CarSlider: FC<Props> = ({ images }) => {
             key={index}
             className="rounded-lg shadow-lg overflow-hidden"
           >
-              <img src={img} alt="car" className="w-full h-auto object-cover" />
+              <img src={img} alt="car" className="w-full object-cover lg:h-[50vh]" />
           </SplideSlide>
         ))}
       </Splide>
