@@ -98,7 +98,7 @@ export const QuickOrder: FC<Props> = ({
   return (
     <div
       className={cn(
-        "w-[30%] bg-denim-700/60 rounded-2xl p-3 shadow-lg backdrop-blur",
+        "bg-denim-700/40 border border-white/20 rounded-2xl p-3 shadow-lg backdrop-blur-md",
         className
       )}
     >
@@ -114,7 +114,7 @@ export const QuickOrder: FC<Props> = ({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-denim-400">Ваше имя</FormLabel>
+                <FormLabel className="text-denim-400 lg:text-xs">Ваше имя</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -132,7 +132,7 @@ export const QuickOrder: FC<Props> = ({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-denim-400">Телефон</FormLabel>
+                <FormLabel className="text-denim-400 lg:text-xs">Телефон</FormLabel>
                 <FormControl>
                   <Controller
                     name="phone"
@@ -162,7 +162,7 @@ export const QuickOrder: FC<Props> = ({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-denim-400">
+                <FormLabel className="text-denim-400 lg:text-xs">
                   Количество суток аренды
                 </FormLabel>
                 <FormControl>
@@ -227,7 +227,7 @@ export const QuickOrder: FC<Props> = ({
 function FieldRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="w-full">
-      <div className="text-denim-400 text-xs lg:text-sm mb-1">{label}</div>
+      <div className="text-denim-400 text-xs mb-1">{label}</div>
       <div className="bg-denim-100 rounded-xl px-4 py-1 lg:py-2 text-sm lg:text-md flex items-center justify-between">
         <span className="text-denim-800">{value}</span>
       </div>
