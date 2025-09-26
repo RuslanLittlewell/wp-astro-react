@@ -12,6 +12,9 @@ export async function fetchGoodsWithACF(ids: number[]): Promise<any[]> {
   // требует плагин "ACF to REST API"
   const url = `/wp/v2/cars?include=${ids.join(",")}&per_page=${ids.length}&_embed`;
   const res = await wpFetch(url);
+  if(!ids.length) {
+    return []
+  }
   return res;
 }
 

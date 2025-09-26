@@ -3,6 +3,7 @@ import CarInfo from "@/components/Pages/Car/CarInfo.astro";
 import { CarSlider } from "@/components/Pages/Car/CarSlider";
 import { RentalCalculatorCard } from "@/components/Pages/Car/OrderCard";
 import { RequirementsBlock } from "@/components/Pages/Car/ReqBlock";
+import PopularAuto from "@/components/Pages/Home/Sections/PopularAuto.astro";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -26,6 +27,7 @@ export async function getStaticPaths() {
 interface Props {
   car: {
     acf: any;
+    recomendation_auto: any;
     title: {
       rendered: string;
     };
@@ -71,5 +73,6 @@ const { acf } = car;
       <CarInfo fields={acf} {car} />
       <RentalCalculatorCard fields={acf} client:load />
     </Container>
+    <PopularAuto fields={acf.recomendation_auto} client:load />
   </div>
 </BaseLayout>
