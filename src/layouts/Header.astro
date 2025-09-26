@@ -1,4 +1,5 @@
 ---
+import MobileMenu from "@/components/Shared/MobileMenu";
 import { cn } from "@/lib/utils";
 import Logo from "@assets/icons/Logo.svg";
 const links = [
@@ -17,8 +18,8 @@ const links = [
 >
   <div class="flex w-full justify-between items-center">
     <!-- <Logo width="100px" /> -->
-    <Logo class="h-[32px]"/>
-    <nav>
+    <Logo class="h-[32px]" />
+    <nav class="hidden md:block">
       <ul class="flex gap-4 text-white relative">
         {
           links.map((i) => {
@@ -33,6 +34,8 @@ const links = [
         }
       </ul>
     </nav>
+
+    <MobileMenu {links} client:load />
   </div>
 </header>
 <script is:inline>

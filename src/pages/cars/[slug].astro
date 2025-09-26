@@ -67,7 +67,7 @@ const { acf } = car;
     <Container>
       <RequirementsBlock client:load />
     </Container>
-    <Container class="flex flex-col md:flex-row gap-10">
+    <Container class="grid grid-cols-1 md:grid-cols-[70%_1fr] gap-4 mb-10">
       <CarInfo fields={acf} {car} />
       <RentalCalculatorCard fields={acf} client:load />
     </Container>
