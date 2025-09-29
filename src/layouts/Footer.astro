@@ -1,1 +1,16 @@
-<footer class="w-full h-[120px] bg-gray-600">123</footer>
+---
+import { Image } from "astro:assets";
+import Container from "./Container.astro";
+import Payments from "@/assets/payments.webp";
+---
+
+<footer class="w-full bg-gray-600 text-white py-5">
+    <Container class="flex flex-col">
+    <div></div>
+    <div class="flex justify-between items-end text-sm">
+        <div>©{new Date().getFullYear()} car1.by Все права защищены.</div>
+        <Image src={Payments} width={1280} height={66} alt="спобобы оплаты" class="w-1/2"/>
+        <div>ИП **** УНП*******</div>
+    </div>
+    </Container>
+</footer>

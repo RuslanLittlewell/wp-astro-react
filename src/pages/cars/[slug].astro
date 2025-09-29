@@ -3,6 +3,7 @@ import CarInfo from "@/components/Pages/Car/CarInfo.astro";
 import { CarSlider } from "@/components/Pages/Car/CarSlider";
 import { RentalCalculatorCard } from "@/components/Pages/Car/OrderCard";
 import { RequirementsBlock } from "@/components/Pages/Car/ReqBlock";
+import MapSection from "@/components/Pages/Home/Sections/MapSection.astro";
 import PopularAuto from "@/components/Pages/Home/Sections/PopularAuto.astro";
 import {
   Breadcrumb,
@@ -64,7 +65,7 @@ const { acf } = car;
       </Breadcrumb>
     </Container>
     <Container big>
-      <CarSlider images={acf.car.car_images} client:load />
+      <CarSlider images={acf.car.car_images} client:only="react" />
     </Container>
     <Container>
       <RequirementsBlock client:load />
@@ -74,5 +75,6 @@ const { acf } = car;
       <RentalCalculatorCard fields={acf} client:load />
     </Container>
     <PopularAuto fields={acf.recomendation_auto} client:load />
+    <MapSection />
   </div>
 </BaseLayout>

@@ -1,5 +1,5 @@
 // src/lib/wp.ts
-const WP = process.env.WP_API_INTERNAL_BASE!;
+const WP = process.env.WP_API_INTERNAL_BASE || 'https://api.littlewell-app.work/wp-json/';
 
 export type GoodsItem = {
   id: number;

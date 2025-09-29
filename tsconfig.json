@@ -4,7 +4,7 @@
     "jsxImportSource": "react",
     "module": "ESNext",
     "target": "ES2020",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "strict": true,
     "baseUrl": ".",
     "isolatedModules": true,
@@ -14,7 +14,10 @@
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"],
       "@styles/*": ["src/styles/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@splidejs/react-splide": [
+          "./node_modules/@splidejs/react-splide/dist/types/index.d.ts"
+        ]
     }
   },
   "exclude": ["node_modules", "dist"]

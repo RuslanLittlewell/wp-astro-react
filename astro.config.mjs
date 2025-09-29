@@ -13,6 +13,8 @@ export default defineConfig({
   },
   prefetch: true,
   vite: {
+        optimizeDeps: { include: ['intl-tel-input', 'intl-tel-input/react'] },
+    ssr: { noExternal: ['intl-tel-input'] },
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
