@@ -1,45 +1,71 @@
 // components/MobileMenu.tsx
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
 
-type NavLink = { link: string; name: string };
+type NavLink = {
+  link?: string;
+  name: string;
+  childs?: {
+    link: string;
+    name: string;
+  }[];
+};
 
-export default function MobileMenu({
-  links,
-}: {
-  links: NavLink[];
-}) {
+export default function MobileMenu({ links }: { links: NavLink[] }) {
   return (
-    <div className="lg:hidden">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Menu className="text-white w-full" size={28} />
-        </DropdownMenuTrigger>
+    <div className="md:hidden">
+      <Sheet>
+        <SheetTrigger asChild>
+          <button aria-label="Меню">
+            <Menu className="text-white" size={28} />
+          </button>
+        </SheetTrigger>
 
-        <DropdownMenuContent
-          align="end"
-          sideOffset={8}
-          className="rounded-2xl px-3 py-6"
-        >
-          {links.map((link) => {
-            return (
-              <DropdownMenuItem key={link.link} asChild className="px-3 py-2">
-                <a
-                  href={link.link}
-                  className="relative inline-block w-full whitespace-nowrap pb-1 text-xl"
-                >
-                  <span className="pr-6">{link.name}</span>
-                </a>
-              </DropdownMenuItem>
-            );
-          })}
-        </DropdownMenuContent>
-      </DropdownMenu>
+        <SheetContent side="left" className="w-full sm:w-[400px] p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold">Меню</h2>
+            <SheetClose />
+          </div>
+
+          <nav className="flex flex-col gap-4">
+            {links.map((link, idx) =>
+              link.childs ? (
+                <div key={`sub-${idx}`}>
+                  <p className="font-semibold text-lg mb-2">{link.name}</p>
+                  <ul className="pl-3 space-y-2">
+                    {link.childs.map((child, subIdx) => (
+                      <li key={`child-${idx}-${subIdx}`}>
+                        <SheetClose asChild>
+                          <a
+                            href={child.link}
+                            className="block text-base text-muted-foreground hover:text-foreground"
+                          >
+                            {child.name}
+                          </a>
+                        </SheetClose>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <SheetClose key={`item-${idx}`} asChild>
+                  <a
+                    href={link.link}
+                    className="text-lg font-medium hover:text-primary"
+                  >
+                    {link.name}
+                  </a>
+                </SheetClose>
+              )
+            )}
+          </nav>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

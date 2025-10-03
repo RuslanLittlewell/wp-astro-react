@@ -10,7 +10,7 @@ const { fields } = Astro.props;
 ---
 
 <section class="bg-gray-200 py-10 lg:py-[70px] w-full">
-  <Container>
+  <Container big>
     <SectionTitle title={fields?.title || ""} />
     <div class="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-4 mx-auto">
       <div
@@ -29,17 +29,17 @@ const { fields } = Astro.props;
             alt="выбор-авто"
             width={600}
             height={600}
-            class="absolute w-auto h-full transition duration-500 ease-in-out object-cover group-hover:scale-125"
+            class="absolute w-full h-full transition duration-500 ease-in-out object-fit group-hover:scale-125"
           />
         </div>
-        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="absolute inset-0 bg-black/50"></div>
         <div
           class="relative z-10 flex flex-col justify-between h-full p-6 text-white"
         >
           <div class="text-xl font-semibold">
             {fields?.steps?.[0].title || ""}
           </div>
-          <div class="text-xs md:text-sm opacity-80 text-end">
+          <div class="text-xs md:text-lg opacity-80 text-end">
             {fields?.steps?.[0].description || ""}
           </div>
         </div>
@@ -62,14 +62,14 @@ const { fields } = Astro.props;
             class="absolute w-full h-auto top-0 md:-top-1/2 transition duration-500 ease-in-out group-hover:scale-125"
           />
         </div>
-        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="absolute inset-0 bg-black/50"></div>
         <div
           class="relative z-10 flex flex-col justify-between h-full p-6 text-white"
         >
           <div class="text-xl font-semibold">
             {fields?.steps?.[1].title || ""}
           </div>
-          <div class="text-xs md:text-sm opacity-80 text-end">
+          <div class="text-xs md:text-lg opacity-80 text-end">
             {fields?.steps?.[1].description || ""}
           </div>
         </div>
@@ -92,14 +92,14 @@ const { fields } = Astro.props;
             class="absolute w-full h-auto top-0 md:-top-1/2 transition duration-500 ease-in-out group-hover:scale-125"
           />
         </div>
-        <div class="absolute inset-0 bg-black/60"></div>
+        <div class="absolute inset-0 bg-black/50"></div>
         <div
           class="relative z-10 flex flex-col justify-between h-full p-6 text-white"
         >
           <div class="text-xl font-semibold">
             {fields?.steps?.[2].title || ""}
           </div>
-          <div class="text-xs md:text-sm opacity-80 text-end">
+          <div class="text-xs md:text-lg opacity-80 text-end">
             {fields?.steps?.[2].description || ""}
           </div>
         </div>

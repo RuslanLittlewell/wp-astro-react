@@ -1,11 +1,38 @@
 ---
 import MobileMenu from "@/components/Shared/MobileMenu";
+import { DesctopMenu } from "@/components/Shared/DesctopMenu";
 import { cn } from "@/lib/utils";
 import Logo from "@assets/icons/Logo.svg";
+
 const links = [
   { name: "Главная", link: "/" },
   { name: "Автопарк", link: "/cars" },
   { name: "Условия", link: "/conditions" },
+  {
+    name: "Услуги",
+    childs: [
+      {
+        name: "Аренда свадебных авто в Бресте",
+        link: "/arenda-svadebnyh-avto-v-breste",
+      },
+      {
+        name: "Аренда авто без водителя в Бресте ",
+        link: "/arenda-avto-bez-voditelya-v-breste",
+      },
+      {
+        name: "Аренда авто для юридических лиц в Бресте ",
+        link: "/arenda-avto-dlya-yuridicheskih-licz-v-breste",
+      },
+      {
+        name: "Аренда авто с АКПП в Бресте",
+        link: "/arenda-avto-s-akpp-v-breste",
+      },
+      {
+        name: "Долгосрочная аренда автомобилей в Бресте",
+        link: "/dolgdolgosrochnaya_arenda_avtomobilej",
+      },
+    ],
+  },
   { name: "Новости", link: "/blog" },
 ];
 ---
@@ -19,22 +46,7 @@ const links = [
   <div class="flex w-full justify-between items-center">
     <!-- <Logo width="100px" /> -->
     <Logo class="h-[32px]" />
-    <nav class="hidden md:block">
-      <ul class="flex gap-4 text-white relative">
-        {
-          links.map((i) => {
-            return (
-              <li>
-                <a href={i.link}>
-                  <span>{i.name}</span>
-                </a>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </nav>
-
+    <DesctopMenu {links} client:load />
     <MobileMenu {links} client:load />
   </div>
 </header>
