@@ -29,7 +29,7 @@ interface Props {
     <div
       class="rounded-xl overflow-hidden"
     >
-    <Image src={image} width={1200} height={800} alt="hero" class="w-full h-full object-cover"/>
+    <Image src={image} width={1200} height={800} alt="hero" fetchpriority="high" loading="lazy" class="w-full object-cover"/>
     </div>
     <div
       class="absolute rounded-xl z-8 h-full w-1/2 bg-gradient-to-r from-gray-800 to-transparent"

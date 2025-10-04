@@ -18,9 +18,9 @@ const { fields } = Astro.props;
         alt="выбор-авто"
         width={600}
         height={400}
-        class="rounded-xl h-[400px] object-cover order-1"
+        class="rounded-xl h-[400px] object-cover order-1 shadow-md"
       />
-      <div class="bg-white/20 rounded-xl p-8 order-2">
+      <div class="bg-white/20 rounded-xl p-8 order-2 shadow-md">
         <div class="text-3xl font-semibold mb-4">
           {fields?.steps?.[0].title || ""}
         </div>
@@ -36,7 +36,7 @@ const { fields } = Astro.props;
         >
       </div>
 
-      <div class="bg-white/20 rounded-xl p-5 order-4 md:order-3">
+      <div class="bg-white/20 rounded-xl p-5 order-4 md:order-3 shadow-md">
         <div class="text-3xl font-semibold mb-4">
           {fields?.steps?.[1].title || ""}
         </div>
@@ -57,7 +57,7 @@ const { fields } = Astro.props;
         alt="оставить заявку"
         width={600}
         height={600}
-        class="rounded-xl h-[400px] object-cover order-3 md:order-4"
+        class="rounded-xl h-[400px] object-cover order-3 md:order-4 shadow-md"
       />
 
       <Image
@@ -65,9 +65,9 @@ const { fields } = Astro.props;
         alt="подписать догоров"
         width={600}
         height={600}
-        class="rounded-xl h-[400px] object-cover order-5"
+        class="rounded-xl h-[400px] object-cover order-5 shadow-md"
       />
-      <div class="bg-white/20 rounded-xl p-5 order-6">
+      <div class="bg-white/20 rounded-xl p-5 order-6 shadow-md">
         <div class="text-3xl font-semibold mb-4">
           {fields?.steps?.[2].title || ""}
         </div>

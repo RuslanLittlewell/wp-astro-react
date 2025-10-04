@@ -46,7 +46,7 @@ export const CarCard: React.FC<Props> = ({ car }) => {
   }
 
   return (
-    <div className="relative rounded-md overflow-hidden group shadow-lg">
+    <div className="relative rounded-md overflow-hidden group shadow-md">
       <img
         src={images[0]}
         alt={car.title.rendered}
