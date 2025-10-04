@@ -69,6 +69,8 @@
 
 html {
   scroll-behavior: smooth;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
 }
 .iti {
   width: 100%;

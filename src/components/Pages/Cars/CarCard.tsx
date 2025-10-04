@@ -54,12 +54,12 @@ export const CarCard: React.FC<Props> = ({ car }) => {
         height={500}
         loading="lazy"
         decoding="async"
-        className="relative w-full h-full object-cover"
+        className="relative w-full h-full object-cover group-hover:scale-125 transition-all ease-in-out duration-300"
       />
 
       <div className="transition-padding ease-in-out duration-500 text-denim-100 absolute top-0 left-0 w-full bg-gradient-to-b from-black/70 to-transparent p-4 pb-8 group-hover:pb-40">
         <a href={`/cars/${car.slug}`}>
-          <h2 className="text-xl font-semibold flex justify-between">
+          <h2 className="text-xl font-thin flex flex-col gap-2">
             {car.title.rendered}
             {price && <p className="text-denim-100">от {price} BYN</p>}
           </h2>
