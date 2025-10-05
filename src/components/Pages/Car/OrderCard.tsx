@@ -126,7 +126,7 @@ export const RentalCalculatorCard: FC<Props> = ({
                   <Input
                     {...field}
                     placeholder="Иван"
-                    className="bg-denim-100 px-4 py-1 lg:py-2 text-sm lg:text-md text-denim-800"
+                    className="bg-denim-100 px-4 py-2 lg:py-2 text-sm lg:text-md text-denim-800"
                   />
                 </FormControl>
                 <FormMessage />
@@ -183,7 +183,7 @@ export const RentalCalculatorCard: FC<Props> = ({
                     onChange={(e) =>
                       field.onChange(e.currentTarget.valueAsNumber || 1)
                     }
-                    className="bg-denim-100 px-4 py-1 lg:py-2 text-sm lg:text-md text-denim-800"
+                    className="bg-denim-100 px-4 py-2 lg:py-2 text-sm lg:text-md text-denim-800"
                   />
                 </FormControl>
                 <FormMessage />
@@ -244,7 +244,7 @@ function FieldRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="w-full">
       <div className="text-denim-400 text-xs mb-1">{label}</div>
-      <div className="bg-denim-100 rounded-xl px-4 py-1 lg:py-2 text-sm lg:text-md flex items-center justify-between">
+      <div className="bg-denim-100 rounded-xl px-4 py-2 lg:py-2 text-sm lg:text-md flex items-center justify-between">
         <span className="text-denim-800">{value}</span>
       </div>
     </div>

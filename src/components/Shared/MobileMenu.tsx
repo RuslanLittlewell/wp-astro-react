@@ -18,7 +18,7 @@ type NavLink = {
 
 export default function MobileMenu({ links }: { links: NavLink[] }) {
   return (
-    <div className="md:hidden">
+    <div className="md:hidden flex">
       <Sheet>
         <SheetTrigger asChild>
           <button aria-label="Меню">

@@ -28,7 +28,7 @@ export const DesctopMenu: FC<Props> = ({ links }) => {
         {links.map((link, idx) =>
           link.childs ? (
             <NavigationMenuItem key={idx}>
-              <NavigationMenuTrigger>{link.name}</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="text-base font-normal">{link.name}</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-2 p-4">
                   {link.childs.map((child, subIdx) => (
