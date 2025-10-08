@@ -1,5 +1,6 @@
 ---
 import AboutSection from "@/components/Pages/Home/Sections/AboutSection.astro";
+import ConditionSection from "@/components/Pages/Home/Sections/ConditionSection.astro";
 import FAQ from "@/components/Pages/Home/Sections/FAQ.astro";
 import FormSection from "@/components/Pages/Home/Sections/FormSection.astro";
 import HeroSection from "@/components/Pages/Home/Sections/HeroSection.astro";
@@ -32,10 +33,11 @@ const {
 
 <BaseLayout {title} {keywords} {description} {image}>
   <HeroSection {hero_block} {image} />
-  <FormSection />
+  <PopularAuto fields={recomendation_auto} />
   <AboutSection {status} {about_us} />
   <RentFlowSection fields={for_rent} />
-  <PopularAuto fields={recomendation_auto} />
+  <ConditionSection />
+  <FormSection />
   <Services fields={services} />
   <MapSection />
   <FAQ fields={faq} />

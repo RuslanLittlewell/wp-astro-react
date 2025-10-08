@@ -1,6 +1,4 @@
 ---
-import Container from "@/layouts/Container.astro";
-import { ContactForm } from "../ContancForm";
 import { Button } from "@/components/ui/button";
 import { Image } from "astro:assets";
 
@@ -21,7 +19,7 @@ interface Props {
 ---
 
 <section
-  class="h-[85.5vh] py-2 px-2 rounded-b-xl relative w-full overflow-hidden text-denim-100 flex flex-col justify-center"
+  class="h-[100vh] py-2 px-2 rounded-b-xl relative w-full overflow-hidden text-denim-100 flex flex-col justify-center"
 >
   <div class="grid w-full h-full aspect-[16/8] relative">
     <div class="rounded-xl overflow-hidden">
@@ -33,7 +31,7 @@ interface Props {
         fetchpriority="high"
         decoding="async"
         loading="lazy"
-        class="w-full h-full md:h-auto object-cover"
+        class="w-full h-full object-cover"
       />
     </div>
     <div

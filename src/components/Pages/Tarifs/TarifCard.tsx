@@ -126,16 +126,16 @@ export const TarifCard: FC<Props> = ({ car }) => {
             <div className="text-neutral-200 border-r border-white/20 h-full flex items-center">
               Стоимость в BYN
             </div>
-            <div className="text-lg font-semibold text-center text-denim-300">
+            <div className="text-lg font-semibold text-center text-white">
               {prices.one_day}
             </div>
-            <div className="text-lg font-semibold text-center text-denim-300">
+            <div className="text-lg font-semibold text-center text-white">
               {prices.more_than_week}
             </div>
-            <div className="text-lg font-semibold text-center text-denim-300">
+            <div className="text-lg font-semibold text-center text-white">
               {prices.almost_month}
             </div>
-            <div className="text-lg font-semibold text-center text-denim-300">
+            <div className="text-lg font-semibold text-center text-white">
               меньше {prices.more_month}
             </div>
 

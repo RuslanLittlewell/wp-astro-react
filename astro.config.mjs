@@ -6,6 +6,9 @@ import { imageService } from "@unpic/astro/service";
 
 export default defineConfig({
   integrations: [react(), tailwind()],
+  define: {
+    global: "window",
+  },
   server: {
     port: 4321,
     host: true,
@@ -13,8 +16,8 @@ export default defineConfig({
   },
   prefetch: true,
   vite: {
-        optimizeDeps: { include: ['intl-tel-input', 'intl-tel-input/react'] },
-    ssr: { noExternal: ['intl-tel-input'] },
+    optimizeDeps: { include: ["intl-tel-input", "intl-tel-input/react"] },
+    ssr: { noExternal: ["intl-tel-input"] },
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -23,7 +26,7 @@ export default defineConfig({
         "@layouts": "/src/layouts",
         "@styles": "/src/styles",
         "@utils": "/src/utils",
-        "@stores": "/src/stores"
+        "@stores": "/src/stores",
       },
     },
   },

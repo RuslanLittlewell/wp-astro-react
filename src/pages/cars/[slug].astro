@@ -3,6 +3,7 @@ import CarInfo from "@/components/Pages/Car/CarInfo.astro";
 import { CarSlider } from "@/components/Pages/Car/CarSlider";
 import { RentalCalculatorCard } from "@/components/Pages/Car/OrderCard";
 import { RequirementsBlock } from "@/components/Pages/Car/ReqBlock";
+import ConditionSection from "@/components/Pages/Home/Sections/ConditionSection.astro";
 import MapSection from "@/components/Pages/Home/Sections/MapSection.astro";
 import PopularAuto from "@/components/Pages/Home/Sections/PopularAuto.astro";
 import {
@@ -67,13 +68,14 @@ const { acf } = car;
     <Container big>
       <CarSlider images={acf.car.car_images} client:only="react" />
     </Container>
-    <Container>
+    <!-- <Container>
       <RequirementsBlock client:load />
-    </Container>
+    </Container> -->
     <Container class="grid grid-cols-1 md:grid-cols-[70%_1fr] gap-4 mb-10">
       <CarInfo fields={acf} {car} />
       <RentalCalculatorCard fields={acf} client:load />
     </Container>
+    <ConditionSection />
     <PopularAuto fields={acf.recomendation_auto} />
     <MapSection />
   </div>
