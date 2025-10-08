@@ -6,9 +6,6 @@ import { imageService } from "@unpic/astro/service";
 
 export default defineConfig({
   integrations: [react(), tailwind()],
-  define: {
-    global: "window",
-  },
   server: {
     port: 4321,
     host: true,
