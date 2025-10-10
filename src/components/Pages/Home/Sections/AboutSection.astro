@@ -21,7 +21,7 @@ const pStyle = "text-denim-900 text-xs md:text-base mb-4 md:mb-0";
 
 <section class="w-full bg-denim-400 py-10 lg:py-[70px]">
   <Container class="flex flex-col gap-10">
-    <div class="w-full grid grid-cols-2 gap-10">
+    <div class="w-full grid md:grid-cols-2 gap-10">
       <Image
         src={about_us?.image}
         width={800}
@@ -30,21 +30,21 @@ const pStyle = "text-denim-900 text-xs md:text-base mb-4 md:mb-0";
         fetchpriority="high"
         decoding="async"
         loading="lazy"
-        class="w-full h-full object-cover rounded-xl shadow-md"
+        class="w-full h-full object-cover rounded-xl shadow-md hidden md:block"
       />
       <div>
-        <h3 class={h3Style}>{about_us?.title || ""}</h3>
-        <p class={pStyle}>{about_us?.description || ""}</p>
+        <h3 class="text-denim-300 text-center md:text-left text-4xl md:text-6xl mb-2 md:mb-4">{about_us?.title || ""}</h3>
+        <p class="text-denim-900 text-xs md:text-base mb-4 md:mb-0 text-center md:text-left">{about_us?.description || ""}</p>
       </div>
     </div>
-    <div class="grid grid-cols-4 gap-y-6 md:gap-y-16 w-full">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-16 w-full">
       {
         (status || []).map((i: ItemsProps) => (
-          <div class="self-end">
+          <div class="self-end text-center md:text-left">
             {i.title ? (
               <h3 class={h3Style}>{i.title}</h3>
             ) : (
-              <EarthIcon className="text-denim-300 w-[60px] mb-4" />
+              <EarthIcon className="text-denim-300 w-[60px] mb-4 mx-auto md:mx-0" />
             )}
             <p class={pStyle}>{i.description || ""}</p>
           </div>

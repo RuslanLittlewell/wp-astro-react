@@ -3,6 +3,9 @@ import MobileMenu from "@/components/Shared/MobileMenu";
 import { DesctopMenu } from "@/components/Shared/DesctopMenu";
 import { cn } from "@/lib/utils";
 import Logo from "@assets/icons/Car1Logo.svg";
+import { wpFetch } from "@/lib/wp";
+
+const { acf } = await wpFetch("/acf/v3/options/options");
 
 const links = [
   { name: "Главная", link: "/" },
@@ -39,16 +42,23 @@ const links = [
 ---
 
 <header
-  class="w-[calc(100%_-1rem)] px-5 py-2 lg:py-5  flex items-center fixed top-2
+  class="w-[calc(100%_-1rem)] px-5 py-2 lg:py-2  flex items-center fixed top-2
   left-1/2 -translate-x-1/2 z-40 bg-gray-800/10
   transition-all duration-300 ease-in-out
   shadow-md rounded-xl [.scrolled_&]:bg-gray-800/90"
 >
   <div class="flex w-full justify-between items-center">
-    <!-- <Logo width="100px" /> -->
-    <Logo class="h-[32px]" />
+     <div class="flex gap-10 items-center">
+      <a href="/"><Logo class="h-[32px]" /></a>
+      <div class="hidden md:flex flex-col">
+        <a href={`tel:${acf.phone}`} class="text-sm text-white/80 font-semibold"
+          >{acf.phone}</a>
+          <p class="text-xs text-white">{acf.address}</p>
+          <p  class="text-xs text-white">{acf.work_time}</p>
+      </div>
+    </div>
     <DesctopMenu {links} client:load />
-    <MobileMenu {links} client:load />
+    <MobileMenu {links} {acf} client:load />
   </div>
 </header>
 <script is:inline>
