@@ -201,7 +201,7 @@ export const RentalCalculatorCard: FC<Props> = ({
             ) : (
               <span>
                 Текущая ставка:{" "}
-                <b className="text-denim-100">{daily} BYN/сутки</b>
+                <b className="text-denim-900">{daily} BYN/сутки</b>
               </span>
             )}
           </div>

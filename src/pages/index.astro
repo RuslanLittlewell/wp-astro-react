@@ -22,6 +22,7 @@ const {
   seo,
   faq,
   services,
+  form_section
 } = pageDdata;
 const {
   seo_title: title,
@@ -37,7 +38,7 @@ const {
   <AboutSection {status} {about_us} />
   <RentFlowSection fields={for_rent} />
   <ConditionSection />
-  <FormSection />
+  <FormSection fields={form_section}/>
   <Services fields={services} />
   <MapSection />
   <FAQ fields={faq} />

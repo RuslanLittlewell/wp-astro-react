@@ -1,10 +1,23 @@
 ---
 import Container from "@/layouts/Container.astro";
 import { ContactForm } from "../ContancForm";
+import { Image } from "astro:assets";
+
+const { fields } = Astro.props;
 ---
 
-<section id="form">
-  <Container>
-    <ContactForm client:load />
+<section id="form" class="py-10 lg:py-[70px] w-full h-[70vh]"
+style={`background: url(${fields.image}) no-repeat center center / cover;`}>
+  <Container big>
+    <div class="grid relattive">
+      <!-- <Image
+        src={fields.image}
+        alt="форма консультации"
+        width={500}
+        height={700}
+        class="absolute rounded-2xl ml-auto w-full h-auto object-cover shadow-md"
+      /> -->
+      <ContactForm {fields} client:load />
+    </div>
   </Container>
 </section>

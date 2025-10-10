@@ -15,7 +15,7 @@ export default function GlobalSheet() {
         <SheetHeader>
           {payload?.title && <SheetTitle>{payload.title}</SheetTitle>}
         </SheetHeader>
-        <div className="flex flex-col justify-between h-[calc(100%_-_20px)]">
+        <div className="flex flex-col justify-between h-max-content">
         <div className="my-1 lg:my-4">
           <img
             src={payload?.image}
