@@ -33,7 +33,7 @@ export const CarSlider: FC<Props> = ({ images }) => {
             <img
               src={img}
               alt={`car-${i}`}
-              className="rounded-lg shadow-lg cursor-pointer w-full h-auto object-cover"
+              className="rounded-lg shadow-lg cursor-pointer w-full object-cover md:h-[600px]"
               onClick={() => setIndex(i)}
             />
           </SplideSlide>
