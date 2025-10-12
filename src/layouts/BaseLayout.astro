@@ -18,6 +18,40 @@ const {
   className
 } = Astro.props;
 const { acf } = await wpFetch('/acf/v3/options/options');
+
+const links = [
+  { name: "Главная", link: "/" },
+  { name: "Автопарк", link: "/cars" },
+  { name: "Условия", link: "/conditions" },
+  {
+    name: "Услуги",
+    childs: [
+      {
+        name: "Аренда свадебных авто в Бресте",
+        link: "/arenda-svadebnyh-avto-v-breste",
+      },
+      {
+        name: "Аренда авто без водителя в Бресте ",
+        link: "/arenda-avto-bez-voditelya-v-breste",
+      },
+      {
+        name: "Аренда авто для юридических лиц в Бресте ",
+        link: "/arenda-avto-dlya-yuridicheskih-licz-v-breste",
+      },
+      {
+        name: "Аренда авто с АКПП в Бресте",
+        link: "/arenda-avto-s-akpp-v-breste",
+      },
+      {
+        name: "Долгосрочная аренда автомобилей в Бресте",
+        link: "/dolgdolgosrochnaya_arenda_avtomobilej",
+      },
+    ],
+  },
+  { name: "Тарифы", link: '/tarifs'},
+  { name: "Новости", link: "/blog" },
+];
+
 ---
 
 <!doctype html>
@@ -33,11 +67,11 @@ const { acf } = await wpFetch('/acf/v3/options/options');
     <ClientRouter />
   </head>
   <body class={cn("min-h-screen bg-gray-50 text-gray-900 flex flex-col", className)}>
-    <Header data={acf} />
+    <Header data={acf} {links} />
     <main class="flex-1">
       <slot />
     </main>
     <GlobalSheet client:load />
-    <Footer data={acf} />
+    <Footer data={acf} {links} />
   </body>
 </html>

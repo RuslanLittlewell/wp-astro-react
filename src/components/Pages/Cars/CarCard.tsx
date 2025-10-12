@@ -61,7 +61,7 @@ export const CarCard: React.FC<Props> = ({ car }) => {
         <a href={`/cars/${car.slug}`}>
           <h2 className="text-xl font-normal flex flex-col">
             {car.title.rendered}
-            {price && <p className="text-denim-100 font-semibold">от {price} BYN</p>}
+            {price && <p className="text-denim-100 font-semibold text-2xl">от {price} BYN</p>}
           </h2>
         </a>
       </div>

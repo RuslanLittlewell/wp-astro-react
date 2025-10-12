@@ -2,15 +2,50 @@
 import { Image } from "astro:assets";
 import Container from "./Container.astro";
 import Payments from "@/assets/payments.webp";
+import Logo from "@assets/icons/Car1Logo.svg";
+import { FooterMenu } from "@/components/Shared/FooterMenu";
+import { Phone, MapPin, ClockAlert } from "lucide-astro";
+const { links, data } = Astro.props;
 ---
 
 <footer class="w-full bg-gray-600 text-white py-5">
-    <Container class="flex flex-col">
-    <div></div>
-    <div class="flex justify-between items-end text-sm">
-        <div>©{new Date().getFullYear()} car1.by Все права защищены.</div>
-        <Image src={Payments} width={1280} height={66} alt="спобобы оплаты" class="w-1/2"/>
-        <div>ИП **** УНП*******</div>
+  <Container class="flex flex-col">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-5 mb-5 mt-5">
+      <a href="/" class="hidden md:block"><Logo class="md:h-[50px] mb-3 w-full" /></a>
+      <div class="">
+        <h4 class="text-base md:text-lg font-semibold mb-4">Разделы</h4>
+        <div class="flex flex-col space-y-1">
+          <FooterMenu {links} client:load />
+        </div>
+      </div>
+      <div>
+        <h4 class="text-base md:text-lg font-semibold mb-4">Контакты</h4>
+        <p class="flex gap-2 text-xs md:text-sm mb-2"><Phone size="16"/> <a href={`tel:${data.phone}`}
+          >{data.phone}</a
+        ></p>
+        <p class="flex gap-2 text-xs md:text-sm mb-2"><MapPin size="16" />
+        {data.address}
+        </p>
+        <p class="flex gap-2 text-xs md:text-sm mb-2"><ClockAlert size="16" />
+        {data.work_time}</p>
+      </div>
+      <div>
+        <h4 class="text-base md:text-lg font-semibold">Нужна консультация?</h4>
+      </div>
+      <div>
+        <h4 class="text-base md:text-lg font-semibold">Социальные сети</h4>
+      </div>
     </div>
-    </Container>
+    <div class="flex flex-col md:flex-row justify-between  items-center md:items-end text-xs md:text-sm">
+      <div>©{new Date().getFullYear()} car1.by Все права защищены.</div>
+      <Image
+        src={Payments}
+        width={1280}
+        height={66}
+        alt="спобобы оплаты"
+        class="w-full md:w-1/2"
+      />
+      <div>ИП **** УНП*******</div>
+    </div>
+  </Container>
 </footer>
