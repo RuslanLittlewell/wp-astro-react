@@ -7,6 +7,7 @@ import Seo from "./Seo.astro";
 import { wpFetch } from "@/lib/wp";
 import { cn } from "@/lib/utils";
 import GlobalSheet from "@/components/Shared/GlobalSheet";
+import { CallbackModal } from "@/components/Shared/OrderCallModal";
 
 const {
   title,
@@ -72,6 +73,7 @@ const links = [
       <slot />
     </main>
     <GlobalSheet client:load />
+    <CallbackModal client:load />
     <Footer data={acf} {links} />
   </body>
 </html>

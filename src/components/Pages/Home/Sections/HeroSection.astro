@@ -1,6 +1,6 @@
 ---
-import { Button } from "@/components/ui/button";
 import { Image } from "astro:assets";
+import { CallbackTrigger } from "@/components/Pages/Home/CallbackTrigger";
 
 const { hero_block, image } = Astro.props;
 const { title, points } = hero_block;
@@ -46,17 +46,6 @@ interface Props {
     <ul class="list-disc pl-4 mb-8 text-sm lg:text-xl">
       {points.map((i) => <li>{i.text}</li>)}
     </ul>
-    <Button
-      className="w-[300px] text-center text-lg bg-denim-300 hover:bg-denim-300/80 hidden md:block"
-      size="lg"
-    >
-      <a href="/cars">Посмотреть автопарк</a>
-    </Button>
-    <Button
-      className="w-[300px] text-center text-lg bg-denim-300 hover:bg-denim-300/80 md:hidden block"
-      size="md"
-    >
-      <a href="/cars">Посмотреть автопарк</a>
-    </Button>
+    <CallbackTrigger client:load />
   </div>
 </section>

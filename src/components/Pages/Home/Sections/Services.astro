@@ -10,7 +10,7 @@ const { title, image, services_link } = fields;
 
 <section class="py-10 lg:py-[70px] w-full bg-gray-200">
   <Container>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-h-[500px]">
       <div>
         <SectionTitle {title} class="!text-left" />
         {
@@ -19,7 +19,7 @@ const { title, image, services_link } = fields;
               <div class="border-b border-gray-600 group">
                 <a
                   href={i.link.post_name}
-                  class="group-hover:pl-5 transition-all duration-300 text-base lg:text-2xl py-2 lg:py-8 flex justify-between items-center"
+                  class="group-hover:pl-5 transition-all duration-300 text-base lg:text-xl py-2 lg:py-6 flex justify-between items-center"
                 >
                   {i.link.post_title}
 
@@ -31,12 +31,10 @@ const { title, image, services_link } = fields;
         }
       </div>
       <div>
-        <Image
+        <img
           src={image}
           alt="Услуги"
-          width={500}
-          height={700}
-          class="rounded-2xl ml-auto w-full h-[750px] object-cover shadow-md"
+          class="rounded-2xl mx-auto max-h-[530px] object-contain shadow-md"
         />
       </div>
     </div>
