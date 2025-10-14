@@ -24,7 +24,7 @@ export default function GlobalSheet() {
             height={500}
             loading="lazy"
             decoding="async"
-            className="relative w-full h-full object-cover"
+            className="relative w-full h-auto object-cover"
           />
         </div>
         <QuickOrder
