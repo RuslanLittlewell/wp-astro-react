@@ -37,7 +37,7 @@ interface Props {
 
 const schema = z.object({
   name: z.string().min(2, "Укажите имя"),
-  days: z.number().min(1, "Минимум 1 сутки"),
+  days: z.number("Минимум 1 сутки").min(1, "Минимум 1 сутки"),
   phone: z.string().min(5, "Укажите телефон"),
 });
 
@@ -60,8 +60,8 @@ export const QuickOrder: FC<Props> = ({
   };
 
   const formatBYN = (n: number): string =>
-    new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(n) +
-    " BYN";
+    n ? new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(n) +
+    " BYN" : 'Добавьте кол. суток';
 
   type TierKey = "one_day" | "more_than_week" | "almost_month" | "more_month";
 
@@ -171,7 +171,7 @@ export const QuickOrder: FC<Props> = ({
                     min={1}
                     {...field}
                     onChange={(e) =>
-                      field.onChange(e.currentTarget.valueAsNumber || 1)
+                      field.onChange(e.currentTarget.valueAsNumber)
                     }
                     className="bg-denim-100 px-4 py-1 lg:py-2 text-sm lg:text-md text-denim-800"
                   />
