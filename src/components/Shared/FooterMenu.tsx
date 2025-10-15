@@ -14,14 +14,14 @@ export const FooterMenu = ({ links }: Props) => {
       <TooltipProvider>
       {links.map((link: any) =>
         link.childs ? (
-          <Tooltip delayDuration={0}>
+          <Tooltip delayDuration={0} key={link.name}>
             <TooltipTrigger asChild className="text-sm" >
               <p>{link.name}</p>
             </TooltipTrigger>
             <TooltipContent>
               <div className="flex flex-col space-y-1 w-fit">
               {link.childs.map((subLink: any) => (
-                <a href={subLink.link} key={subLink.link} className="text-sm hover:underline">
+                <a href={subLink.link} key={subLink.name} className="text-sm hover:underline">
                   {subLink.name}
                 </a>
               ))}
@@ -29,7 +29,7 @@ export const FooterMenu = ({ links }: Props) => {
             </TooltipContent>
           </Tooltip>
         ) : (
-          <a href={link.link} key={link.link} className="text-sm hover:underline w-fit">
+          <a href={link.link} key={link.name} className="text-sm hover:underline w-fit">
             {link.name}
           </a>
         )

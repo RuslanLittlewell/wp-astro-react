@@ -21,7 +21,7 @@ interface Car {
   slug: string;
 }
 
-const cars: Car[] = await wpFetch("/wp/v2/cars");
+const cars: Car[] = await wpFetch("/wp/v2/cars?per_page=100");
 const { acf: pageData } = await wpFetch("/acf/v3/pages/50");
 const { seo } = pageData;
 ---

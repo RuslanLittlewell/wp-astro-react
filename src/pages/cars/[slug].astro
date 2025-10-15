@@ -19,7 +19,7 @@ import Container from "@/layouts/Container.astro";
 import { wpFetch } from "@/lib/wp";
 
 export async function getStaticPaths() {
-  const cars = await wpFetch(`/wp/v2/cars`);
+  const cars = await wpFetch(`/wp/v2/cars?per_page=100`);
   return cars.map((car: any) => ({
     params: { slug: car.slug },
     props: { car },
