@@ -12,6 +12,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { wpFetch } from "@/lib/wp";
+import FAQ from "@/components/Pages/Home/Sections/FAQ.astro";
 
 interface Car {
   acf: any;
@@ -47,8 +48,9 @@ const { seo } = pageData;
     <MainTitle title="Автопарк" />
   </Container>
   <Container big class="mb-24">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-[70px]">
       {cars.map((car) => <CarCard car={car} client:load />)}
     </div>
+      <FAQ fields={pageData.faq} />
   </Container>
 </BaseLayout>
