@@ -10,9 +10,10 @@ const { title, image, services_link } = fields;
 
 <section class="py-10 lg:py-[75px] w-full bg-gray-200">
   <Container>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-h-[500px]">
-      <div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="flex justify-between flex-col">
         <SectionTitle {title} class="!text-left" />
+        <div>
         {
           services_link.map((i: any) => {
             return (
@@ -29,12 +30,13 @@ const { title, image, services_link } = fields;
             );
           })
         }
+        </div>
       </div>
       <div>
         <img
           src={image}
           alt="Услуги"
-          class="rounded-2xl mx-auto max-h-[530px] object-contain shadow-md"
+          class="rounded-2xl w-full h-auto object-fit shadow-md"
         />
       </div>
     </div>

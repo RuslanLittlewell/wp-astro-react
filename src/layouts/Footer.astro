@@ -5,6 +5,7 @@ import Payments from "@/assets/payments.webp";
 import Logo from "@assets/icons/Car1Logo.svg";
 import { FooterMenu } from "@/components/Shared/FooterMenu";
 import { Phone, MapPin, ClockAlert } from "lucide-astro";
+import SocialLinks from "@/components/Shared/SocialLinks.astro";
 const { links, data } = Astro.props;
 ---
 
@@ -30,10 +31,11 @@ const { links, data } = Astro.props;
         {data.work_time}</p>
       </div>
       <div>
-        <h4 class="text-base md:text-lg font-semibold">Нужна консультация?</h4>
+        <h4 class="text-base md:text-lg font-semibold mb-4">Нужна консультация?</h4>
       </div>
       <div>
-        <h4 class="text-base md:text-lg font-semibold">Социальные сети</h4>
+        <h4 class="text-base md:text-lg font-semibold mb-4">Социальные сети</h4>
+        <SocialLinks {data} />
       </div>
     </div>
     <div class="flex flex-col md:flex-row justify-between  items-center md:items-end text-xs md:text-sm">

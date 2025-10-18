@@ -3,6 +3,7 @@ import Container from "@/layouts/Container.astro";
 import { fetchGoodsWithACF } from "@/lib/wp";
 import { CarCard } from "@/components/Pages/Cars/CarCard";
 import SectionTitle from "@/components/Shared/SectionTitle.astro";
+import { Button } from "@/components/ui/button";
 
 const { fields } = Astro.props;
 const ids = (fields || []).map((i: { car: number }) => i.car);
@@ -15,5 +16,11 @@ const cars = await fetchGoodsWithACF(ids);
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
       {(cars || []).map((car) => <CarCard car={car} client:load />)}
     </div>
+    <Button asChild size="lg">
+      <a
+        href="/cars"
+        class="text-white mx-auto px-4 py-2 rounded-md bg-denim-300 hover:bg-denim-300/80 mt-5 block w-max"
+        >Весь автопарк</a>
+        </Button>
   </Container>
 </section>
