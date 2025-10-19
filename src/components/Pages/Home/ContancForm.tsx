@@ -92,8 +92,8 @@ export const ContactForm: FC<Props> = ({
             <p className="text-white text-base mb-4">{fields.description}</p>
             <div className="grid grid-cols-3 gap-3 mb-1">
               <IconButton label="Позвонить" icon={PhoneIcon} />
-              <IconButton label="WhatsApp" icon={WhatsAppIcon} />
-              <IconButton label="Telegram" icon={TelegramIcon} />
+              <IconButton label="WhatsApp" icon={WhatsAppIcon} className="hover:bg-green-600"/>
+              <IconButton label="Telegram" icon={TelegramIcon} className="hover:bg-blue-600"/>
             </div>
           </div>
           <div className="grid gap-x-3 gap-y-4 grid-cols-1 items-center">
@@ -162,11 +162,11 @@ export const ContactForm: FC<Props> = ({
   );
 };
 
-function IconButton({ label, icon: Icon }: { label: string; icon: any }) {
+function IconButton({ label, icon: Icon, className }: { label: string; icon: any; className?: string }) {
   return (
     <button
       type="button"
-      className="bg-gray-800/90 hover:bg-gray-800/30 rounded-xl py-3 flex items-center justify-center gap-2"
+      className={cn("bg-gray-800/90 hover:bg-gray-800/50 rounded-xl py-3 flex items-center justify-center gap-2", className)}
     >
       <Icon className="size-5 text-denim-100 fill-current" />
       <span className="sr-only">{label}</span>
