@@ -1,5 +1,6 @@
 ---
 import { EarthIcon } from "@/components/Shared/Icons";
+import SectionTitle from "@/components/Shared/SectionTitle.astro";
 import Container from "@/layouts/Container.astro";
 import { Image } from "astro:assets";
 
@@ -21,6 +22,7 @@ const pStyle = "text-denim-900 text-xs md:text-xl mb-4 md:mb-0";
 
 <section class="w-full bg-denim-400 py-10 lg:py-[75px]">
   <Container class="flex flex-col gap-10">
+    <SectionTitle title={about_us?.title  || ""} />
     <div class="w-full grid md:grid-cols-2 gap-10">
       <Image
         src={about_us?.image}
@@ -33,7 +35,6 @@ const pStyle = "text-denim-900 text-xs md:text-xl mb-4 md:mb-0";
         class="w-full h-full object-cover rounded-xl shadow-md hidden md:block"
       />
       <div>
-        <h2 class="text-gray-800/90 text-center font-semibold md:text-left text-4xl md:text-6xl mb-4 md:mb-20">{about_us?.title || ""}</h2>
         <p class="text-denim-900 text-xs md:text-xl mb-4 md:mb-0 text-center md:text-left">{about_us?.description || ""}</p>
       </div>
     </div>

@@ -5,7 +5,7 @@ import Container from "@/layouts/Container.astro";
 import { wpFetch } from "@/lib/wp";
 
 const page = await wpFetch(`/wp/v2/pages/556`);
-const {acf: pageData} = page;
+const { acf: pageData } = page;
 const { seo } = pageData;
 ---
 
@@ -13,10 +13,13 @@ const { seo } = pageData;
   title={seo.seo_title}
   image={seo.image}
   description={seo.short_description}
-  className="scrolled" 
+  className="scrolled"
 >
   <Container class="my-32">
     <MainTitle title={page.title.rendered} />
-    <div set:html={page.content.rendered} />
+    <div
+      class="[&_p]:mb-5 [&_h2]:font-bold [&_h2]:mb-8 [&_h2]:text-2xl [&_h3]:font-semibold [&_h3]:mb-6 [&_h3]:text-xl"
+      set:html={page.content.rendered}
+    />
   </Container>
 </BaseLayout>

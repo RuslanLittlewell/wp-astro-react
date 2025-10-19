@@ -8,11 +8,11 @@ const { fields } = Astro.props;
 const { title, image, services_link } = fields;
 ---
 
-<section class="py-10 lg:py-[75px] w-full bg-gray-200">
+<section class="py-10 lg:py-[75px] w-full">
   <Container>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div class="flex justify-between flex-col">
-        <SectionTitle {title} class="!text-left" />
+        <SectionTitle {title} class="!text-left mt-0" />
         <div>
         {
           services_link.map((i: any) => {
