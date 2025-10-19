@@ -3,6 +3,14 @@ import MainTitle from "@/components/Shared/MainTitle.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Container from "@/layouts/Container.astro";
 import { wpFetch } from "@/lib/wp";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const page = await wpFetch(`/wp/v2/pages/597`);
 const { acf: pageData } = page;
@@ -16,6 +24,17 @@ const { seo } = pageData;
   className="scrolled"
 >
   <Container class="my-32">
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Главная</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>{page.title.rendered}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
     <MainTitle title={page.title.rendered} />
     <div
       class="[&_p]:mb-5 [&_h2]:font-bold [&_h2]:mb-8 [&_h2]:text-2xl [&_h3]:font-semibold [&_h3]:mb-6 [&_h3]:text-xl"
