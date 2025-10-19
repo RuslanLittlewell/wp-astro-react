@@ -11,7 +11,7 @@ const { links, data } = Astro.props;
 
 <footer class="w-full bg-gray-600 text-white py-5">
   <Container class="flex flex-col">
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-5 mb-5 mt-5">
+    <div class="grid grid-cols-2 md:grid-cols-[1fr_100px_1fr_1fr_1fr] gap-5 mb-5 mt-5">
       <a href="/" class="hidden md:block"><Logo class="md:h-[50px] mb-3 w-full" /></a>
       <div class="">
         <h4 class="text-base md:text-lg font-semibold mb-4">Разделы</h4>
@@ -32,6 +32,15 @@ const { links, data } = Astro.props;
       </div>
       <div>
         <h4 class="text-base md:text-lg font-semibold mb-4">Нужна консультация?</h4>
+        <p>
+          <a href={data.wa}>Напишите нам в WhatsApp</a>
+        </p>
+         <p>
+          <a href={data.viber}>Напишите нам в Viber</a>
+        </p>
+         <p>
+          <a href={data.telegram}>Напишите нам в Telegram</a>
+        </p>
       </div>
       <div>
         <h4 class="text-base md:text-lg font-semibold mb-4">Социальные сети</h4>
