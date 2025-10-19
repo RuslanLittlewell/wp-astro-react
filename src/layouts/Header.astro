@@ -3,7 +3,7 @@ import MobileMenu from "@/components/Shared/MobileMenu";
 import { DesctopMenu } from "@/components/Shared/DesctopMenu";
 import Logo from "@assets/icons/Car1Logo.svg";
 import { Phone, MapPin, ClockAlert } from "lucide-astro";
-import SocialLinks from "@/components/Shared/SocialLinks.astro";
+import {SocialLinks} from "@/components/Shared/SocialLinks";
 
 const { links, data } = Astro.props;
 ---
@@ -30,7 +30,7 @@ const { links, data } = Astro.props;
           <ClockAlert size="14" />{data.work_time}
         </p>
       </div>
-      <SocialLinks {data} />
+      <SocialLinks {data} className="hidden md:flex" />
     </div>
     <DesctopMenu {links} client:load />
     <MobileMenu {links} acf={data} client:load />

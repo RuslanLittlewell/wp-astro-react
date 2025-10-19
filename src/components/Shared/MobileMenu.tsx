@@ -14,6 +14,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Logo from "@assets/icons/Car1Logo.svg?react";
+import { SocialLinks } from "./SocialLinks";
 
 type NavLink = {
   link?: string;
@@ -52,6 +53,7 @@ export default function MobileMenu({ links, acf }: Props) {
           </div>
 
           <div className="flex flex-col mb-4 text-white">
+             <SocialLinks data={acf} className="mb-4 gap-7 [&_svg]:w-8 [&_svg]:h-8"/>
             <div>
               <a
                 href={`tel:${acf.phone}`}

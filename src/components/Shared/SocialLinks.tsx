@@ -1,9 +1,13 @@
----
-const { data } = Astro.props;
----
+import { cn } from "@/lib/utils";
 
-<div class="flex items-center gap-3">
-  <a href={data.telegram} class="text-white hover:text-denim-300">
+interface Props {
+  data: any;
+  className?: string;
+}
+export const SocialLinks = ({ data, className}: Props) => {
+  return (
+    <div className={cn("flex items-center gap-3", className)}>
+  <a href={data.telegram} className="text-white hover:text-denim-300">
     <svg
       width="18"
       height="15"
@@ -16,7 +20,7 @@ const { data } = Astro.props;
         stroke="currentColor"></path>
     </svg>
   </a>
-  <a href={data.wa} class="text-white hover:text-denim-300">
+  <a href={data.wa} className="text-white hover:text-denim-300">
     <svg
       width="18"
       height="19"
@@ -37,7 +41,7 @@ const { data } = Astro.props;
       </defs>
     </svg>
   </a>
-  <a href={data.viber} class="text-white hover:text-denim-300">
+  <a href={data.viber} className="text-white hover:text-denim-300">
     <svg
       width="18"
       height="19"
@@ -68,3 +72,6 @@ const { data } = Astro.props;
     </svg>
   </a>
 </div>
+  )
+}
+
