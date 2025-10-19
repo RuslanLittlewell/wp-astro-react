@@ -22,11 +22,13 @@ import { z } from "zod";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import IntlTelInput from "intl-tel-input/react";
+import { useResultModalStore } from "@/stores/resultModal";
+
 import "intl-tel-input/styles";
 
 export function CallbackModal() {
   const { open, close } = useModalStore();
-
+  const { openWith} = useResultModalStore();
   const schema = z.object({
     name: z.string().min(2, "Укажите имя"),
     phone: z.string().min(5, "Укажите телефон"),
@@ -43,6 +45,8 @@ export function CallbackModal() {
     console.log("QuickOrder submit:", {
       ...values,
     });
+    close();
+    openWith('success')
   };
   return (
     <Dialog open={open} onOpenChange={(v) => (v ? null : close())}>
@@ -117,9 +121,6 @@ export function CallbackModal() {
             </p>
           </Form>
           <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline" size="lg">Закрыть</Button>
-            </DialogClose>
             <Button className="bg-denim-300" size="lg" type="submit" onClick={form.handleSubmit(onSubmit)}>
               Отправить
             </Button>

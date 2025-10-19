@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 
 import IntlTelInput from "intl-tel-input/react";
 import "intl-tel-input/styles";
+import { useResultModalStore } from "@/stores/resultModal";
 
 interface Prices {
   pledge: string | number;
@@ -53,6 +54,7 @@ export const RentalCalculatorCard: FC<Props> = ({
   carName,
 }) => {
   const { prices } = fields;
+  const { openWith } = useResultModalStore();
 
   const toNum = (v: string | number | undefined): number => {
     if (v == null) return 0;
@@ -95,6 +97,7 @@ export const RentalCalculatorCard: FC<Props> = ({
         ? "Индивидуальный расчет"
         : formatBYN(totalWithPledge),
     });
+    openWith('error');
   };
 
   return (

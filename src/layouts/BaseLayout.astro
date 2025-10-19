@@ -6,8 +6,9 @@ import Footer from "./Footer.astro";
 import Seo from "./Seo.astro";
 import { wpFetch } from "@/lib/wp";
 import { cn } from "@/lib/utils";
-import GlobalSheet from "@/components/Shared/GlobalSheet";
-import { CallbackModal } from "@/components/Shared/OrderCallModal";
+import GlobalSheet from "@/components/Shared/Modals/GlobalSheet";
+import { CallbackModal } from "@/components/Shared/Modals/OrderCallModal";
+import { FormResulatModal } from "@/components/Shared/Modals/FormResultModal";
 
 const {
   title,
@@ -85,6 +86,7 @@ const links = [
     </main>
     <GlobalSheet client:load />
     <CallbackModal client:load />
+    <FormResulatModal client:load />
     <Footer data={acf} {links} />
   </body>
 </html>
