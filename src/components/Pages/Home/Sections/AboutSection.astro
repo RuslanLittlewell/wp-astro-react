@@ -42,11 +42,11 @@ const pStyle = "text-denim-900 text-xs md:text-xl mb-4 md:mb-0";
         (status || []).map((i: ItemsProps) => (
           <div class="self-end text-center md:text-left">
             {i.title ? (
-              <h3 class={h3Style}>{i.title}</h3>
+              <p class={h3Style}>{i.title}</p>
             ) : (
               <EarthIcon className="text-denim-300 w-[60px] mb-4 mx-auto md:mx-0" />
             )}
-            <p class={pStyle}>{i.description || ""}</p>
+            <h3 class={pStyle}>{i.description || ""}</h3>
           </div>
         ))
       }
