@@ -13,7 +13,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Container from "@/layouts/Container.astro";
 import { wpFetch } from "@/lib/wp";
 
-const {acf: pageData} = await wpFetch('/acf/v3/pages/123');
+const page = await wpFetch('/wp/v2/pages/123');
+const {acf: pageData} = page
 const { seo } = pageData
 ---
 
@@ -26,12 +27,11 @@ const { seo } = pageData
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Условия</BreadcrumbPage>
+          <BreadcrumbPage>{page.title.rendered}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
-    <MainTitle title="Условия" />
-
+    <MainTitle title={page.title.rendered} />
    <ConditionsTabs client:load data={pageData} />
   </Container>
 </BaseLayout>

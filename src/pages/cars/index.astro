@@ -23,8 +23,9 @@ interface Car {
 }
 
 const cars: Car[] = await wpFetch("/wp/v2/cars?per_page=100");
-const { acf: pageData } = await wpFetch("/acf/v3/pages/50");
-const { seo } = pageData;
+const page = await wpFetch('/wp/v2/pages/50');
+const {acf: pageData} = page
+const { seo } = pageData
 ---
 
 <BaseLayout
@@ -41,11 +42,11 @@ const { seo } = pageData;
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Автопарк</BreadcrumbPage>
+          <BreadcrumbPage>{page.title.rendered}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
-    <MainTitle title="Автопарк" />
+    <MainTitle title={page.title.rendered} />
   </Container>
   <Container big class="mb-24">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-[70px]">

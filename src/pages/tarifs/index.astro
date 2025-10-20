@@ -23,11 +23,17 @@ interface Car {
 }
 
 const cars: Car[] = await wpFetch("/wp/v2/cars?per_page=100");
-const {acf: pageData} = await wpFetch('/acf/v3/pages/193');
-const { seo } = pageData
+const page = await wpFetch("/wp/v2/pages/193");
+const { acf: pageData } = page;
+const { seo } = pageData;
 ---
 
-<BaseLayout className="scrolled" title={seo.seo_title} image={seo.image} description={seo.short_description}>
+<BaseLayout
+  className="scrolled"
+  title={seo.seo_title}
+  image={seo.image}
+  description={seo.short_description}
+>
   <Container class="my-24">
     <Breadcrumb>
       <BreadcrumbList>
@@ -36,14 +42,14 @@ const { seo } = pageData
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Условия</BreadcrumbPage>
+          <BreadcrumbPage>{page.title.rendered}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
-    <MainTitle title="Тарифы" />
+    <MainTitle title={page.title.rendered} />
 
     <div class="flex flex-col gap-4">
-    {cars.map((car) => <TarifCard car={car} client:load />)}
+      {cars.map((car) => <TarifCard car={car} client:load />)}
     </div>
   </Container>
 </BaseLayout>
