@@ -17,7 +17,7 @@ interface ItemsProps {
 const { about_us, status } = Astro.props;
 
 const h3Style = "text-denim-300 font-normal text-4xl md:text-6xl mb-2 md:mb-4";
-const pStyle = "text-denim-900 text-xs md:text-xl mb-4 md:mb-0";
+const pStyle = "text-denim-900 text-base md:text-xl mb-4 md:mb-0";
 ---
 
 <section class="w-full bg-denim-400 py-10 lg:py-[75px]">
@@ -35,7 +35,7 @@ const pStyle = "text-denim-900 text-xs md:text-xl mb-4 md:mb-0";
         class="w-full h-full object-cover rounded-xl shadow-md hidden md:block"
       />
       <div>
-        <p class="text-denim-900 text-xs md:text-xl mb-4 md:mb-0 text-center md:text-left">{about_us?.description || ""}</p>
+        <p class="text-denim-900 text-base md:text-xl mb-4 md:mb-0 text-center md:text-left">{about_us?.description || ""}</p>
       </div>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-16 w-full">

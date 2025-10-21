@@ -23,13 +23,13 @@ export const ConditionsTabs = ({ data }: Props) => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="condition">
-        <AccordionBlock data={list_1} />
+        <AccordionBlock data={list_1} openAll />
       </TabsContent>
       <TabsContent value="return">
-        <AccordionBlock data={list_2} />
+        <AccordionBlock data={list_2} openAll />
       </TabsContent>
       <TabsContent value="payment">
-        <AccordionBlock data={list_3} />
+        <AccordionBlock data={list_3} openAll />
       </TabsContent>
       <TabsContent value="faq">
         <AccordionBlock data={list_4} />

@@ -53,7 +53,7 @@ export default function MobileMenu({ links, acf }: Props) {
           </div>
 
           <div className="flex flex-col mb-4 text-white">
-             <SocialLinks data={acf} className="mb-4 gap-7 [&_svg]:w-8 [&_svg]:h-8"/>
+             <SocialLinks data={acf} className="mb-4 gap-7 [&_svg]:w-8 [&_svg]:h-8" showInstagram/>
             <div>
               <a
                 href={`tel:${acf.phone}`}
