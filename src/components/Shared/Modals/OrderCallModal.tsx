@@ -121,7 +121,7 @@ export function CallbackModal() {
             </p>
           </Form>
           <DialogFooter>
-            <Button className="bg-denim-300" size="lg" type="submit" onClick={form.handleSubmit(onSubmit)}>
+            <Button className="bg-denim-300 mx-auto" size="lg" type="submit" onClick={form.handleSubmit(onSubmit)}>
               Отправить
             </Button>
           </DialogFooter>

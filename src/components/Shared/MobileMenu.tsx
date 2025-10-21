@@ -1,4 +1,4 @@
-import { Menu, X, MapPin, ClockAlert } from "lucide-react";
+import { Menu, X, MapPin, ClockAlert, Phone } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -57,9 +57,9 @@ export default function MobileMenu({ links, acf }: Props) {
             <div>
               <a
                 href={`tel:${acf.phone}`}
-                className="text-sm text-white/80 font-semibold"
+                className="text-xs text-white flex gap-2 items-center"
               >
-                {acf.phone}
+                <Phone size="14"/> {acf.phone}
               </a>
               <p className="text-xs text-white flex gap-2 items-center">
                 <MapPin size="14" />

@@ -11,22 +11,18 @@ export default function GlobalSheet() {
   const { open, payload, close } = useSheetStore();
   return (
     <UISheet open={open} onOpenChange={(v) => (v ? null : close())}>
-      <SheetContent side={payload?.side ?? "right"} className="overflow-auto lg:p-4">
+      <SheetContent side={payload?.side ?? "right"} className="h-[100vh] g:p-4">
         <SheetHeader>
           {payload?.title && <SheetTitle>{payload.title}</SheetTitle>}
         </SheetHeader>
-        <div className="flex flex-col justify-between h-[calc(100%_-40px)]">
-        <div className="my-1 lg:my-4">
+        <div className="flex flex-col justify-center overflow-auto">
           <img
             src={payload?.image}
             alt={payload?.title}
-            width={500}
-            height={500}
             loading="lazy"
             decoding="async"
-            className="relative w-full h-auto object-cover"
+            className="relative object-cover my-1 lg:my-4"
           />
-        </div>
         <QuickOrder
           fields={payload?.car.acf}
           carName={payload?.title}

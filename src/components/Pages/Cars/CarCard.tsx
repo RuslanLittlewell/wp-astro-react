@@ -46,7 +46,7 @@ export const CarCard: React.FC<Props> = ({ car }) => {
   }
 
   return (
-    <div className="relative rounded-md overflow-hidden group shadow-md">
+    <a className="relative rounded-md overflow-hidden group shadow-md" href={`/cars/${car.slug}`}>
       <img
         src={images[0]}
         alt={car.title.rendered}
@@ -58,12 +58,12 @@ export const CarCard: React.FC<Props> = ({ car }) => {
       />
 
       <div className="transition-padding ease-in-out duration-500 text-denim-100 absolute top-0 left-0 w-full bg-gradient-to-b from-black/70 to-transparent p-4 pb-8 group-hover:pb-40">
-        <a href={`/cars/${car.slug}`}>
+        <div>
           <h2 className="text-xl font-normal flex flex-col">
             {car.title.rendered}
-            {price && <p className="text-denim-100 font-semibold text-2xl"><span className="text-denim-300">от</span> <span className="text-shadow-md text-shadow-denim-300">{price}</span> <span className="text-denim-300">BYN</span></p>}
+            {price && <p className="text-denim-100 font-semibold text-2xl"><span className="text-denim-300">от</span> <span className="text-[28px]">{price}</span> <span className="text-denim-300">BYN</span></p>}
           </h2>
-        </a>
+        </div>
       </div>
 
       <div className="flex gap-3 transition-opacity ease-in-out duration-300 absolute z-1 bottom-14 right-4 opacity-0 group-hover:opacity-100 group-hover:z-10">
@@ -98,6 +98,6 @@ export const CarCard: React.FC<Props> = ({ car }) => {
           </span>
         )}
       </div>
-    </div>
+    </a>
   )
 }
