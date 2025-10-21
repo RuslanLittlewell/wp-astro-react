@@ -23,6 +23,7 @@ import {
 import { sendToCF7 } from "@/lib/cf7";
 import { cn } from "@/lib/utils";
 import IntlTelInput from "intl-tel-input/react";
+import { useResultModalStore } from "@/stores/resultModal";
 // import { openModal } from "@/stores/ui";
 
 const schema = z.object({
@@ -39,14 +40,18 @@ interface Props {
   formId?: number;
   className?: string;
   fields: any;
+  acf: any;
 }
 
-export const ContactForm: FC<Props> = ({
+export const  ContactForm: FC<Props> = ({
   wpBase = "",
   formId = 123,
   className,
   fields,
+  acf
 }) => {
+  const { openWith } = useResultModalStore();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { userName: "", phone: "" },
@@ -63,14 +68,17 @@ export const ContactForm: FC<Props> = ({
 
       if (r.status === "mail_sent") {
         // openModal("success", "Наш менеджер свяжется с вами в ближайшее время.");
+        openWith("success");
         form.reset();
       } else {
+        openWith("error");
         // openModal(
         //   "error",
         //   "Попробуйте ещё раз или свяжитесь с нами по телефону/мессенджеру."
         // );
       }
     } catch {
+      openWith("error");
       // openModal(
       //   "error",
       //   "Попробуйте ещё раз или свяжитесь с нами по телефону/мессенджеру."
@@ -90,10 +98,31 @@ export const ContactForm: FC<Props> = ({
           <div className="mb-4">
             <h3 className="lg:text-2xl text-white mb-4">{fields.title}</h3>
             <p className="text-white text-base mb-4">{fields.description}</p>
-            <div className="grid grid-cols-3 gap-3 mb-1">
-              <IconButton label="Позвонить" icon={PhoneIcon} />
-              <IconButton label="WhatsApp" icon={WhatsAppIcon} className="hover:bg-green-600"/>
-              <IconButton label="Telegram" icon={TelegramIcon} className="hover:bg-blue-600"/>
+            <a
+              href={`tel:${acf.phone}`}
+              className="text-lg text-white font-semibold hover:opacity-80 transition-color duration-300"
+            >
+              {acf.phone}
+            </a>
+            <div className="grid grid-cols-3 gap-3 mb-1 mt-4">
+              <IconButton
+                label="Позвонить"
+                icon={PhoneIcon}
+                link={acf.viber}
+                className="hover:bg-[#7953FD]"
+              />
+              <IconButton
+                label="WhatsApp"
+                icon={WhatsAppIcon}
+                link={acf.wa}
+                className="hover:bg-[#23C741]"
+              />
+              <IconButton
+                label="Telegram"
+                icon={TelegramIcon}
+                link={acf.telegram}
+                className="hover:bg-[#24A1DE]"
+              />
             </div>
           </div>
           <div className="grid gap-x-3 gap-y-4 grid-cols-1 items-center">
@@ -132,7 +161,8 @@ export const ContactForm: FC<Props> = ({
                           initOptions={{
                             initialCountry: "by",
                             nationalMode: false,
-                            containerClass: "flex w-full rounded-xl border border-input shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-denim-100 px-4 py-2 lg:py-3 text-sm lg:text-md text-denim-800",
+                            containerClass:
+                              "flex w-full rounded-xl border border-input shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-denim-100 px-4 py-2 lg:py-3 text-sm lg:text-md text-denim-800",
                             separateDialCode: true,
                             loadUtils: () =>
                               import("public/tel-utils.mjs" as any),
@@ -162,14 +192,27 @@ export const ContactForm: FC<Props> = ({
   );
 };
 
-function IconButton({ label, icon: Icon, className }: { label: string; icon: any; className?: string }) {
+function IconButton({
+  label,
+  icon: Icon,
+  className,
+  link,
+}: {
+  label: string;
+  icon: any;
+  className?: string;
+  link: string;
+}) {
   return (
-    <button
-      type="button"
-      className={cn("bg-gray-800/90 hover:bg-gray-800/50 rounded-xl py-3 flex items-center justify-center gap-2", className)}
+    <a
+      href={link}
+      className={cn(
+        "bg-gray-800/90 hover:bg-gray-800/50 rounded-xl py-3 flex items-center justify-center gap-2",
+        className
+      )}
     >
       <Icon className="size-5 text-denim-100 fill-current" />
       <span className="sr-only">{label}</span>
-    </button>
+    </a>
   );
 }

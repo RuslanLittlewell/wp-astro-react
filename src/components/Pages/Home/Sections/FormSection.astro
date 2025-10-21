@@ -1,12 +1,14 @@
 ---
 import Container from "@/layouts/Container.astro";
 import { ContactForm } from "../ContancForm";
-import { Image } from "astro:assets";
+import { wpFetch } from "@/lib/wp";
 
 const { fields } = Astro.props;
+const { acf } = await wpFetch("/acf/v3/options/options");
+
 ---
 
-<section id="form" class="py-10 lg:py-[75px] w-full h-[80vh]"
+<section id="form" class="py-10 my-10 lg:my-[75px] lg:py-[75px] w-full h-[80vh]"
 style={`background: url(${fields.image}) no-repeat center center / cover;`}>
   <Container>
     <div class="grid relattive">
@@ -17,7 +19,7 @@ style={`background: url(${fields.image}) no-repeat center center / cover;`}>
         height={700}
         class="absolute rounded-2xl ml-auto w-full h-auto object-cover shadow-md"
       /> -->
-      <ContactForm {fields} client:load />
+      <ContactForm {fields} {acf} client:load />
     </div>
   </Container>
 </section>
