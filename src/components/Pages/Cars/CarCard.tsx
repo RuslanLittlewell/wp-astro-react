@@ -36,6 +36,7 @@ export const CarCard: React.FC<Props> = ({ car }) => {
 
   const handleOpenOrder = (e: any) => {
     e.stopPropagation();
+    e.preventDefault();
     Sheet.open({
       title: car.title.rendered,
       side: "right",
