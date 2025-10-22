@@ -38,6 +38,7 @@ interface Props {
   fields: { prices: Prices };
   className?: string;
   carName?: string;
+  options: any;
 }
 
 const schema = z.object({
@@ -52,6 +53,7 @@ export const RentalCalculatorCard: FC<Props> = ({
   fields,
   className,
   carName,
+  options,
 }) => {
   const { prices } = fields;
   const { openWith } = useResultModalStore();
@@ -227,9 +229,24 @@ export const RentalCalculatorCard: FC<Props> = ({
 
           {/* Contacts */}
           <div className="grid grid-cols-3 gap-3 mb-1">
-            <IconButton label="Позвонить" icon={PhoneIcon} />
-            <IconButton label="WhatsApp" icon={WhatsAppIcon} />
-            <IconButton label="Telegram" icon={TelegramIcon} />
+             <IconButton
+                label="Позвонить"
+                icon={PhoneIcon}
+                link={options.viber}
+                className="hover:bg-[#7953FD]"
+              />
+              <IconButton
+                label="WhatsApp"
+                icon={WhatsAppIcon}
+                link={options.wa}
+                className="hover:bg-[#23C741]"
+              />
+              <IconButton
+                label="Telegram"
+                icon={TelegramIcon}
+                link={options.telegram}
+                className="hover:bg-[#24A1DE]"
+              />
           </div>
 
           <p className="text-xs text-neutral-500 text-center leading-relaxed mt-3">
@@ -253,14 +270,27 @@ function FieldRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function IconButton({ label, icon: Icon }: { label: string; icon: any }) {
+function IconButton({
+  label,
+  icon: Icon,
+  className,
+  link,
+}: {
+  label: string;
+  icon: any;
+  className?: string;
+  link: string;
+}) {
   return (
-    <button
-      type="button"
-      className="bg-denim-800 hover:bg-denim-700 rounded-xl py-3 flex items-center justify-center gap-2"
+    <a
+      href={link}
+      className={cn(
+        "bg-gray-800/90 hover:bg-gray-800/50 rounded-xl py-3 flex items-center justify-center gap-2",
+        className
+      )}
     >
       <Icon className="size-5 text-denim-100 fill-current" />
       <span className="sr-only">{label}</span>
-    </button>
+    </a>
   );
 }
