@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { Button } from "@/components/ui/button";
 import { CogIcon, FuelIcon, GaugeIcon } from "lucide-react";
 import { Sheet } from "@/stores/sheet";
@@ -34,7 +34,8 @@ export const CarCard: React.FC<Props> = ({ car }) => {
   const images = acf.car.car_images;
   const { engine, fuel_consumption, transmission } = carInfo;
 
-  const handleOpenOrder = () => {
+  const handleOpenOrder = (e: any) => {
+    e.stopPropagation();
     Sheet.open({
       title: car.title.rendered,
       side: "right",
