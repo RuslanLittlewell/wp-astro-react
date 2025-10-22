@@ -33,12 +33,12 @@ const { links, data } = Astro.props;
       <SocialLinks {data} className="hidden md:flex" />
     </div>
     <DesctopMenu {links} client:load />
-    <div class="flex gap-2 items-center md:hidden">
+    <div class="flex gap-3 items-center md:hidden">
     <a href={`tel:${data.phone}`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
+        width="28"
+        height="28"
         viewBox="0 0 30 30"
         fill="none"
       >
