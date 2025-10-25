@@ -16,7 +16,7 @@ const { links, data } = Astro.props;
 >
   <div class="flex w-full justify-between items-center">
     <div class="flex gap-10 items-center">
-      <a href="/"><Logo class="h-[32px]" /></a>
+      <a href="/" aria-label="Car1.by"><Logo class="h-[32px]" /></a>
       <div class="hidden md:flex flex-col">
         <a
           href={`tel:${data.phone}`}
@@ -34,7 +34,7 @@ const { links, data } = Astro.props;
     </div>
     <DesctopMenu {links} client:load />
     <div class="flex gap-3 items-center md:hidden">
-    <a href={`tel:${data.phone}`}>
+    <a href={`tel:${data.phone}`} aria-label="Телефон">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="28"
