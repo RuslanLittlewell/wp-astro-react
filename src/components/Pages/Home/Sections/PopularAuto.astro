@@ -8,13 +8,14 @@ import { Button } from "@/components/ui/button";
 const { fields } = Astro.props;
 const ids = (fields || []).map((i: { car: number }) => i.car);
 const cars = await fetchGoodsWithACF(ids);
+const carsList = Array.isArray(cars) ? cars : [];
 ---
 
 <section class="py-10 lg:py-[75px] w-full">
   <Container big>
     <SectionTitle title="Популярные авто" />
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-      {(cars || []).map((car) => <CarCard car={car} client:load />)}
+      {carsList.map((car) => <CarCard car={car} client:load />)}
     </div>
     <Button asChild size="lg">
       <a
