@@ -1,4 +1,3 @@
-// src/lib/wp.ts
 const WP = process.env.WP_API_INTERNAL_BASE || 'https://api.littlewell-app.work/wp-json/';
 
 export type GoodsItem = {
@@ -9,13 +8,26 @@ export type GoodsItem = {
 };
 
 export async function fetchGoodsWithACF(ids: number[]): Promise<any[]> {
-  // требует плагин "ACF to REST API"
-  const url = `/wp/v2/cars?include=${ids.join(",")}&per_page=${ids.length}&_embed`;
-  const res = await wpFetch(url);
-  if(!ids.length) {
-    return []
+  const normalizedIds = (ids ?? []).filter(
+    (id): id is number => Number.isFinite(id) && id > 0
+  );
+  if (!normalizedIds.length) {
+    return [];
   }
-  return res;
+
+  const url = `/wp/v2/cars?include=${normalizedIds.join(
+    ","
+  )}&per_page=${Math.max(normalizedIds.length, 1)}&_embed`;
+  const res = await wpFetch(url);
+
+  if (!Array.isArray(res)) {
+    return [];
+  }
+
+  return res.sort(
+    (a: { id: number }, b: { id: number }) =>
+      normalizedIds.indexOf(a.id) - normalizedIds.indexOf(b.id)
+  );
 }
 
 
