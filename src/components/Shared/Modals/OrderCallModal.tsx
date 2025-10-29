@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -25,29 +23,41 @@ import IntlTelInput from "intl-tel-input/react";
 import { useResultModalStore } from "@/stores/resultModal";
 
 import "intl-tel-input/styles";
+import { sendToCF7 } from "@/lib/cf7";
 
 export function CallbackModal() {
   const { open, close } = useModalStore();
-  const { openWith} = useResultModalStore();
+  const { openWith } = useResultModalStore();
   const schema = z.object({
-    name: z.string().min(2, "Укажите имя"),
-    phone: z.string().min(5, "Укажите телефон"),
+    username: z.string().min(2, "Укажите имя"),
+    userphone: z.string().min(5, "Укажите телефон"),
   });
   type FormValues = z.infer<typeof schema>;
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { name: "", phone: "" },
+    defaultValues: { username: "", userphone: "" },
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<FormValues> = (values: FormValues) => {
-    console.log("QuickOrder submit:", {
-      ...values,
-    });
+  const onSubmit: SubmitHandler<FormValues> = async (values: FormValues) => {
+    const id = 692;
+    try {
+      const r = await sendToCF7({
+        formId: id,
+        values: values,
+      });
+      if (r.status === "mail_sent") {
+        openWith("success");
+      } else {
+        openWith("error");
+      }
+    } catch (e) {
+      openWith("error");
+    }
     close();
-    openWith('success')
   };
+
   return (
     <Dialog open={open} onOpenChange={(v) => (v ? null : close())}>
       <form>
@@ -63,7 +73,7 @@ export function CallbackModal() {
               className="space-y-2 lg:space-y-3"
             >
               <FormField
-                name="name"
+                name="username"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
@@ -83,7 +93,7 @@ export function CallbackModal() {
               />
               {/* Телефон */}
               <FormField
-                name="phone"
+                name="userphone"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
@@ -121,7 +131,12 @@ export function CallbackModal() {
             </p>
           </Form>
           <DialogFooter>
-            <Button className="bg-denim-300 mx-auto" size="lg" type="submit" onClick={form.handleSubmit(onSubmit)}>
+            <Button
+              className="bg-denim-300 mx-auto"
+              size="lg"
+              type="submit"
+              onClick={form.handleSubmit(onSubmit)}
+            >
               Отправить
             </Button>
           </DialogFooter>

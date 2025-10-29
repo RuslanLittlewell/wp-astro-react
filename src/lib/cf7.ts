@@ -1,4 +1,5 @@
-// src/lib/cf7.ts
+const WP = process.env.WP_API_INTERNAL_BASE || 'http://api.car1.by/wp-json/';
+
 export type Cf7Response = {
   status: "mail_sent" | "validation_failed" | "spam" | "mail_failed";
   message: string;
@@ -6,22 +7,20 @@ export type Cf7Response = {
 };
 
 export async function sendToCF7({
-  wpBase,
   formId,
   values,
 }: {
-  wpBase: string;
   formId?: number | string;
   values: {
-    userName: string;
-    phone: string;
+    username: string;
+    userphone: string;
     rentalPeriod?: string;
     product?: string;
     price?: string;
     additionalItem?: string;
   };
 }): Promise<Cf7Response> {
-  const url = `${wpBase}contact-form-7/v1/contact-forms/${formId}/feedback`;
+  const url = `${WP}contact-form-7/v1/contact-forms/${formId}/feedback`;
   const fd = new FormData();
   const locale = "ru_RU";
   const cf7Version = "5.9.8";
@@ -38,14 +37,12 @@ export async function sendToCF7({
   fd.append("_wpcf7_unit_tag", unitTag);
   fd.append("_wpcf7_container_post", String(containerPostId));
 
-  values.product && fd.append("product", values.product);
-  fd.append("userName", values.userName);
-  fd.append("phone", values.phone);
-  values.rentalPeriod && fd.append("rentalPeriod", values.rentalPeriod);
-  values.price && fd.append("price", values.price);
-  values.additionalItem && fd.append("additionalItem", values.additionalItem);
+  fd.append("userName", values.username);
+  fd.append("phone", values.userphone);
+  // values.rentalPeriod && fd.append("rentalPeriod", values.rentalPeriod);
+  // values.price && fd.append("price", values.price);
+  // values.additionalItem && fd.append("additionalItem", values.additionalItem);
   
-    console.log(values)
   const res = await fetch(url, {
     method: "POST",
     body: fd,
