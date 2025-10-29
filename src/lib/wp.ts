@@ -1,4 +1,4 @@
-const WP = process.env.WP_API_INTERNAL_BASE || 'http://api.car1.by/wp-json/';
+const WP = process.env.WP_API_INTERNAL_BASE || 'https://api.car1.by/wp-json/';
 
 export type GoodsItem = {
   id: number;
