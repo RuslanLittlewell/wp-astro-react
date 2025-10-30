@@ -37,8 +37,8 @@ export async function sendToCF7({
   fd.append("_wpcf7_unit_tag", unitTag);
   fd.append("_wpcf7_container_post", String(containerPostId));
 
-  fd.append("userName", values.username);
-  fd.append("phone", values.userphone);
+  fd.append("username", values.username);
+  fd.append("userphone", values.userphone);
   // values.rentalPeriod && fd.append("rentalPeriod", values.rentalPeriod);
   // values.price && fd.append("price", values.price);
   // values.additionalItem && fd.append("additionalItem", values.additionalItem);
