@@ -15,9 +15,8 @@ export async function sendToCF7({
     username: string;
     userphone: string;
     rentalPeriod?: string;
-    product?: string;
+    car?: string;
     price?: string;
-    additionalItem?: string;
   };
 }): Promise<Cf7Response> {
   const url = `${WP}contact-form-7/v1/contact-forms/${formId}/feedback`;
@@ -39,9 +38,9 @@ export async function sendToCF7({
 
   fd.append("username", values.username);
   fd.append("userphone", values.userphone);
-  // values.rentalPeriod && fd.append("rentalPeriod", values.rentalPeriod);
-  // values.price && fd.append("price", values.price);
-  // values.additionalItem && fd.append("additionalItem", values.additionalItem);
+  values.rentalPeriod && fd.append("rentalPeriod", values.rentalPeriod);
+  values.price && fd.append("price", values.price);
+  values.car && fd.append("car", values.car);
   
   const res = await fetch(url, {
     method: "POST",

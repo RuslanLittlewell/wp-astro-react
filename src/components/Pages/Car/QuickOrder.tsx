@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import IntlTelInput from "intl-tel-input/react";
 import "intl-tel-input/styles";
 import { useResultModalStore } from "@/stores/resultModal";
+import { sendToCF7 } from "@/lib/cf7";
 
 interface Prices {
   pledge: string | number;
@@ -37,9 +38,9 @@ interface Props {
 }
 
 const schema = z.object({
-  name: z.string().min(2, "Укажите имя"),
-  days: z.number("Минимум 1 сутки").min(1, "Минимум 1 сутки"),
-  phone: z.string().min(5, "Укажите телефон"),
+  username: z.string().min(2, "Укажите имя"),
+  userphone: z.string().min(5, "Укажите телефон"),
+  rentalPeriod: z.number("Минимум 1 сутки").min(1, "Минимум 1 сутки"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -51,7 +52,7 @@ export const QuickOrder: FC<Props> = ({
   handleClose,
 }) => {
   const { prices } = fields;
-  const { openWith} = useResultModalStore();
+  const { openWith } = useResultModalStore();
 
   const toNum = (v: string | number | undefined): number => {
     if (v == null) return 0;
@@ -62,40 +63,59 @@ export const QuickOrder: FC<Props> = ({
   };
 
   const formatBYN = (n: number): string =>
-    n ? new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(n) +
-    " BYN" : 'Добавьте кол. суток';
+    n
+      ? new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(n) +
+        " BYN"
+      : "Добавьте кол. суток";
 
   type TierKey = "one_day" | "more_than_week" | "almost_month" | "more_month";
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { days: 1, name: "", phone: "" },
+    defaultValues: { rentalPeriod: 1, username: "", userphone: "" },
     mode: "onChange",
   });
 
-  const days = form.watch("days");
+  const rentalPeriod = form.watch("rentalPeriod");
 
   const tier: { key: TierKey; label: string } = useMemo(() => {
-    if (days >= 30) return { key: "more_month", label: "Более 30 суток" };
-    if (days >= 11) return { key: "almost_month", label: "11–29 суток" };
-    if (days >= 3) return { key: "more_than_week", label: "3–10 суток" };
+    if (rentalPeriod >= 30)
+      return { key: "more_month", label: "Более 30 суток" };
+    if (rentalPeriod >= 11)
+      return { key: "almost_month", label: "11–29 суток" };
+    if (rentalPeriod >= 3)
+      return { key: "more_than_week", label: "3–10 суток" };
     return { key: "one_day", label: "1–2 суток" };
-  }, [days]);
+  }, [rentalPeriod]);
 
   const daily = toNum(prices[tier.key]);
   const isIndividual = tier.key === "more_month";
-  const totalWithPledge = !isIndividual ? daily * days : 0;
+  const totalWithPledge = !isIndividual ? daily * rentalPeriod : 0;
 
-  const onSubmit: SubmitHandler<FormValues> = (values: FormValues) => {
-    console.log("QuickOrder submit:", {
-      ...values,
-      car: carName,
-      price: isIndividual
-        ? "Индивидуальный расчет"
-        : formatBYN(totalWithPledge),
-    });
+  const onSubmit: SubmitHandler<FormValues> = async (values: FormValues) => {
+    const id = 693;
+    try {
+      const r = await sendToCF7({
+        formId: id,
+        values: {
+          username: values.username,
+          userphone: values.userphone,
+          car: carName,
+          price: isIndividual
+            ? "Индивидуальный расчет"
+            : formatBYN(totalWithPledge),
+        },
+      });
+      if (r.status === "mail_sent") {
+        openWith("success");
+      } else {
+        openWith("error");
+      }
+    } catch (e) {
+      openWith("error");
+    }
+
     handleClose();
-    openWith('success');
   };
 
   return (
@@ -106,18 +126,23 @@ export const QuickOrder: FC<Props> = ({
       )}
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 lg:space-y-3">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-2 lg:space-y-3"
+        >
           {/* Инфо */}
           <div className="flex gap-2">
             <FieldRow label="Тариф" value={tier.label} />
             <FieldRow label="Перепробег" value={String(prices.overrun)} />
           </div>
           <FormField
-            name="name"
+            name="username"
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-denim-400 lg:text-xs">Ваше имя</FormLabel>
+                <FormLabel className="text-denim-400 lg:text-xs">
+                  Ваше имя
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -131,11 +156,13 @@ export const QuickOrder: FC<Props> = ({
           />
           {/* Телефон */}
           <FormField
-            name="phone"
+            name="userphone"
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-denim-400 lg:text-xs">Телефон</FormLabel>
+                <FormLabel className="text-denim-400 lg:text-xs">
+                  Телефон
+                </FormLabel>
                 <FormControl>
                   <Controller
                     name="phone"
@@ -145,10 +172,12 @@ export const QuickOrder: FC<Props> = ({
                         onChangeNumber={field.onChange}
                         initOptions={{
                           initialCountry: "by",
-                          containerClass: "flex w-full rounded-xl border border-input shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-denim-100 px-4 py-2 lg:py-2 text-sm lg:text-md text-denim-800",
+                          containerClass:
+                            "flex w-full rounded-xl border border-input shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-denim-100 px-4 py-2 lg:py-2 text-sm lg:text-md text-denim-800",
                           nationalMode: false,
                           separateDialCode: true,
-                          loadUtils: () => import("public/tel-utils.mjs" as any),
+                          loadUtils: () =>
+                            import("public/tel-utils.mjs" as any),
                         }}
                       />
                     )}
@@ -161,7 +190,7 @@ export const QuickOrder: FC<Props> = ({
 
           {/* Дни */}
           <FormField
-            name="days"
+            name="rentalPeriod"
             control={form.control}
             render={({ field }) => (
               <FormItem>
