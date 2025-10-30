@@ -16,7 +16,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
@@ -24,11 +23,10 @@ import { sendToCF7 } from "@/lib/cf7";
 import { cn } from "@/lib/utils";
 import IntlTelInput from "intl-tel-input/react";
 import { useResultModalStore } from "@/stores/resultModal";
-// import { openModal } from "@/stores/ui";
 
 const schema = z.object({
-  userName: z.string().min(2, "Введите корректное имя"),
-  phone: z
+  username: z.string().min(2, "Введите корректное имя"),
+  userphone: z
     .string()
     .regex(/^\+?\d[\d\s().-]{6,}$/, "Введите корректный номер телефона"),
 });
@@ -36,16 +34,12 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 interface Props {
-  wpBase?: string;
-  formId?: number;
   className?: string;
   fields: any;
   acf: any;
 }
 
 export const  ContactForm: FC<Props> = ({
-  wpBase = "",
-  formId = 123,
   className,
   fields,
   acf
@@ -54,35 +48,24 @@ export const  ContactForm: FC<Props> = ({
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { userName: "", phone: "" },
+    defaultValues: { username: "", userphone: "" },
     mode: "onTouched",
   });
 
   async function onSubmit(values: FormValues) {
+    const id = 692;
     try {
       const r = await sendToCF7({
-        wpBase,
-        formId,
-        values, // { userName, phone }
+        formId: id,
+        values: values,
       });
-
       if (r.status === "mail_sent") {
-        // openModal("success", "Наш менеджер свяжется с вами в ближайшее время.");
         openWith("success");
-        form.reset();
       } else {
         openWith("error");
-        // openModal(
-        //   "error",
-        //   "Попробуйте ещё раз или свяжитесь с нами по телефону/мессенджеру."
-        // );
       }
-    } catch {
+    } catch (e) {
       openWith("error");
-      // openModal(
-      //   "error",
-      //   "Попробуйте ещё раз или свяжитесь с нами по телефону/мессенджеру."
-      // );
     }
   }
 
@@ -128,7 +111,7 @@ export const  ContactForm: FC<Props> = ({
           <div className="grid gap-x-3 gap-y-4 grid-cols-1 items-center">
             <FormField
               control={form.control}
-              name="userName"
+              name="username"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -136,7 +119,7 @@ export const  ContactForm: FC<Props> = ({
                       {...field}
                       disabled={isSubmitting}
                       placeholder="Имя"
-                      aria-invalid={!!form.formState.errors.userName}
+                      aria-invalid={!!form.formState.errors.username}
                       className="bg-white text-gray-600 placeholder:text-gray-800/90 py-2 md:py-3"
                     />
                   </FormControl>
@@ -147,7 +130,7 @@ export const  ContactForm: FC<Props> = ({
 
             {/* Телефон */}
             <FormField
-              name="phone"
+              name="userphone"
               control={form.control}
               render={({ field }) => (
                 <FormItem>

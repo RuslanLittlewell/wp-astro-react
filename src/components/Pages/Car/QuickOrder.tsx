@@ -100,6 +100,7 @@ export const QuickOrder: FC<Props> = ({
         values: {
           username: values.username,
           userphone: values.userphone,
+          rentalPeriod: `${rentalPeriod}`,
           car: carName,
           price: isIndividual
             ? "Индивидуальный расчет"

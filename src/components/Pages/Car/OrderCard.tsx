@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import IntlTelInput from "intl-tel-input/react";
 import "intl-tel-input/styles";
 import { useResultModalStore } from "@/stores/resultModal";
+import { sendToCF7 } from "@/lib/cf7";
 
 interface Prices {
   pledge: string | number;
@@ -42,9 +43,9 @@ interface Props {
 }
 
 const schema = z.object({
-  name: z.string().min(2, "Укажите имя"),
-  days: z.number("Минимум 1 сутки").min(1, "Минимум 1 сутки"),
-  phone: z.string().min(5, "Укажите телефон"),
+  username: z.string().min(2, "Укажите имя"),
+  rentalPeriod: z.number("Минимум 1 сутки").min(1, "Минимум 1 сутки"),
+  userphone: z.string().min(5, "Укажите телефон"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -74,32 +75,46 @@ export const RentalCalculatorCard: FC<Props> = ({
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { days: 1, name: "", phone: "" },
+    defaultValues: { rentalPeriod: 1, username: "", userphone: "" },
     mode: "onChange",
   });
 
-  const days = form.watch("days");
+  const rentalPeriod = form.watch("rentalPeriod");
 
   const tier: { key: TierKey; label: string } = useMemo(() => {
-    if (days >= 30) return { key: "more_month", label: "Более 30 суток" };
-    if (days >= 11) return { key: "almost_month", label: "11–29 суток" };
-    if (days >= 3) return { key: "more_than_week", label: "3–10 суток" };
+    if (rentalPeriod >= 30) return { key: "more_month", label: "Более 30 суток" };
+    if (rentalPeriod >= 11) return { key: "almost_month", label: "11–29 суток" };
+    if (rentalPeriod >= 3) return { key: "more_than_week", label: "3–10 суток" };
     return { key: "one_day", label: "1–2 суток" };
-  }, [days]);
+  }, [rentalPeriod]);
 
   const daily = toNum(prices[tier.key]);
   const isIndividual = tier.key === "more_month";
-  const totalWithPledge = !isIndividual ? daily * days : 0;
+  const totalWithPledge = !isIndividual ? daily * rentalPeriod : 0;
 
-  const onSubmit: SubmitHandler<FormValues> = (values: FormValues) => {
-    console.log("QuickOrder submit:", {
-      ...values,
-      car: carName,
-      price: isIndividual
-        ? "Индивидуальный расчет"
-        : formatBYN(totalWithPledge),
-    });
-    openWith('error');
+  const onSubmit: SubmitHandler<FormValues> = async (values: FormValues) => {
+    const id = 693;
+    try {
+      const r = await sendToCF7({
+        formId: id,
+        values: {
+          username: values.username,
+          userphone: values.userphone,
+          rentalPeriod: `${rentalPeriod}`,
+          car: carName,
+          price: isIndividual
+            ? "Индивидуальный расчет"
+            : formatBYN(totalWithPledge),
+        },
+      });
+      if (r.status === "mail_sent") {
+        openWith("success");
+      } else {
+        openWith("error");
+      }
+    } catch (e) {
+      openWith("error");
+    }
   };
 
   return (
@@ -120,7 +135,7 @@ export const RentalCalculatorCard: FC<Props> = ({
             <FieldRow label="Перепробег" value={String(prices.overrun)} />
           </div>
           <FormField
-            name="name"
+            name="username"
             control={form.control}
             render={({ field }) => (
               <FormItem>
@@ -140,7 +155,7 @@ export const RentalCalculatorCard: FC<Props> = ({
           />
           {/* Телефон */}
           <FormField
-            name="phone"
+            name="userphone"
             control={form.control}
             render={({ field }) => (
               <FormItem>
@@ -149,7 +164,7 @@ export const RentalCalculatorCard: FC<Props> = ({
                 </FormLabel>
                 <FormControl>
                   <Controller
-                    name="phone"
+                    name="userphone"
                     render={({ field: ctrl }) => (
                       <IntlTelInput
                         initialValue={field.value}
@@ -173,7 +188,7 @@ export const RentalCalculatorCard: FC<Props> = ({
 
           {/* Дни */}
           <FormField
-            name="days"
+            name="rentalPeriod"
             control={form.control}
             render={({ field }) => (
               <FormItem>
