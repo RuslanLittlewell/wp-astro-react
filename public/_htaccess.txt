@@ -25,11 +25,15 @@ AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml appl
 FileETag MTime Size
 <IfModule mod_headers.c>
   <FilesMatch "\.(css|js|mjs|woff2?|ttf|otf|svg|jpg|jpeg|png|webp|gif)$">
-    Header set Cache-Control "public, max-age=31536000, immutable"
+    Header always set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
   <FilesMatch "\.(html|json|xml|txt)$">
-    Header set Cache-Control "public, max-age=300, must-revalidate"
+    Header always set Cache-Control "public, max-age=300, must-revalidate"
   </FilesMatch>
+  <IfModule mod_setenvif.c>
+    SetEnvIf Request_URI "^/_astro/.*$" astro_bundle
+    Header always set Cache-Control "public, max-age=31536000, immutable" env=astro_bundle
+  </IfModule>
 </IfModule>
 <IfModule mod_expires.c>
   ExpiresActive On
