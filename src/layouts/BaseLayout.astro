@@ -1,5 +1,5 @@
 ---
-import "@styles/global.css";
+import globalStyles from "@styles/global.css?inline";
 import { ClientRouter } from "astro:transitions";
 import Header from "@/layouts/Header.astro";
 import Footer from "./Footer.astro";
@@ -81,6 +81,7 @@ const links = [
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
+    <style is:global set:html={globalStyles} />
     <ClientRouter />
   </head>
   <body

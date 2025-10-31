@@ -1,9 +1,9 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/splide/dist/css/splide.min.css";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import "yet-another-react-lightbox/styles.css";
+import splideCssUrl from "@splidejs/splide/dist/css/splide.min.css?url";
+import lightboxCssUrl from "yet-another-react-lightbox/styles.css?url";
 
 interface Props {
   images: string[];
@@ -11,6 +11,20 @@ interface Props {
 
 export const CarSlider: FC<Props> = ({ images }) => {
   const [index, setIndex] = useState<number | null>(null);
+  useEffect(() => {
+    const ensureStylesheet = (href: string) => {
+      if (document.head.querySelector(`link[data-dynamic-styles="${href}"]`)) {
+        return;
+      }
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = href;
+      link.dataset.dynamicStyles = href;
+      document.head.appendChild(link);
+    };
+    ensureStylesheet(splideCssUrl);
+    ensureStylesheet(lightboxCssUrl);
+  }, []);
 
   return (
     <div className="w-full mb-10">
