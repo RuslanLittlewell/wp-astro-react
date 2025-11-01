@@ -109,6 +109,7 @@ export const RentalCalculatorCard: FC<Props> = ({
       });
       if (r.status === "mail_sent") {
         openWith("success");
+        form.reset();
       } else {
         openWith("error");
       }
