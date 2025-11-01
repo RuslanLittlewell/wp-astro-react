@@ -11,11 +11,11 @@ export default function GlobalSheet() {
   const { open, payload, close } = useSheetStore();
   return (
     <UISheet open={open} onOpenChange={(v) => (v ? null : close())}>
-      <SheetContent side={payload?.side ?? "right"} className="h-[100vh] g:p-4">
+      <SheetContent side={payload?.side ?? "right"} className="h-[100vh] g:p-4 !overflow-y-auto">
         <SheetHeader>
           {payload?.title && <SheetTitle>{payload.title}</SheetTitle>}
         </SheetHeader>
-        <div className="flex flex-col justify-center overflow-auto">
+        <div className="flex flex-col justify-center">
           <img
             src={payload?.image}
             alt={payload?.title}
