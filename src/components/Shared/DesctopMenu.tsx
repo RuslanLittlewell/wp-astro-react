@@ -44,7 +44,7 @@ export const DesctopMenu: FC<Props> = ({ links }) => {
           ) : (
             <NavigationMenuItem key={idx}>
               <NavigationMenuLink asChild>
-                <a className="text-white px-2 py-1 rounded hover:text-gray-700 hover:bg-white" href={link.link}>{link.name}</a>
+                <a className="text-white px-1 py-1 rounded hover:text-gray-700 hover:bg-white" href={link.link}>{link.name}</a>
               </NavigationMenuLink>
             </NavigationMenuItem>
           )
