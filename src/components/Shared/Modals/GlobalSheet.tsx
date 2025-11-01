@@ -21,7 +21,7 @@ export default function GlobalSheet() {
             alt={payload?.title}
             loading="lazy"
             decoding="async"
-            className="relative object-cover my-1 lg:my-4 max-w-[308px] mx-auto md:max-w-auto"
+            className="relative object-cover my-1 lg:my-4 max-w-[308px] w-full mx-auto md:max-w-auto"
           />
         <QuickOrder
           fields={payload?.car.acf}
