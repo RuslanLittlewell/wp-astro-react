@@ -57,7 +57,7 @@ export async function sendToCF7({
   });
 
   const text = [
-    "*🚗 Новая заявка!*",
+    "*🚗 Новая заявка*",
     `👤 Имя: ${mdEscape(values.username)}`,
     `📞 Телефон: ${mdEscape(values.userphone)}`,
     values.car ? `🚘 Авто: ${mdEscape(values.car)}` : "",
