@@ -54,27 +54,28 @@ export async function sendToCF7({
     method: "POST",
     body: fd,
   });
-  const cf7Data = await res.json();
 
-      const text =
-      `*Новая заявка*\\n` +
-      `Имя: ${mdEscape(values.username)}\\n` +
-      `Телефон: ${mdEscape(values.userphone)}\\n` +
-      (values.car ? `Авто: ${mdEscape(values.car)}\\n` : "") +
-      (values.rentalPeriod ? `Период: ${mdEscape(values.rentalPeriod)}\\n` : "") +
-      (values.price ? `Цена: ${mdEscape(values.price)}\\n` : "") +
-      `Статус CF7: ${mdEscape(cf7Data.status || "unknown")}`;
+  const text = [
+    "*🚗 Новая заявка!*",
+    `👤 Имя: ${mdEscape(values.username)}`,
+    `📞 Телефон: ${mdEscape(values.userphone)}`,
+    values.car ? `🚘 Авто: ${mdEscape(values.car)}` : "",
+    values.rentalPeriod ? `🕒 Период: ${mdEscape(values.rentalPeriod)}` : "",
+    values.price ? `💰 Цена: ${mdEscape(values.price)}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
 
-    const tgRes = await fetch(`https://api.telegram.org/bot${acf.bot_token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: 427762530,
-        text,
-        parse_mode: "MarkdownV2",
-        disable_web_page_preview: true,
-      }),
-    });
+  fetch(`https://api.telegram.org/bot${acf.bot_token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: 427762530,
+      text,
+      parse_mode: "MarkdownV2",
+      disable_web_page_preview: true,
+    }),
+  });
 
   if (!res.ok) throw new Error(`CF7 HTTP ${res.status}`);
   return (await res.json()) as Cf7Response;
