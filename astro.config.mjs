@@ -6,6 +6,16 @@ import { fileURLToPath } from "node:url";
 import { imageService } from "@unpic/astro/service";
 
 export default defineConfig({
+    image: {
+    service: imageService({ fallbackService: 'sharp', layout: 'constrained' }),
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.car1.by',
+        pathname: '/wp-content/uploads/**',
+      },
+    ],
+  },
   site: "https://car1.by",
   integrations: [react(), tailwind(), sitemap()],
   server: {

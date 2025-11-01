@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { wpFetch } from "@/lib/wp";
 import FAQ from "@/components/Pages/Home/Sections/FAQ.astro";
+import { getImage } from 'astro:assets';
 
 interface Car {
   acf: any;
@@ -22,7 +23,22 @@ interface Car {
   slug: string;
 }
 
-const cars: Car[] = await wpFetch("/wp/v2/cars?per_page=100");
+const cars = await wpFetch('/wp/v2/cars?per_page=100');
+const carsWithCovers = await Promise.all(
+  cars.map(async (car: any) => {
+    const [original] = car.acf?.car?.car_images ?? [];
+    const cover = original
+      ? await getImage({
+          src: original,
+          width: 640,
+          format: 'webp',
+          quality: 70,
+        })
+      : null;
+
+    return { ...car, cover };
+  }),
+);
 const page = await wpFetch('/wp/v2/pages/50');
 const {acf: pageData} = page
 const { seo } = pageData
@@ -50,7 +66,7 @@ const { seo } = pageData
   </Container>
   <Container big class="mb-24">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-[70px]">
-      {cars.map((car) => <CarCard car={car} client:load />)}
+      {carsWithCovers.map((car) => <CarCard car={car} cover={car.cover} client:load />)}
     </div>
       <FAQ fields={pageData.faq} />
   </Container>

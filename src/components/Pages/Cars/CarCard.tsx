@@ -1,7 +1,22 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { CogIcon, FuelIcon, GaugeIcon } from "lucide-react";
 import { Sheet } from "@/stores/sheet";
+import { GetImageResult } from "astro";
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = React.useState(false);
+
+  React.useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) setMatches(media.matches);
+    const listener = () => setMatches(media.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, [matches, query]);
+
+  return matches;
+}
 
 interface Car {
   acf: {
@@ -25,14 +40,25 @@ interface Car {
 
 interface Props {
   car: Car;
+  cover?: GetImageResult | null;
 }
 
-export const CarCard: React.FC<Props> = ({ car }) => {
+export const CarCard: React.FC<Props> = ({ car, cover }) => {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const WrapperTag: any = isDesktop ? "a" : "div";
   const { acf } = car;
   const price = acf.prices.one_day;
   const carInfo = acf.car.car_info;
   const images = acf.car.car_images;
   const { engine, fuel_consumption, transmission } = carInfo;
+  const fallbackSrc = car.acf.car.car_images?.[0];
+
+  const attrs = cover?.attributes ?? {
+    width: 500,
+    height: 500,
+    loading: "lazy",
+    decoding: "async",
+  };
 
   const handleOpenOrder = (e: any) => {
     e.stopPropagation();
@@ -49,12 +75,9 @@ export const CarCard: React.FC<Props> = ({ car }) => {
     return (
       <>
         <img
-          src={images[0]}
+          src={cover?.src ?? fallbackSrc}
           alt={car.title.rendered}
-          width={500}
-          height={500}
-          loading="lazy"
-          decoding="async"
+          {...attrs}
           className="relative w-full h-full object-cover group-hover:scale-125 transition-all ease-in-out duration-300"
         />
 
@@ -109,16 +132,11 @@ export const CarCard: React.FC<Props> = ({ car }) => {
     );
   };
   return (
-    <>
-      <a
-        className="relative rounded-md overflow-hidden group shadow-md hidden md:block"
-        href={`/cars/${car.slug}`}
-      >
-        {renderContent()}
-      </a>
-      <div className="relative rounded-md overflow-hidden group shadow-md md:hidden">
-        {renderContent()}
-      </div>
-    </>
+       <WrapperTag
+      className="relative rounded-md overflow-hidden group shadow-md block"
+      {...(isDesktop && { href: `/cars/${car.slug}` })}
+    >
+      {renderContent()}
+    </WrapperTag>
   );
 };

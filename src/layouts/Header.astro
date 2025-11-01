@@ -65,14 +65,17 @@ const { links, data } = Astro.props;
   </div>
 </header>
 <script is:inline>
-  const onScroll = () => {
-    if (window?.scrollY > 0) {
-      document?.documentElement.classList.add("scrolled");
-    } else {
-      document?.documentElement.classList.remove("scrolled");
-    }
-  };
+    if(window && document) {
+        const onScroll = () => {
+      if (window?.scrollY > 0) {
+        document?.documentElement.classList.add("scrolled");
+      } else {
+        document?.documentElement.classList.remove("scrolled");
+      }
+    };
 
-  window?.addEventListener("scroll", onScroll);
-  onScroll();
+    window?.addEventListener("scroll", onScroll);
+    onScroll();
+  }
+
 </script>

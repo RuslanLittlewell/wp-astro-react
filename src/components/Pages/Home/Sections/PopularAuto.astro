@@ -4,18 +4,34 @@ import { fetchGoodsWithACF } from "@/lib/wp";
 import { CarCard } from "@/components/Pages/Cars/CarCard";
 import SectionTitle from "@/components/Shared/SectionTitle.astro";
 import { Button } from "@/components/ui/button";
+import { getImage } from 'astro:assets';
 
 const { fields } = Astro.props;
 const ids = (fields || []).map((i: { car: number }) => i.car);
 const cars = await fetchGoodsWithACF(ids);
-const carsList = Array.isArray(cars) ? cars : [];
+const carsWithCovers = await Promise.all(
+  cars.map(async (car: any) => {
+    const original = car.acf?.car?.car_images[0] ?? [];
+    const cover = original
+      ? await getImage({
+          src: original,
+          width: 640,
+          format: 'webp',
+          quality: 70,
+        })
+      : null;
+
+    return { ...car, cover };
+  }),
+);
+const carsList = Array.isArray(carsWithCovers) ? carsWithCovers : [];
 ---
 
 <section class="py-10 lg:py-[75px] w-full">
   <Container big>
     <SectionTitle title="Популярные авто" />
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-      {carsList.map((car) => <CarCard car={car} client:load />)}
+      {carsList.map((car) => <CarCard car={car} cover={car.cover} client:load />)}
     </div>
     <Button asChild size="lg">
       <a

@@ -63,8 +63,8 @@ export const SocialLinks = ({ data, className, showInstagram }: Props) => {
               y2="30"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#32FD57" />
-              <stop offset="1" stop-color="#23C741" />
+              <stop stopColor="#32FD57" />
+              <stop offset="1" stopColor="#23C741" />
             </linearGradient>
           </defs>
         </svg>
@@ -174,8 +174,8 @@ export const SocialLinks = ({ data, className, showInstagram }: Props) => {
                 gradientUnits="userSpaceOnUse"
                 gradientTransform="translate(1.94157 29.3428) scale(38.0889)"
               >
-                <stop offset="0.09" stop-color="#FA8F21" />
-                <stop offset="0.78" stop-color="#D82D7E" />
+                <stop offset="0.09" stopColor="#FA8F21" />
+                <stop offset="0.78" stopColor="#D82D7E" />
               </radialGradient>
             </defs>
           </svg>
