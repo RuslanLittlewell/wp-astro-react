@@ -57,11 +57,11 @@ export async function sendToCF7({
   });
 
   const text = [
-    "*🚗 Новая заявка*",
+    "*Новая заявка*",
     `👤 Имя: ${mdEscape(values.username)}`,
     `📞 Телефон: ${mdEscape(values.userphone)}`,
     values.car ? `🚘 Авто: ${mdEscape(values.car)}` : "",
-    values.rentalPeriod ? `🕒 Период: ${mdEscape(values.rentalPeriod)}` : "",
+    values.rentalPeriod ? `🕒 Дней аренды: ${mdEscape(values.rentalPeriod)}` : "",
     values.price ? `💰 Цена: ${mdEscape(values.price)}` : "",
   ]
     .filter(Boolean)
@@ -71,7 +71,7 @@ export async function sendToCF7({
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      chat_id: 427762530,
+      chat_id: -1002826766234,
       text,
       parse_mode: "MarkdownV2",
       disable_web_page_preview: true,
