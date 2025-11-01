@@ -8,8 +8,9 @@ export type Cf7Response = {
   invalid_fields?: Array<{ into: string; message: string; idref: string }>;
 };
 
-function mdEscape(s: string) {
-  return s.replace(/([_*\[\]()~`>#+\-=|{}.!\\])/g, "\\$1");
+function mdEscape(text: string) {
+  if (!text) return "";
+  return text.replace(/([_*\[\]()~`>#+\-=|{}.!\\])/g, "\\$1");
 }
 
 export async function sendToCF7({
