@@ -68,8 +68,10 @@ export const RentalCalculatorCard: FC<Props> = ({
   };
 
   const formatBYN = (n: number): string =>
-    n ? new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(n) +
-    " BYN" : 'Добавьте кол. суток';
+    n
+      ? new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(n) +
+        " BYN"
+      : "Добавьте кол. суток";
 
   type TierKey = "one_day" | "more_than_week" | "almost_month" | "more_month";
 
@@ -82,9 +84,12 @@ export const RentalCalculatorCard: FC<Props> = ({
   const rentalPeriod = form.watch("rentalPeriod");
 
   const tier: { key: TierKey; label: string } = useMemo(() => {
-    if (rentalPeriod >= 30) return { key: "more_month", label: "Более 30 суток" };
-    if (rentalPeriod >= 11) return { key: "almost_month", label: "11–29 суток" };
-    if (rentalPeriod >= 3) return { key: "more_than_week", label: "3–10 суток" };
+    if (rentalPeriod >= 30)
+      return { key: "more_month", label: "Более 30 суток" };
+    if (rentalPeriod >= 11)
+      return { key: "almost_month", label: "11–29 суток" };
+    if (rentalPeriod >= 3)
+      return { key: "more_than_week", label: "3–10 суток" };
     return { key: "one_day", label: "1–2 суток" };
   }, [rentalPeriod]);
 
@@ -172,7 +177,8 @@ export const RentalCalculatorCard: FC<Props> = ({
                         onChangeNumber={field.onChange}
                         initOptions={{
                           initialCountry: "by",
-                          containerClass: "flex w-full rounded-xl border border-input shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-denim-100 px-4 py-2 lg:py-2 text-sm lg:text-md text-denim-800",
+                          containerClass:
+                            "flex w-full rounded-xl border border-input shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-denim-100 px-4 py-2 lg:py-2 text-sm lg:text-md text-denim-800",
                           nationalMode: false,
                           separateDialCode: true,
                           loadUtils: () =>
@@ -237,32 +243,36 @@ export const RentalCalculatorCard: FC<Props> = ({
           </div>
 
           <Button
-            className="w-full mb-2 rounded-xl bg-denim-300 hover:bg-denim-300/80"
-            size="lg"
+            type="submit"
+            className="w-full rounded-xl bg-denim-300 hover:bg-denim-300/80"
+            size="md"
+            disabled={form.formState.isSubmitting}
           >
-            Оставить заявку на аренду
+            {form.formState.isSubmitting
+              ? "Отправляем..."
+              : "Оставить заявку на аренду"}
           </Button>
 
           {/* Contacts */}
           <div className="grid grid-cols-3 gap-3 mb-1">
-             <IconButton
-                label="Позвонить"
-                icon={PhoneIcon}
-                link={options.viber}
-                className="hover:bg-[#7953FD]"
-              />
-              <IconButton
-                label="WhatsApp"
-                icon={WhatsAppIcon}
-                link={options.wa}
-                className="hover:bg-[#23C741]"
-              />
-              <IconButton
-                label="Telegram"
-                icon={TelegramIcon}
-                link={options.telegram}
-                className="hover:bg-[#24A1DE]"
-              />
+            <IconButton
+              label="Позвонить"
+              icon={PhoneIcon}
+              link={options.viber}
+              className="hover:bg-[#7953FD]"
+            />
+            <IconButton
+              label="WhatsApp"
+              icon={WhatsAppIcon}
+              link={options.wa}
+              className="hover:bg-[#23C741]"
+            />
+            <IconButton
+              label="Telegram"
+              icon={TelegramIcon}
+              link={options.telegram}
+              className="hover:bg-[#24A1DE]"
+            />
           </div>
 
           <p className="text-xs text-neutral-500 text-center leading-relaxed mt-3">

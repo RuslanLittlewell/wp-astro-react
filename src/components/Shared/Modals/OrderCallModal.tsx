@@ -58,7 +58,7 @@ export function CallbackModal() {
     }
     close();
   };
-
+  const isSubmitting = form.formState.isSubmitting;
   return (
     <Dialog open={open} onOpenChange={(v) => (v ? null : close())}>
       <form>
@@ -136,9 +136,11 @@ export function CallbackModal() {
               className="bg-denim-300 mx-auto"
               size="lg"
               type="submit"
+              disabled={isSubmitting}
+              aria-busy={isSubmitting}
               onClick={form.handleSubmit(onSubmit)}
             >
-              Отправить
+              {isSubmitting ? "Отправляем..." : "Отправить"}
             </Button>
           </DialogFooter>
         </DialogContent>
