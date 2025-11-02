@@ -32,6 +32,12 @@ const {
 } = seo;
 const ymd = new Date().toISOString().split("T")[0];
 
+// aggregateRating: {
+//   "@type": "AggregateRating",
+//   ratingValue: "5.0",
+//   reviewCount: "276",
+// },
+
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -56,11 +62,6 @@ const jsonLd = [
       addressLocality: "Брест",
       addressCountry: "BY",
       streetAddress: "ул. Шоссейная, 16, офис 202",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: "276",
     },
     sameAs: [
       "https://api.whatsapp.com/send/?phone=375257808808",
