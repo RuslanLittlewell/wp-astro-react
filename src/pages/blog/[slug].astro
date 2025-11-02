@@ -55,7 +55,7 @@ const jsonLd = {
   className="scrolled"
   title={post.title.rendered}
   {jsonLd}
-  image={post.acf?.seo.image}
+  image={post.acf?.seo.seo_image}
   keywords={post.acf?.seo.keywords}
   description={post.acf?.seo.short_description}
 >
@@ -77,7 +77,7 @@ const jsonLd = {
     </Breadcrumb>
     <article class="max-w-3xl mx-auto py-8">
       <Image
-        src={post.acf?.image || "/default-image.jpg"}
+        src={post.acf?.seo.seo_image || "/default-image.jpg"}
         alt={post.title.rendered}
         width={800}
         height={450}
