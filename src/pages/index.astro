@@ -22,7 +22,7 @@ const {
   seo,
   faq,
   services,
-  form_section
+  form_section,
 } = pageDdata;
 const {
   seo_title: title,
@@ -30,15 +30,52 @@ const {
   short_description: description,
   seo_image: image,
 } = seo;
+const ymd = new Date().toISOString().split("T")[0];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  headline: title,
+  datePublished: ymd,
+  dateModified: ymd,
+  inLanguage: "ru",
+  description: description,
+  mainEntityOfPage: { "@type": "WebPage", "@id": "https://car1.by" },
+  image: image,
+  email: "car1prokat@gmail.com",
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+375 25 780-88-08",
+    contactType: "customer service",
+    areaServed: "BY",
+    availableLanguage: ["Russian", "English"],
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Брест",
+    addressCountry: "BY",
+    streetAddress: "ул. Шоссейная, 16, офис 202",
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "5.0",
+    reviewCount: "276",
+  },
+  sameAs: [
+    "https://api.whatsapp.com/send/?phone=375257808808",
+    "https://t.me/Car4_brest",
+    "https://www.instagram.com/car4.by/",
+  ],
+};
 ---
 
-<BaseLayout {title} {keywords} {description} {image}>
+<BaseLayout {title} {keywords} {jsonLd} {description} {image}>
   <HeroSection {hero_block} {image} />
   <PopularAuto fields={recomendation_auto} />
   <AboutSection {status} {about_us} />
   <RentFlowSection fields={for_rent} />
   <ConditionSection />
-  <FormSection fields={form_section}/>
+  <FormSection fields={form_section} />
   <Services fields={services} />
   <MapSection />
   <FAQ fields={faq} />

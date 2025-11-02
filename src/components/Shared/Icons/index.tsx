@@ -59,3 +59,4 @@ export function EarthIcon({ className = "", width = "100%", height = "100%" }) {
     </svg>
   );
 }
+

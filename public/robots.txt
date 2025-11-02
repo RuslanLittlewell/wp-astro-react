@@ -27,5 +27,11 @@ Disallow: /articles/<int:year>/ [name='articles_by_year']
 Disallow: /article/<str:art_url>/ [name='article_one']
 Disallow: /info_page/<str:page_url>/ [name='user_page']
 
+Allow: /cars/
+Allow: /conditions/
+Allow: /tarifs/
+Allow: /blog/
+
+
 Sitemap: https://car1.by/sitemap-index.xml
 Host: car1.by
