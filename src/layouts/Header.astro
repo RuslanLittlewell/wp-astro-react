@@ -1,10 +1,8 @@
 ---
 import MobileMenu from "@/components/Shared/MobileMenu";
 import { DesctopMenu } from "@/components/Shared/DesctopMenu";
-import Logo from "@assets/icons/Car1Logo.svg";
-import { Phone, MapPin, ClockAlert } from "lucide-astro";
+import { MapPin, ClockAlert } from "lucide-astro";
 import { SocialLinks } from "@/components/Shared/SocialLinks";
-import { Image } from "astro:assets";
 
 const { links, data } = Astro.props;
 ---
@@ -18,7 +16,13 @@ const { links, data } = Astro.props;
   <div class="flex w-full justify-between items-center">
     <div class="flex gap-10 items-center">
       <a href="/" aria-label="Car1.by"
-        ><img alt="logo" src={data.logo} class="h-[32px] !object-contain" /></a
+        ><img
+          alt="logo"
+          src={data.logo}
+          height={32}
+          width={80}
+          class="h-[32px] !object-contain"
+        /></a
       >
       <div class="hidden md:flex flex-col">
         <a
