@@ -99,21 +99,11 @@ const links = [
 
     {!isBot && (
       <>
-        <script is:inline type="text/javascript">
+        <script is:inline async type="text/javascript">
           (function () {
             if (typeof navigator === "undefined") {
               return;
             }
-            const ua = navigator.userAgent.toLowerCase();
-            const isClientBot =
-              navigator.webdriver ||
-              /(bot|crawler|spider|crawling|lighthouse|gtmetrix|pagespeed)/.test(
-                ua
-              );
-            if (isClientBot) {
-              return;
-            }
-
             (function (m, e, t, r, i, k, a) {
               m[i] =
                 m[i] ||
@@ -161,9 +151,10 @@ const links = [
 
         <script
           is:inline
+          async
           src="https://www.googletagmanager.com/gtag/js?id=G-XLJDV4XM8V"
         ></script>
-        <script is:inline>
+        <script is:inline async>
           window.dataLayer = window.dataLayer || [];
           function gtag() {
             window.dataLayer.push(arguments);
