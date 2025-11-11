@@ -31,7 +31,7 @@ Allow: /cars/
 Allow: /conditions/
 Allow: /tarifs/
 Allow: /blog/
-
+Allow: /
 
 Sitemap: https://car1.by/sitemap-index.xml
 Host: car1.by
