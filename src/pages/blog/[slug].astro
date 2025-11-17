@@ -26,35 +26,34 @@ export async function getStaticPaths() {
     params: { slug: post.slug },
   }));
 }
-const iso = post.date;
-const ymd = iso.split("T")[0];
+// const iso = post.date;
+// const ymd = iso.split("T")[0];
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "NewsArticle",
-  headline: post.title.rendered,
-  datePublished: ymd,
-  dateModified: ymd,
-  inLanguage: "ru",
-  author: {
-    "@type": "Organization",
-    name: "Прокат автомобилей в Бресте",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Прокат автомобилей в Бресте",
-  },
-  articleSection: "Новости",
-  description: "Cервис проката автомобилей в Бресте",
-  mainEntityOfPage: { "@type": "WebPage", "@id": url },
-  image: post.acf?.image || "",
-};
+// const jsonLd = {
+//   "@context": "https://schema.org",
+//   "@type": "NewsArticle",
+//   headline: post.title.rendered,
+//   datePublished: ymd,
+//   dateModified: ymd,
+//   inLanguage: "ru",
+//   author: {
+//     "@type": "Organization",
+//     name: "Прокат автомобилей в Бресте",
+//   },
+//   publisher: {
+//     "@type": "Organization",
+//     name: "Прокат автомобилей в Бресте",
+//   },
+//   articleSection: "Новости",
+//   description: "Cервис проката автомобилей в Бресте",
+//   mainEntityOfPage: { "@type": "WebPage", "@id": url },
+//   image: post.acf?.image || "",
+// };
 ---
 
 <BaseLayout
   className="scrolled"
   title={post.title.rendered}
-  {jsonLd}
   image={post.acf?.seo.seo_image}
   keywords={post.acf?.seo.keywords}
   description={post.acf?.seo.short_description}
