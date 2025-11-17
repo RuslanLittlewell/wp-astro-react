@@ -1,31 +1,6 @@
 User-agent: *
 
-Disallow: /ckeditor/
-Disallow: /i18n/
-Disallow: /accounts/signup/ [name='signup']
-Disallow: /accounts/login/cancelled/
-Disallow: /accounts/
-Disallow: /messages/
-Disallow: /user_account/
-Disallow: /routes/
-Disallow: /subscribes/
-Disallow: /messages/
-Disallow: /reference_data/
-Disallow: /get_articles_block/ [name='get_articles_block_ajax']
-Disallow: /test_404 [name='page_404']
-Disallow: /send_push
-Disallow: /webpush/
-Disallow: /sw.js
 Disallow: /admin/
-Disallow: /[name='main']
-Disallow: /page/<str:url>/ [name='static_page']
-Disallow: /test_code [name='test_code']
-Disallow: /profile/
-Disallow: /routes/
-Disallow: /articles/ [name='articles']
-Disallow: /articles/<int:year>/ [name='articles_by_year']
-Disallow: /article/<str:art_url>/ [name='article_one']
-Disallow: /info_page/<str:page_url>/ [name='user_page']
 
 Allow: /cars/
 Allow: /conditions/
