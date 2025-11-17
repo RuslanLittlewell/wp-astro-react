@@ -30,22 +30,20 @@ const {
   short_description: description,
   seo_image: image,
 } = seo;
+
+
 const ymd = new Date().toISOString().split("T")[0];
 
-// aggregateRating: {
-//   "@type": "AggregateRating",
-//   ratingValue: "5.0",
-//   reviewCount: "276",
-// },
-
-const jsonLd = [
+const jsonLd =
   {
     "@context": "https://schema.org",
     "@type": "Organization",
+    name: title,
     headline: title,
     datePublished: ymd,
     dateModified: ymd,
     inLanguage: "ru",
+    url: "https://car1.by/",
     description: description,
     mainEntityOfPage: { "@type": "WebPage", "@id": "https://car1.by" },
     image: image,
@@ -63,55 +61,39 @@ const jsonLd = [
       addressCountry: "BY",
       streetAddress: "ул. Шоссейная, 16, офис 202",
     },
+    hasPart: [
+      {
+        "@type": "WebPage",
+        name: "Автопарк",
+        url: "https://car1.by/cars/",
+      },
+      {
+        "@type": "WebPage",
+        name: "Условия",
+        url: "https://car1.by/conditions/",
+      },
+      {
+        "@type": "WebPage",
+        name: "Тарифы",
+        url: "https://car1.by/tarifs/",
+      },
+      {
+        "@type": "WebPage",
+        name: "Новости",
+        url: "https://car1.by/blog/",
+      },
+    ],
     sameAs: [
       "https://api.whatsapp.com/send/?phone=375257808808",
       "https://t.me/Car4_brest",
       "https://www.instagram.com/car4.by/",
     ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Car1.by — Прокат авто в Бресте",
-    url: "https://car1.by/",
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Главная",
-        item: "https://car1.by/",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Автопарк",
-        item: "https://car1.by/cars/",
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: "Тарифы",
-        item: "https://car1.by/tarifs/",
-      },
-      {
-        "@type": "ListItem",
-        position: 4,
-        name: "Условия аренды",
-        item: "https://car1.by/conditions/",
-      },
-      {
-        "@type": "ListItem",
-        position: 5,
-        name: "Новости",
-        item: "https://car1.by/blog/",
-      },
-    ],
-  },
-];
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      reviewCount: "276",
+    },
+  }
 ---
 
 <BaseLayout {title} {keywords} {jsonLd} {description} {image}>
