@@ -11,6 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import ContentLayout from "@/layouts/ContentLayout.astro";
 
 const page = await wpFetch(`/wp/v2/pages/152`);
 const { acf: pageData } = page;
@@ -36,9 +37,8 @@ const { seo } = pageData;
       </BreadcrumbList>
     </Breadcrumb>
     <MainTitle title={page.title.rendered} />
-    <div
-      class="text-sm md:text-base [&_p]:mb-5 [&_h2]:font-bold [&_h2]:mb-8 [&_h2]:text-2xl [&_h3]:font-semibold [&_h3]:mb-6 [&_h3]:text-xl"
-      set:html={page.content.rendered}
-    />
+     <ContentLayout>
+      <div set:html={page.content.rendered} />
+    </ContentLayout>
   </Container>
 </BaseLayout>
