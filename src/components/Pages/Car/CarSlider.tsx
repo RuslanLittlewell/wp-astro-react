@@ -2,7 +2,6 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { FC, useEffect, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import splideCssUrl from "@splidejs/splide/dist/css/splide.min.css?url";
 import lightboxCssUrl from "yet-another-react-lightbox/styles.css?url";
 
 interface Props {
@@ -10,6 +9,7 @@ interface Props {
 }
 
 export const CarSlider: FC<Props> = ({ images }) => {
+
   const [index, setIndex] = useState<number | null>(null);
   useEffect(() => {
     const ensureStylesheet = (href: string) => {
@@ -22,7 +22,7 @@ export const CarSlider: FC<Props> = ({ images }) => {
       link.dataset.dynamicStyles = href;
       document.head.appendChild(link);
     };
-    ensureStylesheet(splideCssUrl);
+    // ensureStylesheet(splideCssUrl);
     ensureStylesheet(lightboxCssUrl);
   }, []);
 

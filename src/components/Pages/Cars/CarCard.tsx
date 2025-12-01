@@ -23,6 +23,7 @@ interface Car {
     prices: {
       one_day?: number;
     };
+    transfer: boolean;
     car: {
       car_info: {
         engine?: string;
@@ -30,7 +31,7 @@ interface Car {
         transmission?: string;
       };
       car_images: string[];
-    };
+    }
   };
   title: {
     rendered: string;
@@ -52,7 +53,7 @@ export const CarCard: React.FC<Props> = ({ car, cover }) => {
   const images = acf.car.car_images;
   const { engine, fuel_consumption, transmission } = carInfo;
   const fallbackSrc = car.acf.car.car_images?.[0];
-
+  const isTransfer = acf.transfer
   const attrs = cover?.attributes ?? {
     width: 500,
     height: 500,
@@ -87,9 +88,10 @@ export const CarCard: React.FC<Props> = ({ car, cover }) => {
               {car.title.rendered}
               {price && (
                 <p className="text-denim-100 font-semibold text-2xl">
-                  <span className="text-denim-300">от</span>{" "}
+                  {isTransfer ? <span className="text-denim-300">Трансфер</span> : <><span className="text-denim-300">от</span>{" "}
                   <span className="text-[28px]">{price}</span>{" "}
                   <span className="text-denim-300">BYN</span>
+                  </>}
                 </p>
               )}
             </h2>

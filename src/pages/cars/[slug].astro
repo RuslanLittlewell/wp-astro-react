@@ -17,6 +17,8 @@ import {
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Container from "@/layouts/Container.astro";
 import { wpFetch } from "@/lib/wp";
+import "@splidejs/splide/dist/css/splide.min.css";
+// import "lightgallery/css/lightgallery.css";
 
 export async function getStaticPaths() {
   const cars = await wpFetch(`/wp/v2/cars?per_page=100`);

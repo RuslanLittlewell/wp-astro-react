@@ -36,7 +36,7 @@ interface Prices {
 }
 
 interface Props {
-  fields: { prices: Prices };
+  fields: { prices: Prices, transfer: boolean };
   className?: string;
   carName?: string;
   options: any;
@@ -56,6 +56,7 @@ export const RentalCalculatorCard: FC<Props> = ({
   carName,
   options,
 }) => {
+  const isTransfer = fields.transfer;
   const { prices } = fields;
   const { openWith } = useResultModalStore();
 
@@ -71,7 +72,7 @@ export const RentalCalculatorCard: FC<Props> = ({
     n
       ? new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(n) +
         " BYN"
-      : "Добавьте кол. суток";
+      : isTransfer ? "Трансфер" : "Добавьте кол. суток";
 
   type TierKey = "one_day" | "more_than_week" | "almost_month" | "more_month";
 
@@ -105,9 +106,9 @@ export const RentalCalculatorCard: FC<Props> = ({
         values: {
           username: values.username,
           userphone: values.userphone,
-          rentalPeriod: `${rentalPeriod}`,
+          rentalPeriod: isTransfer ? 'Трансфер' : `${rentalPeriod}`,
           car: carName,
-          price: isIndividual
+          price: isTransfer ? 'Трансфер' : isIndividual
             ? "Индивидуальный расчет"
             : formatBYN(totalWithPledge),
         },
@@ -137,7 +138,7 @@ export const RentalCalculatorCard: FC<Props> = ({
         >
           {/* Инфо */}
           <div className="flex gap-2">
-            <FieldRow label="Тариф" value={tier.label} />
+            <FieldRow label="Тариф" value={isTransfer ? "Трансфер" : tier.label} />
             <FieldRow label="Перепробег" value={String(prices.overrun)} />
           </div>
           <FormField
@@ -194,6 +195,7 @@ export const RentalCalculatorCard: FC<Props> = ({
           />
 
           {/* Дни */}
+          {!isTransfer &&
           <FormField
             name="rentalPeriod"
             control={form.control}
@@ -215,10 +217,10 @@ export const RentalCalculatorCard: FC<Props> = ({
                 <FormMessage />
               </FormItem>
             )}
-          />
+          />}
 
           {/* Текущая ставка */}
-          <div className="mb-2 text-xs lg:text-sm text-denim-300">
+          {!isTransfer && <div className="mb-2 text-xs lg:text-sm text-denim-300">
             {isIndividual ? (
               <span>
                 Для аренды на срок более 30 суток действует индивидуальный
@@ -230,11 +232,11 @@ export const RentalCalculatorCard: FC<Props> = ({
                 <b className="text-denim-900">{daily} BYN/сутки</b>
               </span>
             )}
-          </div>
+          </div>}
 
-          <div className="h-px bg-neutral-800" />
+          {!isTransfer && <div className="h-px bg-neutral-800" />}
           <div className="mb-4">
-            <div className="text-denim-900 text-sm">Итого:</div>
+            {!isTransfer && <div className="text-denim-900 text-sm">Итого:</div>}
             <div className="text-2xl text-end font-semibold tracking-tight">
               {isIndividual
                 ? "Индивидуальный расчет"
