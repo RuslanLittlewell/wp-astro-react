@@ -2,8 +2,8 @@
 import CarInfo from "@/components/Pages/Car/CarInfo.astro";
 import { CarSlider } from "@/components/Pages/Car/CarSlider";
 import { RentalCalculatorCard } from "@/components/Pages/Car/OrderCard";
-import { RequirementsBlock } from "@/components/Pages/Car/ReqBlock";
 import ConditionSection from "@/components/Pages/Home/Sections/ConditionSection.astro";
+import FormSection from "@/components/Pages/Home/Sections/FormSection.astro";
 import MapSection from "@/components/Pages/Home/Sections/MapSection.astro";
 import PopularAuto from "@/components/Pages/Home/Sections/PopularAuto.astro";
 import {
@@ -40,6 +40,9 @@ interface Props {
 const { car } = Astro.props;
 const { acf } = car;
 const { acf: options } = await wpFetch("/acf/v3/options/options");
+
+const mainPage = await wpFetch(`/acf/v3/pages/48`);
+const { acf: pageDdata } = mainPage;
 
 ---
 
@@ -82,5 +85,7 @@ const { acf: options } = await wpFetch("/acf/v3/options/options");
     <ConditionSection />
     <PopularAuto fields={acf.recomendation_auto} />
     <MapSection />
+    <FormSection fields={pageDdata.form_section} />
+
   </div>
 </BaseLayout>

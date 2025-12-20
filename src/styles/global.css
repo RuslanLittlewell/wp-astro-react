@@ -115,6 +115,15 @@ html {
   background-color: transparent;
   outline: none;
 }
+.number-input-orange {
+  appearance: auto;
+  accent-color: #e86901;
+}
+.number-input-orange::-webkit-inner-spin-button,
+.number-input-orange::-webkit-outer-spin-button {
+  opacity: 1;
+  color: #e86901;
+}
 
 @media (max-width: 450px) {
   .iti {

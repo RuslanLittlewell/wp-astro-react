@@ -142,14 +142,14 @@ export const QuickOrder: FC<Props> = ({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-denim-400 lg:text-xs">
+                <FormLabel className="text-denim-400 lg:text-sm">
                   Ваше имя
                 </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     placeholder="Иван"
-                    className="bg-denim-100 px-4 py-1 lg:py-2 text-sm lg:text-md text-denim-800"
+                    className="bg-denim-100 px-4 py-3 text-base lg:text-xl text-denim-800"
                   />
                 </FormControl>
                 <FormMessage />
@@ -162,7 +162,7 @@ export const QuickOrder: FC<Props> = ({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-denim-400 lg:text-xs">
+                <FormLabel className="text-denim-400 lg:text-sm">
                   Телефон
                 </FormLabel>
                 <FormControl>
@@ -175,7 +175,7 @@ export const QuickOrder: FC<Props> = ({
                         initOptions={{
                           initialCountry: "by",
                           containerClass:
-                            "flex w-full rounded-xl border border-input shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-denim-100 px-4 py-2 lg:py-2 text-sm lg:text-md text-denim-800",
+                            "flex w-full rounded-xl border border-input shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 bg-denim-100 px-4 py-3 text-base lg:text-xl text-denim-800",
                           nationalMode: false,
                           separateDialCode: true,
                           loadUtils: () =>
@@ -196,7 +196,7 @@ export const QuickOrder: FC<Props> = ({
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-denim-400 lg:text-xs">
+                <FormLabel className="text-denim-400 lg:text-sm">
                   Количество суток аренды
                 </FormLabel>
                 <FormControl>
@@ -207,7 +207,7 @@ export const QuickOrder: FC<Props> = ({
                     onChange={(e) =>
                       field.onChange(e.currentTarget.valueAsNumber)
                     }
-                    className="bg-denim-100 px-4 py-1 lg:py-2 text-sm lg:text-md text-denim-800"
+                    className="number-input-orange bg-denim-100 px-4 py-3 text-base lg:text-xl text-denim-800"
                   />
                 </FormControl>
                 <FormMessage />
@@ -234,8 +234,8 @@ export const QuickOrder: FC<Props> = ({
 
           {/* Итого */}
           <div className="mb-2">
-            <div className="text-denim-900 text-xs flex justify-between lg:text-sm">Итого: <span>Тариф - {tier.label}</span></div>
-            <div className="text-md lg:text-xl text-end font-semibold">
+            <div className="text-denim-900 text-xs flex justify-between lg:text-sm">Итого: <span>Тариф: {tier.label}</span></div>
+            <div className="text-md lg:text-3xl text-end font-semibold">
               {isIndividual
                 ? "Индивидуальный расчет"
                 : formatBYN(totalWithPledge)}
