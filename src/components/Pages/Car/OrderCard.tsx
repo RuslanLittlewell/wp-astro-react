@@ -137,10 +137,10 @@ export const RentalCalculatorCard: FC<Props> = ({
           className="space-y-2 lg:space-y-3"
         >
           {/* Инфо */}
-          <div className="flex gap-2">
+          {/* <div className="flex gap-2">
             <FieldRow label="Тариф" value={isTransfer ? "Трансфер" : tier.label} />
             <FieldRow label="Перепробег" value={String(prices.overrun)} />
-          </div>
+          </div> */}
           <FormField
             name="username"
             control={form.control}
@@ -208,6 +208,7 @@ export const RentalCalculatorCard: FC<Props> = ({
                   <Input
                     type="number"
                     {...field}
+                    min={1}
                     onChange={(e) =>
                       field.onChange(e.currentTarget.valueAsNumber)
                     }
@@ -236,7 +237,7 @@ export const RentalCalculatorCard: FC<Props> = ({
 
           {!isTransfer && <div className="h-px bg-neutral-800" />}
           <div className="mb-4">
-            {!isTransfer && <div className="text-denim-900 text-sm">Итого:</div>}
+            {!isTransfer && <div className="text-denim-900 flex justify-between text-sm">Итого: <span>Тариф - {tier.label}</span></div>}
             <div className="text-2xl text-end font-semibold tracking-tight">
               {isIndividual
                 ? "Индивидуальный расчет"

@@ -133,10 +133,10 @@ export const QuickOrder: FC<Props> = ({
           className="space-y-2 lg:space-y-3"
         >
           {/* Инфо */}
-          <div className="flex gap-2">
+          {/* <div className="flex gap-2">
             <FieldRow label="Тариф" value={tier.label} />
             <FieldRow label="Перепробег" value={String(prices.overrun)} />
-          </div>
+          </div> */}
           <FormField
             name="username"
             control={form.control}
@@ -234,7 +234,7 @@ export const QuickOrder: FC<Props> = ({
 
           {/* Итого */}
           <div className="mb-2">
-            <div className="text-denim-900 text-xs lg:text-sm">Итого:</div>
+            <div className="text-denim-900 text-xs flex justify-between lg:text-sm">Итого: <span>Тариф - {tier.label}</span></div>
             <div className="text-md lg:text-xl text-end font-semibold">
               {isIndividual
                 ? "Индивидуальный расчет"
