@@ -5,7 +5,7 @@ interface Props {
   data: any;
 }
 export const ConditionsTabs = ({ data }: Props) => {
-  const { list_1, list_2, list_3, list_4 } = data;
+  const { list_1, list_2, list_3, list_4, list_5 } = data;
   return (
     <Tabs defaultValue="condition">
       <TabsList className="bg-gray-200 flex flex-col md:flex-row">
@@ -21,6 +21,9 @@ export const ConditionsTabs = ({ data }: Props) => {
         <TabsTrigger className="p-3 px-5" value="faq">
           Часто задаваемые вопросы
         </TabsTrigger>
+        <TabsTrigger className="p-3 px-5" value="reservation">
+          Бронирование
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="condition">
         <AccordionBlock data={list_1} openAll />
@@ -33,6 +36,9 @@ export const ConditionsTabs = ({ data }: Props) => {
       </TabsContent>
       <TabsContent value="faq">
         <AccordionBlock data={list_4} />
+      </TabsContent>
+      <TabsContent value="reservation">
+        <AccordionBlock data={list_5} />
       </TabsContent>
     </Tabs>
   );
