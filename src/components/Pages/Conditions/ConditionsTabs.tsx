@@ -38,7 +38,7 @@ export const ConditionsTabs = ({ data }: Props) => {
         <AccordionBlock data={list_4} />
       </TabsContent>
       <TabsContent value="reservation">
-        <AccordionBlock data={list_5} />
+        <AccordionBlock data={list_5} openAll />
       </TabsContent>
     </Tabs>
   );
