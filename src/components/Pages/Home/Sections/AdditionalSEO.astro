@@ -1,0 +1,30 @@
+---
+import Container from "@/layouts/Container.astro";
+
+const { fields } = Astro.props;
+
+---
+
+<section class="py-10 lg:py-[75px] w-ful bg-gray-200">
+  <Container class="grid grid-cols-1 md:grid-cols-[25%_1fr] gap-5">
+ <div
+  class="seo seo-lg max-w-none
+    [&_h2]:font-semibold [&_h2]:text-xl [&_h2]:mt-5 [&_h2]:mb-2 [&_h2]:text-zinc-900
+    [&_h3]:font-semibold [&_h3]:text-lg [&_h3]:mt-4 [&_h3]:mb-1.5 [&_h3]:text-zinc-900
+    [&_p]:text-zinc-700 [&_p]:leading-relaxed [&_p]:my-2 [&_p]:text-xs
+    [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-5
+    [&_ul_ul]:list-[circle] [&_ul_ul]:pl-5
+    [&_ul_ul_ul]:list-[square] [&_ul_ul_ul]:pl-5
+    [&_ol]:list-decimal [&_ol]:pl-5
+    [&_ol_ol]:list-[lower-alpha] [&_ol_ol]:pl-5
+    [&_ol_ol_ol]:list-[lower-roman] [&_ol_ol_ol]:pl-5
+    [&_li]:my-1 [&_li::marker]:text-denim-300 [&_li]:text-xs
+    [&_blockquote]:my-6 [&_blockquote]:rounded-xl
+    [&_blockquote]:border-l-4 [&_blockquote]:border-denim-300
+    [&_blockquote]:bg-indigo-50/60 [&_blockquote]:px-5 [&_blockquote]:py-3
+    [&_blockquote]:font-medium [&_blockquote]:text-zinc-800
+  "
+  set:html={fields}
+/>
+  </Container>
+</section>

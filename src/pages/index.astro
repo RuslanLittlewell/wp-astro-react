@@ -1,5 +1,6 @@
 ---
 import AboutSection from "@/components/Pages/Home/Sections/AboutSection.astro";
+import AdditionalSEO from "@/components/Pages/Home/Sections/AdditionalSEO.astro";
 import ConditionSection from "@/components/Pages/Home/Sections/ConditionSection.astro";
 import FAQ from "@/components/Pages/Home/Sections/FAQ.astro";
 import FormSection from "@/components/Pages/Home/Sections/FormSection.astro";
@@ -23,6 +24,7 @@ const {
   faq,
   services,
   form_section,
+  add_seo_text,
 } = pageDdata;
 const {
   seo_title: title,
@@ -106,4 +108,5 @@ const jsonLd =
   <Services fields={services} />
   <MapSection />
   <FAQ fields={faq} />
+  {add_seo_text && <AdditionalSEO fields={add_seo_text} />}
 </BaseLayout>
