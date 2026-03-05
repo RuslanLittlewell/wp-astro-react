@@ -20,7 +20,7 @@ const [post] = await wpFetch(
 );
 
 export async function getStaticPaths() {
-  const posts = await wpFetch(`/wp/v2/posts?_fields=slug`);
+  const posts = await wpFetch(`/wp/v2/posts?per_page=100&_fields=slug`);
 
   return posts.map((post: { slug: string }) => ({
     params: { slug: post.slug },
