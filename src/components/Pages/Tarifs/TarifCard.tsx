@@ -88,7 +88,7 @@ export const TarifCard: FC<Props> = ({ car }) => {
               </div>
               <div className="opacity-80 border-b border-white/20 pb-2"> {'>'} 30 суток</div>
               <div className="text-right font-medium border-b border-white/20 pb-2">
-                меньше {prices.more_month} BYN
+                {prices.more_month} BYN
               </div>
             </div>
 
@@ -136,7 +136,7 @@ export const TarifCard: FC<Props> = ({ car }) => {
               {prices.almost_month}
             </div>
             <div className="text-lg font-semibold text-center text-white">
-              меньше {prices.more_month}
+              {prices.more_month}
             </div>
 
             <div className="flex items-center flex-col justify-end gap-3 pl-2">
