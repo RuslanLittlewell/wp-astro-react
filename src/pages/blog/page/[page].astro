@@ -1,5 +1,4 @@
 ---
-import FeaturedPosts from "@/components/Pages/Posts/FeaturedPosts.astro";
 import PostsPagination from "@/components/Pages/Posts/PostsPagination.astro";
 import RegularPosts from "@/components/Pages/Posts/RegularPosts.astro";
 import {
@@ -15,6 +14,22 @@ import Container from "@/layouts/Container.astro";
 import { BLOG_PAGE_SIZE } from "@/lib/blogPagination";
 import { wpFetch } from "@/lib/wp";
 
+export async function getStaticPaths() {
+  const posts: any[] = await wpFetch(
+    `/wp/v2/posts?per_page=100&orderby=date&order=desc&_fields=id,slug,date,link,title,excerpt,acf`
+  );
+
+  const masonryAll = posts.slice(3);
+  const totalPages = Math.max(1, Math.ceil(masonryAll.length / BLOG_PAGE_SIZE));
+  const paths = [];
+
+  for (let page = 2; page <= totalPages; page += 1) {
+    paths.push({ params: { page: String(page) } });
+  }
+
+  return paths;
+}
+
 const posts: any[] = await wpFetch(
   `/wp/v2/posts?per_page=100&orderby=date&order=desc&_fields=id,slug,date,link,title,excerpt,acf`
 );
@@ -29,22 +44,26 @@ const fmt = (iso: string) =>
     year: "numeric",
   });
 
-const [featured, ...rest] = posts;
-const highlights = rest.slice(0, 2);
+const pageNumber = Number(Astro.params.page ?? 1);
+const [, ...rest] = posts;
 const masonryAll = rest.slice(2);
 const totalPages = Math.max(1, Math.ceil(masonryAll.length / BLOG_PAGE_SIZE));
-const masonry = masonryAll.slice(0, BLOG_PAGE_SIZE);
+const masonry = masonryAll.slice(
+  (pageNumber - 1) * BLOG_PAGE_SIZE,
+  pageNumber * BLOG_PAGE_SIZE
+);
 const ymd = new Date().toISOString().split("T")[0];
 
 const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    headline: 'Новости Car1.by — Прокат автомобилей в Бресте',
+    headline: "Новости Car1.by — Прокат автомобилей в Бресте",
     datePublished: ymd,
     dateModified: ymd,
     inLanguage: "ru",
-    description: 'Cервис проката автомобилей Car1.by в Бресте — свежие новости и статьи',
+    description:
+      "Cервис проката автомобилей Car1.by в Бресте — свежие новости и статьи",
     mainEntityOfPage: { "@type": "WebPage", "@id": "https://car1.by" },
     email: "car1prokat@gmail.com",
     contactPoint: {
@@ -69,7 +88,7 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: 'Новости Car1.by — Прокат автомобилей в Бресте',
+    name: "Новости Car1.by — Прокат автомобилей в Бресте",
     url: "https://car1.by/",
   },
   {
@@ -88,14 +107,22 @@ const jsonLd = [
         name: "Новости",
         item: "https://car1.by/blog/",
       },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `Страница ${pageNumber}`,
+        item: `https://car1.by/blog/page/${pageNumber}/`,
+      },
     ],
   },
 ];
 ---
 
-<BaseLayout className="scrolled"
-  title="Новости"
-  description="Cервис проката автомобилей в Бресте — свежие новости и статьи"
+<BaseLayout
+  className="scrolled"
+  title={`Новости — страница ${pageNumber}`}
+  description="Cервис проката автомобилей Car1.by в Бресте — свежие новости и статьи"
+  {jsonLd}
 >
   <Container class="my-24">
     <Breadcrumb>
@@ -105,20 +132,17 @@ const jsonLd = [
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Новости</BreadcrumbPage>
+          <BreadcrumbLink href="/blog">Новости</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Страница {pageNumber}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
     <div>
-      {
-        featured && (
-          <FeaturedPosts {slugOf} {imgOf} {fmt} {featured} {highlights} />
-        )
-      }
-
-      <!-- Masonry-лента -->
       <RegularPosts {slugOf} {imgOf} {fmt} {masonry} />
-      <PostsPagination current={1} total={totalPages} />
+      <PostsPagination current={pageNumber} total={totalPages} />
     </div>
   </Container>
 </BaseLayout>

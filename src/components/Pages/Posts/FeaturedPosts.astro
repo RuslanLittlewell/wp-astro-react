@@ -2,7 +2,7 @@
 const { featured, slugOf, imgOf, fmt, highlights } = Astro.props;
 ---
 
-<section class="grid gap-6 lg:grid-cols-3">
+<section class="grid gap-6 lg:grid-cols-3 mb-6">
   <!-- Большая карточка слева -->
   <article
     class="group relative overflow-hidden rounded-3xl border bg-white lg:col-span-2"
@@ -50,7 +50,7 @@ const { featured, slugOf, imgOf, fmt, highlights } = Astro.props;
         <article class="group relative overflow-hidden rounded-3xl border bg-white">
           <a
             href={`/blog/${slugOf(p)}`}
-            class="absolute inset-0 z-10"
+            class="absolute inset-0 z-10 text-denim-300"
             aria-label="Читать новость"
           />
           <div class="relative aspect-[16/10]">

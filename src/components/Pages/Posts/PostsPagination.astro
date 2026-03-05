@@ -1,0 +1,51 @@
+---
+const {
+  current = 1,
+  total = 1,
+  basePath = "/blog",
+  pagePathPrefix = "/blog/page",
+} = Astro.props;
+
+const pageHref = (n: number) => (n === 1 ? basePath : `${pagePathPrefix}/${n}`);
+const pages = Array.from({ length: total }, (_, i) => i + 1);
+const hasPrev = current > 1;
+const hasNext = current < total;
+---
+
+{total > 1 && (
+  <nav class="mt-10 flex flex-wrap justify-center items-center gap-2" aria-label="Пагинация">
+    {hasPrev && (
+      <a
+        href={pageHref(current - 1)}
+        class="inline-flex items-center rounded-full border bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+        aria-label="Предыдущая страница"
+      >
+        ← Назад
+      </a>
+    )}
+
+    {pages.map((n) => (
+      <a
+        href={pageHref(n)}
+        class={`inline-flex h-10 w-10 items-center justify-center rounded-full border text-sm font-semibold transition ${
+          n === current
+            ? "border-gray-900 bg-gray-900 text-white"
+            : "bg-white text-gray-700 hover:bg-gray-50"
+        }`}
+        aria-current={n === current ? "page" : undefined}
+      >
+        {n}
+      </a>
+    ))}
+
+    {hasNext && (
+      <a
+        href={pageHref(current + 1)}
+        class="inline-flex items-center rounded-full border bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+        aria-label="Следующая страница"
+      >
+        Вперед →
+      </a>
+    )}
+  </nav>
+)}
