@@ -1,8 +1,10 @@
 ---
 import { Separator } from "@radix-ui/react-dropdown-menu";
 
-const { fields, car } = Astro.props;
+const { fields, car, options } = Astro.props;
 const { car_info } = fields.car;
+
+
 ---
 
 <div
@@ -38,5 +40,22 @@ const { car_info } = fields.car;
     </div>
     <Separator className="h-px bg-white/50" />
   </div>
-  <div class="md:border-l md:border-white/50 md:pl-10" set:html={car.content.rendered} />
+  <div class="flex flex-col gap-3 md:border-l md:border-white/50 
+           prose-ul:my-4 prose-ul:pl-5 prose-li:my-1
+         prose-li:marker:text-denim-300
+         [&_ul]:list-disc [&_ul]:pl-5
+         [&_ul_ul]:list-[circle] [&_ul_ul]:pl-5
+         [&_ul_ul_ul]:list-[square] [&_ul_ul_ul]:pl-5
+         [&_ol]:list-decimal [&_ol]:pl-5
+         [&_ol_ol]:list-[lower-alpha] [&_ol_ol]:pl-5
+         [&_ol_ol_ol]:list-[lower-roman] [&_ol_ol_ol]:pl-5
+  ">
+    <div class="md:pl-5" set:html={car.content.rendered} />
+
+      <Separator className="h-px bg-white/50" />
+      <div class="md:pl-5">
+        <h3 class="mb-3 font-bold text-lg">{options.additional_service.additional_service_title}</h3>
+        <div set:html={options.additional_service.additional_service_items} />
+      </div>
+  </div>
 </div>
