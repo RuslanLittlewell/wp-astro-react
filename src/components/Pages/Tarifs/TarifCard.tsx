@@ -94,7 +94,7 @@ export const TarifCard: FC<Props> = ({ car }) => {
 
             <div className="flex gap-3 pt-2">
               <Button className="bg-denim-300 hover:bg-denim-300/80 w-full">
-                <a href={`/cars/${car.slug}`}>Подробнее</a>
+                <a href={`/cars/${car.slug}/`}>Подробнее</a>
               </Button>
               <Button
                 className="bg-denim-300 hover:bg-denim-300/80 w-full"
@@ -141,7 +141,7 @@ export const TarifCard: FC<Props> = ({ car }) => {
 
             <div className="flex items-center flex-col justify-end gap-3 pl-2">
               <Button className="bg-denim-300 hover:bg-denim-300/80 w-full">
-                <a href={`/cars/${car.slug}`}>Подробнее</a>
+                <a href={`/cars/${car.slug}/`}>Подробнее</a>
               </Button>
               <Button
                 className="bg-denim-300 hover:bg-denim-300/80 w-full"

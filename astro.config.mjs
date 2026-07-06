@@ -17,6 +17,7 @@ export default defineConfig({
     ],
   },
   site: "https://car1.by",
+  trailingSlash: "always",
   integrations: [react(), tailwind(), sitemap()],
   server: {
     port: 4321,

@@ -2,11 +2,11 @@
 const {
   current = 1,
   total = 1,
-  basePath = "/blog",
+  basePath = "/blog/",
   pagePathPrefix = "/blog/page",
 } = Astro.props;
 
-const pageHref = (n: number) => (n === 1 ? basePath : `${pagePathPrefix}/${n}`);
+const pageHref = (n: number) => (n === 1 ? basePath : `${pagePathPrefix}/${n}/`);
 const pages = Array.from({ length: total }, (_, i) => i + 1);
 const hasPrev = current > 1;
 const hasNext = current < total;
