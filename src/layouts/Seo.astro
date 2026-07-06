@@ -1,5 +1,4 @@
 ---
-// src/components/Seo.astro
 export interface Props {
   title: string;
   description?: string;
@@ -7,7 +6,7 @@ export interface Props {
   canonical?: string;
   image?: string;
   noindex?: boolean;
-  lang?: string; // например "ru"
+  lang?: string;
   type?: "website" | "article" | "product";
 }
 
@@ -31,7 +30,12 @@ const {
   type = "website",
 } = Astro.props as Props;
 
-const title = decodeEntities(rawTitle);
+let title = decodeEntities(rawTitle);
+const isHome = (Astro.url?.pathname || "/") === "/";
+if (isHome && !/^car1\.by/i.test(title)) {
+  const withoutBrandSuffix = title.replace(/\s*\|\s*Car1\.by\s*$/i, "").trim();
+  title = `Car1.by — ${withoutBrandSuffix}`;
+}
 const kw = Array.isArray(keywords) ? keywords.join(", ") : keywords;
 const url = canonical || Astro.url?.href || "";
 ---
