@@ -34,8 +34,6 @@ const {
 } = seo;
 
 
-const ymd = new Date().toISOString().split("T")[0];
-
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -48,9 +46,6 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Car1.by",
-    headline: title,
-    datePublished: ymd,
-    dateModified: ymd,
     inLanguage: "ru",
     url: "https://car1.by/",
     description: description,
