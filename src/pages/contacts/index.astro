@@ -1,0 +1,119 @@
+---
+import { Phone, MapPin, ClockAlert, Mail } from "lucide-astro";
+import MainTitle from "@/components/Shared/MainTitle.astro";
+import { SocialLinks } from "@/components/Shared/SocialLinks";
+import { ContactForm } from "@/components/Pages/Home/ContancForm";
+import MapSection from "@/components/Pages/Home/Sections/MapSection.astro";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Container from "@/layouts/Container.astro";
+import { wpFetch } from "@/lib/wp";
+
+const { acf } = await wpFetch("/acf/v3/options/options");
+
+const seoTitle = "Контакты Car1.by — телефон, адрес и мессенджеры в Бресте";
+const seoDescription =
+  "Свяжитесь с Car1.by: телефон, адрес офиса в Бресте, режим работы, WhatsApp, Viber, Telegram и форма обратной связи.";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Car1.by",
+    email: "car1prokat@gmail.com",
+    telephone: acf.phone,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: acf.address,
+      addressLocality: "Брест",
+      addressCountry: "BY",
+    },
+    sameAs: [acf.wa, acf.telegram, acf.instagram].filter(Boolean),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://car1.by/" },
+      { "@type": "ListItem", position: 2, name: "Контакты", item: "https://car1.by/contacts/" },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  className="scrolled"
+  title={seoTitle}
+  description={seoDescription}
+  jsonLd={jsonLd}
+>
+  <Container class="my-24">
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Главная</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Контакты</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+    <MainTitle title="Контакты" />
+
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_500px] gap-8 items-start">
+      <div class="flex flex-col gap-6">
+        <div class="bg-white rounded-xl shadow-md p-6 flex flex-col gap-4">
+          <a
+            href={`tel:${acf.phone}`}
+            class="flex items-center gap-3 text-denim-900 font-semibold text-lg hover:text-denim-300 transition-colors"
+          >
+            <Phone size="20" class="text-denim-300 shrink-0" />
+            {acf.phone}
+          </a>
+
+          <a
+            href="mailto:car1prokat@gmail.com"
+            class="flex items-center gap-3 text-denim-800 hover:text-denim-300 transition-colors"
+          >
+            <Mail size="20" class="text-denim-300 shrink-0" />
+            car1prokat@gmail.com
+          </a>
+
+          <p class="flex items-center gap-3 text-denim-800">
+            <MapPin size="20" class="text-denim-300 shrink-0" />
+            {acf.address}
+          </p>
+
+          <p class="flex items-center gap-3 text-denim-800">
+            <ClockAlert size="20" class="text-denim-300 shrink-0" />
+            {acf.work_time}
+          </p>
+
+          <div class="pt-2">
+            <p class="text-sm text-denim-700 mb-3">Мы в мессенджерах и соцсетях</p>
+            <SocialLinks data={acf} showInstagram />
+          </div>
+        </div>
+      </div>
+
+      <ContactForm
+        fields={{
+          title: "Остались вопросы?",
+          description: "Оставьте заявку — перезвоним в течение 15 минут.",
+        }}
+        {acf}
+        client:load
+      />
+    </div>
+  </Container>
+
+  <MapSection />
+</BaseLayout>
