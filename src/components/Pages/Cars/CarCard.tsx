@@ -100,7 +100,7 @@ export const CarCard: React.FC<Props> = ({ car, cover }) => {
 
         <div className="flex gap-3 transition-opacity ease-in-out duration-300 absolute z-1 bottom-14 right-4 opacity-0 group-hover:opacity-100 group-hover:z-10">
           <Button className="bg-denim-300 hover:bg-denim-300/80">
-            <a href={`/cars/${car.slug}`}>Подробнее</a>
+            <a href={`/cars/${car.slug}/`}>Подробнее</a>
           </Button>
           <Button
             className="bg-denim-300 hover:bg-denim-300/80"
@@ -136,7 +136,7 @@ export const CarCard: React.FC<Props> = ({ car, cover }) => {
   return (
        <WrapperTag
       className="relative rounded-md overflow-hidden group shadow-md block"
-      {...(isDesktop && { href: `/cars/${car.slug}` })}
+      {...(isDesktop && { href: `/cars/${car.slug}/` })}
     >
       {renderContent()}
     </WrapperTag>

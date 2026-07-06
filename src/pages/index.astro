@@ -36,11 +36,18 @@ const {
 
 const ymd = new Date().toISOString().split("T")[0];
 
-const jsonLd =
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Car1.by",
+    alternateName: ["Car1", "Прокат авто Car1.by"],
+    url: "https://car1.by/",
+  },
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: title,
+    name: "Car1.by",
     headline: title,
     datePublished: ymd,
     dateModified: ymd,
@@ -95,7 +102,8 @@ const jsonLd =
       ratingValue: "5.0",
       reviewCount: "276",
     },
-  }
+  },
+]
 ---
 
 <BaseLayout {title} {keywords} {jsonLd} {description} {image}>
