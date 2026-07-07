@@ -31,11 +31,6 @@ const {
 } = Astro.props as Props;
 
 let title = decodeEntities(rawTitle);
-const isHome = (Astro.url?.pathname || "/") === "/";
-if (isHome && !/^car1\.by/i.test(title)) {
-  const withoutBrandSuffix = title.replace(/\s*\|\s*Car1\.by\s*$/i, "").trim();
-  title = `Car1.by — ${withoutBrandSuffix}`;
-}
 const kw = Array.isArray(keywords) ? keywords.join(", ") : keywords;
 const url = canonical || Astro.url?.href || "";
 ---
