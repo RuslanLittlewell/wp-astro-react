@@ -1,0 +1,38 @@
+# Car1.by — аренда и прокат авто в Бресте
+
+> Car1.by — сервис аренды и проката автомобилей в Бресте (Беларусь). Новый автопарк, оформление за 15 минут, аренда с водителем и без, посуточно, на выходные, на месяц и долгосрочно. Цены от 60 BYN в сутки.
+
+Компания:
+- Название: Car1.by
+- Город: Брест, Беларусь
+- Адрес: ул. Шоссейная 16, офис 202
+- Телефон: +375 25 7 808 808
+- Email: car1prokat@gmail.com
+- Сайт: https://car1.by
+
+## Основные страницы
+
+- [Главная](https://car1.by/): обзор сервиса, автопарк, условия аренды
+- [Автопарк](https://car1.by/cars/): каталог доступных автомобилей с ценами
+- [Условия аренды](https://car1.by/conditions/): требования, документы, депозит, правила
+- [Тарифы](https://car1.by/tarifs/): цены и тарифные планы аренды
+- [Контакты](https://car1.by/contacts/): телефон, адрес офиса в Бресте, мессенджеры
+- [Новости](https://car1.by/blog/): статьи и новости сервиса
+
+## Услуги
+
+- [Прокат авто на сутки](https://car1.by/arenda-avto-na-sutki/)
+- [Аренда авто на выходные](https://car1.by/arenda-avto-na-vyhodnye/)
+- [Аренда авто на неделю](https://car1.by/arenda-avto-na-nedelyu/)
+- [Аренда авто на месяц](https://car1.by/arenda-avto-na-mesyac/)
+- [Аренда авто без водителя](https://car1.by/arenda-avto-bez-voditelya/)
+- [Аренда авто с водителем](https://car1.by/arenda-avto-s-voditelem/)
+- [Аренда авто на свадьбу](https://car1.by/arenda-avto-na-svadbu/)
+- [Каршеринг авто](https://car1.by/karshering-avto/)
+- [Долгосрочная аренда автомобилей](https://car1.by/dolgdolgosrochnaya-arenda-avtomobilej/)
+- [Трансфер в Бресте](https://car1.by/transfer-v-breste/)
+- [Прокат микроавтобусов](https://car1.by/prokat-mikroavtobusov/)
+
+## Дополнительно
+
+- [Карта сайта (sitemap)](https://car1.by/sitemap-index.xml)

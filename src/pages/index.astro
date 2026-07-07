@@ -11,6 +11,7 @@ import RentFlowSection from "@/components/Pages/Home/Sections/RentFlowSection.as
 import Services from "@/components/Pages/Home/Sections/Services.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { wpFetch } from "@/lib/wp";
+import { faqSchema } from "@/lib/schema";
 
 const data = await wpFetch(`/acf/v3/pages/48`);
 const { acf: pageDdata } = data;
@@ -34,71 +35,7 @@ const {
 } = seo;
 
 
-const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Car1.by",
-    alternateName: ["Car1", "Прокат авто Car1.by"],
-    url: "https://car1.by/",
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Car1.by",
-    inLanguage: "ru",
-    url: "https://car1.by/",
-    description: description,
-    mainEntityOfPage: { "@type": "WebPage", "@id": "https://car1.by" },
-    image: image,
-    email: "car1prokat@gmail.com",
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+375 25 780-88-08",
-      contactType: "customer service",
-      areaServed: "BY",
-      availableLanguage: ["Russian", "English"],
-    },
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Брест",
-      addressCountry: "BY",
-      streetAddress: "ул. Шоссейная, 16, офис 202",
-    },
-    hasPart: [
-      {
-        "@type": "WebPage",
-        name: "Автопарк",
-        url: "https://car1.by/cars/",
-      },
-      {
-        "@type": "WebPage",
-        name: "Условия",
-        url: "https://car1.by/conditions/",
-      },
-      {
-        "@type": "WebPage",
-        name: "Тарифы",
-        url: "https://car1.by/tarifs/",
-      },
-      {
-        "@type": "WebPage",
-        name: "Новости",
-        url: "https://car1.by/blog/",
-      },
-    ],
-    sameAs: [
-      "https://api.whatsapp.com/send/?phone=375257808808",
-      "https://t.me/Car4_brest",
-      "https://www.instagram.com/car4.by/",
-    ],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: "276",
-    },
-  },
-]
+const jsonLd = [faqSchema(faq?.faq_data)].filter(Boolean);
 ---
 
 <BaseLayout {title} {keywords} {jsonLd} {description} {image}>
