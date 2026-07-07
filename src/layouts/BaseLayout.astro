@@ -8,6 +8,7 @@ import { wpFetch } from "@/lib/wp";
 import { cn } from "@/lib/utils";
 import { globalSchema } from "@/lib/schema";
 import GlobalSheet from "@/components/Shared/Modals/GlobalSheet";
+import { WebMCP } from "@/components/Shared/WebMCP";
 import { CallbackModal } from "@/components/Shared/Modals/OrderCallModal";
 import { FormResulatModal } from "@/components/Shared/Modals/FormResultModal";
 
@@ -107,6 +108,7 @@ const links = [
       <slot />
     </main>
     <GlobalSheet client:load />
+    <WebMCP client:idle />
     <CallbackModal client:load />
     <FormResulatModal client:load />
     <Footer data={acf} {links} />

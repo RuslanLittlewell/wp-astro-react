@@ -8,13 +8,15 @@ interface Props {
 export const SocialLinks = ({ data, className, showInstagram }: Props) => {
   return (
     <div className={cn("flex items-center gap-3", className)}>
-      <a href={data.telegram} className="group">
+      <a href={data.telegram} aria-label="Telegram" target="_blank" rel="noopener noreferrer" className="group">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
           height="30"
           viewBox="0 0 30 30"
           fill="none"
+          aria-hidden="true"
+          focusable="false"
         >
           <rect
             width="30"
@@ -30,13 +32,15 @@ export const SocialLinks = ({ data, className, showInstagram }: Props) => {
           />
         </svg>
       </a>
-      <a href={data.wa} className="group">
+      <a href={data.wa} aria-label="WhatsApp" target="_blank" rel="noopener noreferrer" className="group">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
           height="30"
           viewBox="0 0 30 30"
           fill="none"
+          aria-hidden="true"
+          focusable="false"
         >
           <rect
             width="30"
@@ -70,13 +74,15 @@ export const SocialLinks = ({ data, className, showInstagram }: Props) => {
         </svg>
       </a>
 
-      <a href={data.viber} className="group">
+      <a href={data.viber} aria-label="Viber" target="_blank" rel="noopener noreferrer" className="group">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
           height="30"
           viewBox="0 0 30 30"
           fill="none"
+          aria-hidden="true"
+          focusable="false"
         >
           <rect
             width="30"
@@ -134,7 +140,7 @@ export const SocialLinks = ({ data, className, showInstagram }: Props) => {
       </a>
 
       {showInstagram && (
-        <a href={data.instagram} className="group">
+        <a href={data.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="group">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="30"
