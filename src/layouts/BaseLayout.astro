@@ -6,6 +6,7 @@ import Footer from "./Footer.astro";
 import Seo from "./Seo.astro";
 import { wpFetch } from "@/lib/wp";
 import { cn } from "@/lib/utils";
+import { globalSchema } from "@/lib/schema";
 import GlobalSheet from "@/components/Shared/Modals/GlobalSheet";
 import { CallbackModal } from "@/components/Shared/Modals/OrderCallModal";
 import { FormResulatModal } from "@/components/Shared/Modals/FormResultModal";
@@ -83,6 +84,11 @@ const links = [
 <html lang="ru" class="h-full">
   <head>
     <Seo {title} {description} {keywords} {canonical} {image} />
+    {
+      globalSchema.map((schema) => (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+      ))
+    }
     {
       jsonLd && (
         <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
