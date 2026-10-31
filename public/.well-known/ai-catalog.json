@@ -1,0 +1,9 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Car1.by",
+    "identifier": "car1.by",
+    "documentationUrl": "https://car1.by/llms.txt"
+  },
+  "entries": []
+}

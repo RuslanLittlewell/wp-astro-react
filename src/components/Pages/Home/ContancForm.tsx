@@ -72,10 +72,17 @@ export const  ContactForm: FC<Props> = ({
 
   const isSubmitting = form.formState.isSubmitting;
 
+  // WebMCP: агент заполняет форму, отправляет её человек (без toolautosubmit)
+  const webmcpForm = {
+    toolname: "request_car_rental_callback",
+    tooldescription:
+      "Оставить заявку на обратный звонок по аренде авто в Бресте (Car1.by). Менеджер перезвонит клиенту и подтвердит наличие авто и бронь.",
+  };
   return (
     <div className="bg-denim-300/80 w-full md:w-[500px] rounded-xl ml-auto shadow-md">
       <Form {...form}>
         <form
+          {...webmcpForm}
           onSubmit={form.handleSubmit(onSubmit)}
           className={cn("p-6 w-full flex flex-col justify-between", className)}
         >
@@ -118,6 +125,7 @@ export const  ContactForm: FC<Props> = ({
                   <FormControl>
                     <Input
                       {...field}
+                      {...{ toolparamdescription: "Имя клиента, как к нему обращаться" }}
                       disabled={isSubmitting}
                       placeholder="Имя"
                       aria-invalid={!!form.formState.errors.username}
