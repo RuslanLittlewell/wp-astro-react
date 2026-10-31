@@ -44,11 +44,27 @@ const { acf: options } = await wpFetch("/acf/v3/options/options");
 const mainPage = await wpFetch(`/acf/v3/pages/48`);
 const { acf: pageDdata } = mainPage;
 
+// SEO: поля из WP, а если пустые — уникальный текст из характеристик машины,
+// чтобы одноимённые авто не давали одинаковые title/description.
+const clean = (v?: string) => (v ?? "").replace(/\s+/g, " ").trim();
+const name = clean(car.title.rendered);
+const info = acf.car.car_info ?? {};
+const specs = [clean(info.transmission), info.engine && `${clean(info.engine)} л`]
+  .filter(Boolean)
+  .join(", ");
+const price = clean(acf.prices?.one_day);
+const seoTitle =
+  clean(acf.seo?.seo_title) ||
+  `Аренда ${name}${specs ? ` (${specs})` : ""} в Бресте${price ? ` от ${price} BYN/сутки` : ""} | Car1.by`;
+const seoDescription =
+  clean(acf.seo?.short_description) ||
+  `Аренда ${name} в Бресте без водителя.${specs ? ` ${specs[0].toUpperCase()}${specs.slice(1)}.` : ""}${info.fuel_consumption ? ` Расход ${clean(info.fuel_consumption)}.` : ""}${price ? ` От ${price} BYN в сутки.` : ""} Страховка включена, оформление за 15 минут.`;
 ---
 
 <BaseLayout
-  title={car.title.rendered}
-  image={acf.car.car_images[0]}
+  title={seoTitle}
+  description={seoDescription}
+  image={acf.seo?.seo_image || acf.car.car_images[0]}
   className="scrolled"
 >
   <div class="w-full mt-24">
