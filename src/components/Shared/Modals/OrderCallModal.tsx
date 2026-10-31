@@ -61,7 +61,7 @@ export function CallbackModal() {
   const isSubmitting = form.formState.isSubmitting;
   return (
     <Dialog open={open} onOpenChange={(v) => (v ? null : close())}>
-      <form>
+      <>
         <DialogContent className="sm:max-w-[425px] bg-gray-300 backdrop-blur-xl">
           <DialogHeader>
             <DialogTitle className="text-2xl text-center">
@@ -70,6 +70,11 @@ export function CallbackModal() {
           </DialogHeader>
           <Form {...form}>
             <form
+              {...{
+                toolname: "request_callback_modal",
+                tooldescription:
+                  "Оставить заявку на обратный звонок по аренде авто в Бресте (Car1.by). Менеджер перезвонит клиенту.",
+              }}
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-2 lg:space-y-3"
             >
@@ -108,12 +113,14 @@ export function CallbackModal() {
                           <IntlTelInput
                             initialValue={field.value}
                             onChangeNumber={field.onChange}
+                            inputProps={{ name: "userphone", ...{ toolparamdescription: "Телефон клиента в международном формате, например +375291234567" } }}
                             initOptions={{
                               initialCountry: "by",
                               containerClass:
                                 "h-12 !flex items-center w-full rounded-xl border border-input shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-denim-100 px-4 py-2 lg:py-2 text-sm lg:text-md text-denim-800",
                               nationalMode: false,
                               separateDialCode: true,
+                              countrySearch: false, // поле поиска без name ломает валидацию схемы WebMCP
                               loadUtils: () =>
                                 import("public/tel-utils.mjs" as any),
                             }}
@@ -144,7 +151,7 @@ export function CallbackModal() {
             </Button>
           </DialogFooter>
         </DialogContent>
-      </form>
+      </>
     </Dialog>
   );
 }

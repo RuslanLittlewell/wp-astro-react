@@ -129,6 +129,11 @@ export const QuickOrder: FC<Props> = ({
     >
       <Form {...form}>
         <form
+          {...{
+            toolname: "quick_order_car_rental",
+            tooldescription:
+              "Быстрый заказ аренды конкретного автомобиля в Бресте (Car1.by): имя, телефон и срок аренды в сутках. Менеджер свяжется с клиентом.",
+          }}
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-2 lg:space-y-3"
         >
@@ -172,12 +177,14 @@ export const QuickOrder: FC<Props> = ({
                       <IntlTelInput
                         initialValue={field.value}
                         onChangeNumber={field.onChange}
+                        inputProps={{ name: "userphone", ...{ toolparamdescription: "Телефон клиента в международном формате, например +375291234567" } }}
                         initOptions={{
                           initialCountry: "by",
                           containerClass:
                             "flex w-full rounded-xl border border-input shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 bg-denim-100 px-4 py-3 text-base lg:text-xl text-denim-800",
                           nationalMode: false,
                           separateDialCode: true,
+                          countrySearch: false, // поле поиска без name ломает валидацию схемы WebMCP
                           loadUtils: () =>
                             import("public/tel-utils.mjs" as any),
                         }}

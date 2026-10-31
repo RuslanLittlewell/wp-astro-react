@@ -150,12 +150,14 @@ export const  ContactForm: FC<Props> = ({
                         <IntlTelInput
                           initialValue={field.value}
                           onChangeNumber={field.onChange}
+                          inputProps={{ name: "userphone", ...{ toolparamdescription: "Телефон клиента в международном формате, например +375291234567" } }}
                           initOptions={{
                             initialCountry: "by",
                             nationalMode: false,
                             containerClass:
                               "flex w-full rounded-xl border border-input shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-denim-100 px-4 py-2 lg:py-3 text-sm lg:text-md text-denim-800",
                             separateDialCode: true,
+                            countrySearch: false, // поле поиска без name ломает валидацию схемы WebMCP
                             loadUtils: () =>
                               import("public/tel-utils.mjs" as any),
                           }}
