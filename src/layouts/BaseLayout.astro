@@ -84,6 +84,12 @@ const links = [
 <!doctype html>
 <html lang="ru" class="h-full">
   <head>
+    {
+      import.meta.env.PUBLIC_WEBMCP_TOKEN && (
+        <meta http-equiv="origin-trial" content={import.meta.env.PUBLIC_WEBMCP_TOKEN} />
+      )
+    }
+    <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
     <Seo {title} {description} {keywords} {canonical} {image} />
     {
       globalSchema.map((schema) => (
