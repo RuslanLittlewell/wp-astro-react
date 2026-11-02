@@ -1,0 +1,90 @@
+---
+import Stars from "@/components/Shared/Stars.astro";
+import type { GoogleReviews } from "@/lib/wp";
+import { cn, plural } from "@/lib/utils";
+
+interface Props {
+  data: GoogleReviews;
+  class?: string;
+}
+
+const { data, class: className = "" } = Astro.props;
+const { rating, count, url, writeReviewUrl, reviews } = data;
+
+const formatDate = (date: string) =>
+  new Date(date).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+---
+
+<div class={cn("flex flex-col bg-white rounded-xl border border-gray-200 p-5", className)}>
+  <div class="flex items-start justify-between gap-3">
+    <a href={url} target="_blank" rel="noopener" class="text-xl font-medium hover:text-primary">car1.by</a>
+    <span class="text-xs text-gray-400 whitespace-nowrap mt-1.5">Google</span>
+  </div>
+
+  <div class="flex items-center gap-3 mt-3">
+    <span class="text-5xl leading-none">{rating.toFixed(1).replace(".", ",")}</span>
+    <div>
+      <Stars value={rating} class="mb-2" />
+      <a href={url} target="_blank" rel="noopener" class="text-sm text-gray-400 hover:text-primary">
+        {count} {plural(count, ["оценка", "оценки", "оценок"])} в Google
+      </a>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap items-center justify-center gap-3 bg-gray-100 rounded-md p-2 mt-4 font-medium">
+    <span>Поставьте нам оценку</span>
+    <a
+      href={writeReviewUrl}
+      target="_blank"
+      rel="noopener"
+      class="bg-[#258ffb] hover:bg-[#1a6df2] text-white rounded-lg px-4 py-3 leading-4 transition-colors"
+    >
+      Оставить отзыв
+    </a>
+  </div>
+
+  <ul class="flex-1 min-h-0 overflow-y-auto mt-2">
+    {reviews.map((review) => (
+      <li class="py-6 border-b border-gray-100 last:border-0">
+        <div class="flex items-center gap-3 mb-4">
+          {review.photo ? (
+            <img
+              src={review.photo}
+              alt=""
+              width="40"
+              height="40"
+              loading="lazy"
+              referrerpolicy="no-referrer"
+              class="size-10 rounded-full"
+            />
+          ) : (
+            <span class="size-10 shrink-0 rounded-full bg-[#50c0e6] text-white grid place-items-center">
+              {review.author.charAt(0)}
+            </span>
+          )}
+          <div>
+            <div class="font-medium">{review.author}</div>
+            <div class="text-sm text-gray-400">{formatDate(review.date)}</div>
+          </div>
+        </div>
+        <Stars value={review.rating} class="mb-2" />
+        <p class="line-clamp-4 leading-5 whitespace-pre-line">{review.text}</p>
+        {review.reply && (
+          <div class="mt-3 pl-3 border-l-2 border-gray-200 text-sm text-gray-500">
+            <div class="font-medium text-gray-600 mb-1">Ответ владельца</div>
+            <p class="line-clamp-3 whitespace-pre-line">{review.reply}</p>
+          </div>
+        )}
+      </li>
+    ))}
+  </ul>
+
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener"
+    class="self-center mt-4 bg-[#f5f7fa] hover:bg-[#e9eef3] text-[#198cff] font-medium rounded-lg px-4 py-3 leading-4"
+  >
+    Все отзывы в Google
+  </a>
+</div>
