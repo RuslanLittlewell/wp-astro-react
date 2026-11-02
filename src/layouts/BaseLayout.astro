@@ -84,6 +84,8 @@ const links = [
 <!doctype html>
 <html lang="ru" class="h-full">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     {
       import.meta.env.PUBLIC_WEBMCP_TOKEN && (
         <meta http-equiv="origin-trial" content={import.meta.env.PUBLIC_WEBMCP_TOKEN} />
@@ -101,8 +103,6 @@ const links = [
         <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
       )
     }
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style is:global set:html={globalStyles}></style>
     <ClientRouter />
   </head>
