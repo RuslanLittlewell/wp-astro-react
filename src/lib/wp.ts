@@ -36,3 +36,32 @@ export async function wpFetch(url: string) {
   const data = await res.json();
   return data
 }
+
+export type GoogleReview = {
+  author: string;
+  photo: string;
+  rating: number;
+  date: string;
+  text: string;
+  reply: string;
+};
+
+export type GoogleReviews = {
+  name: string;
+  rating: number;
+  count: number;
+  url: string;
+  writeReviewUrl: string;
+  reviews: GoogleReview[];
+};
+
+// Отзывы из Trustindex на WP (google-reviews-plug.php). Если эндпоинт
+// недоступен или пуст — возвращаем null, блок не выводится, сборка не падает.
+export async function fetchGoogleReviews(): Promise<GoogleReviews | null> {
+  try {
+    const data = await wpFetch("/car1/v1/google-reviews");
+    return Array.isArray(data?.reviews) && data.reviews.length ? data : null;
+  } catch {
+    return null;
+  }
+}

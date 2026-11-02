@@ -1,0 +1,44 @@
+---
+import GoogleReviews from "@/components/Pages/Home/GoogleReviews.astro";
+import SectionTitle from "@/components/Shared/SectionTitle.astro";
+import Container from "@/layouts/Container.astro";
+import { cn } from "@/lib/utils";
+import type { GoogleReviews as GoogleReviewsData } from "@/lib/wp";
+import { YANDEX_ORG_ID } from "@/lib/yandex";
+
+interface Props {
+  google: GoogleReviewsData | null;
+}
+
+const { google } = Astro.props;
+
+// На десктопе секция целиком помещается в экран: высота карточек зависит от высоты окна
+const cardHeight = "h-[600px] lg:h-[min(640px,calc(100vh_-_250px))] lg:min-h-[460px]";
+---
+
+<section class="py-10 lg:py-12 w-full" id="reviews">
+  <Container>
+    <SectionTitle title="Отзывы наших клиентов" class="lg:mt-0 lg:mb-8" />
+    <div class={cn("grid gap-5 mx-auto", google ? "lg:grid-cols-2" : "max-w-[760px]")}>
+      <div class={cn("relative rounded-xl overflow-hidden border border-gray-200", cardHeight)}>
+        <iframe
+          src={`https://yandex.ru/maps-reviews-widget/${YANDEX_ORG_ID}?comments`}
+          width="100%"
+          height="100%"
+          loading="lazy"
+          style="display:block;border:0"
+          title="Отзывы о Car1.by на Яндекс Картах"
+        ></iframe>
+        <a
+          href={`https://yandex.by/maps/org/car1_by/${YANDEX_ORG_ID}/reviews/`}
+          target="_blank"
+          rel="noopener"
+          class="absolute bottom-2 left-0 w-full px-4 text-center text-[10px] text-gray-400 truncate"
+        >
+          Car1.by на карте Бреста — Яндекс Карты
+        </a>
+      </div>
+      {google && <GoogleReviews data={google} class={cardHeight} />}
+    </div>
+  </Container>
+</section>

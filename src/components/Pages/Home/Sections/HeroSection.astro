@@ -1,8 +1,11 @@
 ---
 import { Image } from "astro:assets";
 import { CallbackTrigger } from "@/components/Pages/Home/CallbackTrigger";
+import RatingBadges from "@/components/Pages/Home/RatingBadges.astro";
+import type { GoogleReviews } from "@/lib/wp";
+import type { YandexRating } from "@/lib/yandex";
 
-const { hero_block, image } = Astro.props;
+const { hero_block, image, google, yandex } = Astro.props;
 const { title, points } = hero_block;
 
 interface Ponits {
@@ -16,6 +19,8 @@ interface Props {
     image: string;
   };
   image: string;
+  google: GoogleReviews | null;
+  yandex: YandexRating | null;
 }
 ---
 
@@ -49,5 +54,6 @@ interface Props {
       {points.map((i) => <li>{i.text}</li>)}
     </ul>
     <CallbackTrigger client:load />
+    <RatingBadges {google} {yandex} />
   </div>
 </section>
