@@ -14,8 +14,13 @@ import {
 } from "@/components/ui/breadcrumb";
 
 const page = await wpFetch(`/wp/v2/pages/980`);
-const { acf: pageData } = page;
-const { seo } = pageData;
+const pageData = page?.acf;
+const seo = pageData?.seo;
+
+// Нет данных из WP (страница в черновике / недоступна) — страницу не собираем
+if (!seo) {
+  return new Response(null, { status: 404 });
+}
 ---
 
 <BaseLayout
