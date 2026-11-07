@@ -4,7 +4,7 @@ import { ClientRouter } from "astro:transitions";
 import Header from "@/layouts/Header.astro";
 import Footer from "./Footer.astro";
 import Seo from "./Seo.astro";
-import { wpFetch } from "@/lib/wp";
+import { wpFetch, getPublishedPageSlugs } from "@/lib/wp";
 import { cn } from "@/lib/utils";
 import { globalSchema } from "@/lib/schema";
 import GlobalSheet from "@/components/Shared/Modals/GlobalSheet";
@@ -26,7 +26,7 @@ const userAgent = Astro.request?.headers.get("user-agent") ?? "";
 const isBot =
   /bot|crawler|spider|crawling|lighthouse|gtmetrix|pagespeed/i.test(userAgent);
 
-const links = [
+const allLinks = [
   { name: "Главная", link: "/" },
   { name: "Автопарк", link: "/cars/" },
   { name: "Условия", link: "/conditions/" },
@@ -79,6 +79,22 @@ const links = [
   { name: "Новости", link: "/blog/" },
   { name: "Контакты", link: "/contacts/" },
 ];
+
+// В «Услугах» показываем только страницы, опубликованные в WP
+// (черновики/удалённые пропускаются при сборке, ссылки на них вели бы на 404).
+const publishedSlugs = await getPublishedPageSlugs();
+const links = publishedSlugs
+  ? allLinks.map((item) =>
+      item.childs
+        ? {
+            ...item,
+            childs: item.childs.filter((child) =>
+              publishedSlugs.has(child.link.replace(/^\/|\/$/g, ""))
+            ),
+          }
+        : item
+    )
+  : allLinks;
 ---
 
 <!doctype html>
