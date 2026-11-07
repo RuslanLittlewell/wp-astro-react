@@ -37,6 +37,23 @@ export async function wpFetch(url: string) {
   return data
 }
 
+// Слаги опубликованных страниц WP (анонимный API отдаёт только publish).
+// Кэшируется на время сборки. Если WP недоступен — null (меню не фильтруем).
+let publishedSlugsPromise: Promise<Set<string> | null> | null = null;
+
+export function getPublishedPageSlugs(): Promise<Set<string> | null> {
+  publishedSlugsPromise ??= (async () => {
+    try {
+      const data = await wpFetch("/wp/v2/pages?per_page=100&_fields=slug");
+      if (!Array.isArray(data) || !data.length) return null;
+      return new Set<string>(data.map((p: { slug: string }) => p.slug));
+    } catch {
+      return null;
+    }
+  })();
+  return publishedSlugsPromise;
+}
+
 export type GoogleReview = {
   author: string;
   photo: string;
